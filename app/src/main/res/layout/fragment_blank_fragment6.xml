@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.percentlayout.widget.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BlankFragment6"
+    android:background="@drawable/top_parent">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:layout_widthPercent="90%"
+        app:layout_heightPercent="17%"
+        android:text="Please select parent's image on your device \n then you go to the 'Login' page"
+        app:layout_marginTopPercent="80%"
+        android:textSize="6sp"
+        android:textColor="#04A6B8"
+        app:layout_marginLeftPercent="5%"
+
+        />
+
+</androidx.percentlayout.widget.PercentRelativeLayout>

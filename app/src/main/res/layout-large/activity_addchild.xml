@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="@drawable/newone"
+    android:layoutDirection="ltr"
+
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/hintchildName"
+        android:textColor="#FFFF"
+        android:textSize="18sp"
+        android:background="@drawable/customborder"
+        android:drawableEnd="@drawable/ic_baseline_person_add_24" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        app:layout_marginRightPercent="8%"
+        app:layout_marginLeftPercent="8%"
+        app:layout_marginTopPercent="10%"
+        android:id="@+id/relativeid">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextedttitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha=".5"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:onClick="edttitle"
+            tools:ignore="OnClick"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp"
+            app:hintTextColor="#FFF"
+            app:startIconTint="#FFF"
+            app:endIconTint="#FFFF">
+
+            <EditText
+                android:id="@+id/edtChildName"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+
+                android:inputType="textAutoComplete"
+                android:hint="@string/name"
+                android:textColorHint="#000"
+                android:textColor="#000"
+                android:background="@drawable/custom_input"
+
+                android:ems="10"
+                android:fontFamily="@font/verdana"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextedtText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha=".5"
+            android:layout_below="@+id/inputTextedttitle"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:onClick="edtText"
+            tools:ignore="OnClick">
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCodeAddchild"
+        android:layout_marginTop="40dp"
+        android:layout_centerInParent="true"
+        android:textSize="18dp"
+        tools:ignore="NotSibling"
+        android:gravity="center_horizontal" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtCodeAddchild"
+
+
+        android:id="@+id/btnAddKidd"
+        android:layout_marginTop="26dp"
+        android:onClick="onClickAddChild"
+        android:text="@string/btnAddChild"
+        android:textAllCaps="false"
+        android:theme="@style/PrimaryFlatButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAddKidd"
+        android:drawableEnd="@drawable/ic_downloadd"
+        android:layout_marginTop="130dp"
+        android:layout_marginEnd="123dp"
+        android:onClick="btndl"
+        android:text="@string/dlapp"
+        android:textAllCaps="false"
+        android:theme="@style/PrimaryFlatButton" />
+
+
+</LinearLayout>

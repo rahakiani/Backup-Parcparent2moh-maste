@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+
+    tools:context=".SmsVerActivity"
+    android:layoutDirection="ltr"
+    android:background="@drawable/newone">
+
+    <EditText
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/smsVerCodeHint"
+        android:layout_marginTop="16dp"
+        android:id="@+id/edtvercode"
+        android:background="@drawable/custom_inpuut"
+        android:textSize="35sp"
+        android:inputType="text|number" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTimer_verSMS"
+        android:layout_marginTop="16dp"
+        android:textSize="50sp" />
+
+    <Button
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnVerCodeOk"
+        android:onClick="btnsabt"
+        tools:ignore="OnClick"
+        android:id="@+id/btnSMSVerOk"
+        android:textSize="25sp"
+        android:textColor="#aeaeae"
+        android:background="@drawable/custom_inpuut"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:padding="5dp"
+        android:background="@drawable/customborder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txtSendSMSAgain"
+        android:textColor="#FFFF"
+        android:layout_below="@id/btnSMSVerOk"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="45dp"
+        android:textSize="20sp"
+        android:onClick="txtSensSMSAgain"
+        tools:ignore="OnClick" />
+
+
+</LinearLayout>

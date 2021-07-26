@@ -1,0 +1,134 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/registerr"
+    android:padding="8dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome"
+        android:gravity="center"
+        android:textColor="#FFF"
+        android:layout_marginTop="150dp"
+        android:fontFamily="serif"
+        android:textSize="70sp" />
+
+    <LinearLayout
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:alpha="1"
+        android:layout_marginTop="100dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:text="@string/pleas_enetr_username_and_password"
+            android:fontFamily="serif" />
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:layout_width="245dp"
+            android:layout_height="253dp"
+            android:layout_gravity="center"
+            android:src="@drawable/user" />
+
+
+        <TextView
+            android:layout_marginTop="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="#DDF1F0"
+
+            android:textSize="50sp"
+            android:textStyle="bold|italic"
+            android:text="@string/btnLogin"
+            android:fontFamily="@font/scriptmtbold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextPhoneLogin"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:hintTextColor="#FFF"
+            app:startIconTint="#FFF"
+            app:endIconTint="#FFFF"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp">
+
+            <EditText
+                android:id="@+id/edtPhoneLogin"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/custom_input"
+                android:drawableLeft="@drawable/ic_profile"
+
+                android:ems="10"
+                android:fontFamily="@font/verdana"
+                android:hint="@string/hintPhone"
+                android:padding="5dp"
+
+                android:textColor="#aeaeae"
+                android:textColorHighlight="#aeaeae"
+
+                android:textColorHint="#aeaeae"
+                android:textColorLink="#aeaeae"
+                android:textSize="27dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextPassLogin"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp"
+            app:hintTextColor="#FFF"
+            app:startIconTint="#FFF"
+            app:endIconTint="#FFFF">
+
+            <EditText
+                android:padding="5dp"
+                android:id="@+id/edtPassLogin"
+                android:background="@drawable/custom_input"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:inputType="textPassword"
+                android:hint="@string/hintPassword"
+                android:textColorHighlight="#aeaeae"
+                android:textSize="27dp"
+                android:textColor="#aeaeae"
+                android:textColorHint="#aeaeae"
+                android:ems="10"
+                android:drawableLeft="@drawable/ic_password"
+                android:fontFamily="@font/verdana" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:background="@drawable/custom_input"
+            android:id="@+id/btnLogin"
+            android:layout_width="260dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:theme="@style/PrimaryFlatButton"
+            android:textColor="#aeaeae"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="@string/btnLogin" />
+
+    </LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

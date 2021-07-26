@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    android:background="@drawable/newone"
+    android:layoutDirection="ltr">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/hintchildName"
+        android:textColor="#FFFF"
+        android:textSize="18sp"
+        android:background="@drawable/customborder"
+        app:drawableEndCompat="@drawable/ic_baseline_person_add_24" />
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        app:layout_marginRightPercent="8%"
+        app:layout_marginLeftPercent="8%"
+        app:layout_marginTopPercent="10%"
+        android:id="@+id/relativeid">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextedttitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha=".5"
+            android:textColorHint="#FFF"
+            android:layout_marginTop="80dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:onClick="edttitle"
+            app:boxBackgroundMode="filled"
+            app:boxStrokeWidth="0dp"
+            app:hintTextColor="#FFF"
+            app:startIconTint="#FFF"
+            app:endIconTint="#FFFF"
+            tools:ignore="OnClick">
+
+
+            <EditText
+                android:id="@+id/edtChildName"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+
+                android:inputType="textAutoComplete"
+                android:hint="@string/name"
+                android:textColorHint="#000"
+                android:autoSizeStepGranularity="10dp"
+                android:textColor="#000"
+                android:ems="10"
+                android:background="@drawable/custom_input"
+                android:fontFamily="@font/verdana"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:importantForAutofill="no" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTextedtText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha=".5"
+            android:layout_below="@+id/inputTextedttitle"
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:onClick="edtText"
+
+            tools:ignore="OnClick">
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtCodeAddchild"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/relativeid"
+        android:layout_centerInParent="true"
+        android:textSize="18dp"
+        tools:ignore="NotSibling"
+        android:gravity="center_horizontal" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtCodeAddchild"
+        android:layout_marginTop="10dp"
+        android:text="@string/btnAddChild"
+        android:id="@+id/btnAddKidd"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickAddChild"
+        android:theme="@style/PrimaryFlatButton"
+        android:textAllCaps="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dlapp"
+        android:layout_below="@+id/btnAddKidd"
+        android:layout_centerHorizontal="true"
+
+        android:drawableEnd="@drawable/ic_downloadd"
+        android:layout_marginTop="50dp"
+        android:onClick="btndl"
+        android:theme="@style/PrimaryFlatButton"
+        android:textAllCaps="false" />
+
+
+</LinearLayout>

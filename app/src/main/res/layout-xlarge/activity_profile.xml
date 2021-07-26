@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity"
+    android:layout_gravity="center_vertical"
+    android:layoutDirection="ltr"
+    android:background="@drawable/newone">
+
+    <EditText
+        android:padding="5dp"
+        android:background="@drawable/custom_inpuut"
+        android:drawableStart="@drawable/ic_phonecall"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/edtPhoneProfile"
+        android:layout_marginTop="15dp"
+        android:hint="@string/txtPhoneProfileHint"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="phone" />
+
+    <EditText
+        android:padding="5dp"
+        android:background="@drawable/custom_inpuut"
+        android:drawableStart="@drawable/ic_emaile"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/edtEmailProfile"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/edtPhoneProfile"
+        android:hint="@string/txtEmailProfileHint"
+        android:minEms="10"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:padding="5dp"
+        android:background="@drawable/custom_inpuut"
+        android:drawableStart="@drawable/ic_password"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:id="@+id/edtPassProfile"
+        android:layout_below="@id/edtEmailProfile"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/txtPassProfileHint"
+        android:minEms="8"
+        android:inputType="textVisiblePassword" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnProfile"
+        android:textColor="#aeaeae"
+        android:background="@drawable/custom_inpuut"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/edtPassProfile"
+        android:layout_centerHorizontal="true" />
+
+</LinearLayout>
