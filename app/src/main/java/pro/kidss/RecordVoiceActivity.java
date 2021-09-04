@@ -3,7 +3,6 @@ package pro.kidss;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -13,18 +12,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,40 +28,47 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 import ir.hamsaa.persiandatepicker.Listener;
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.util.PersianCalendar;
-import pro.kidss.R;
 
 public class RecordVoiceActivity extends AppCompatActivity {
 
-    ArrayList<String> voiceurl=new ArrayList<String>();
-    ArrayList<String> voiceNmae=new ArrayList<String>();
-    RecyclerView recyclerViewgetvoice;
-//    private SwipeRefreshLayout swpref;
+
+    ImageView player;
+    //    private SwipeRefreshLayout swpref;
     private DateConverter converter;
-    FloatingActionButton fabremove,fab2;
-    private VoiceAdapterRecycler adapter ;
+    FloatingActionButton fabremove, fab2;
+    //    private VoiceAdapterRecy adapter ;
     DownloadManager downloadManager;
+    TimePicker timePicker;
+    TextInputLayout editText;
+    EditText editTextt;
+    Button bt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_record_voice);
-//        swpref=(SwipeRefreshLayout)findViewById(R.id.swpref);
-        fabremove=(FloatingActionButton)findViewById(R.id.fab);
-        fab2=(FloatingActionButton)findViewById(R.id.fab2);
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_record_voice );
+
+        player = findViewById( R.id.btnplayervoice );
+        fabremove = (FloatingActionButton) findViewById( R.id.fab );
+        fab2 = (FloatingActionButton) findViewById( R.id.fab2 );
+        timePicker = findViewById( R.id.timePicker1 );
+        editText = findViewById( R.id.inputTextPhoneReg );
+        editTextt = findViewById( R.id.edtduration );
+        bt = findViewById( R.id.btnrec );
+
 //        swpref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
@@ -75,88 +77,20 @@ public class RecordVoiceActivity extends AppCompatActivity {
 //                swpref.setRefreshing(false);
 //            }
 //        });
-        geturls(RecordVoiceActivity.this);
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int i=0;
-                while (i<adapter.getremovelist().size()){
-                    downloadFile(adapter.getremovelist().get(i),voiceNmae.get(voiceurl.indexOf(adapter.getremovelist().get(i)))+".mp3");
-                    i++;
-                }
-                finish();
-                startActivity(getIntent());
-            }
-        });
-        fabremove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JSONObject jsonObject=new JSONObject();
-                JSONArray jsonArray=new JSONArray();
-                int ii=0;
-                while (ii<adapter.getremovelist().size()){
-                    jsonArray.put("/static/"+adapter.getremovelist().get(ii).split("/static/")[1]);
-                    ii++;
-                }
-                CtokenDataBaseManager ctokenDataBaseManager=new CtokenDataBaseManager(RecordVoiceActivity.this);
-                try {
-                    jsonObject.put("token",ctokenDataBaseManager.getctoken());
-                    jsonObject.put("voiceUrl",jsonArray);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //send to server
-                Log.e("fuuuuuuuuuuuuuuukit", jsonObject.toString() );
-                AlertDialog.Builder alertClose=new AlertDialog.Builder(RecordVoiceActivity.this);
-                alertClose.setMessage("Do you want to delete the videos?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //send
-                                StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/delete-voice/",
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Toast.makeText(RecordVoiceActivity.this, "Successfully removed", Toast.LENGTH_SHORT).show();
-//                                                loadvideo();
-                                                finish();
-                                                startActivity(getIntent());
 
-
-                                            }
-                                        }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-//                                        progressDialog.dismiss();
-                                        Alert.shows(RecordVoiceActivity.this,"","please check the connection","ok","");
-                                        SendEror.sender(RecordVoiceActivity.this,error.toString());
-                                    }
-
-                                })
-                                {
-                                    @Override
-                                    protected Map<String, String> getParams(){
-                                        Map<String,String> params=new HashMap<String, String>();
-                                        params.put("data",jsonObject.toString());
-                                        return params;
-                                    }
-                                };
-                                RequestQueue requestQueue= Volley.newRequestQueue(RecordVoiceActivity.this);
-                                requestQueue.add(stringRequest);
-
-
-                            }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                       geturls(RecordVoiceActivity.this);
-
-                    }
-                }).show();
-            }
-        });
-
-
+//        geturls(RecordVoiceActivity.this);
+//        fab2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int i=0;
+//                while (i<adapter.getremovelist().size()){
+//                    downloadFile(adapter.getremovelist().get(i),voiceNmae.get(voiceurl.indexOf(adapter.getremovelist().get(i)))+".mp3");
+//                    i++;
+//                }
+//                finish();
+//                startActivity(getIntent());
+//            }
+//        });
 
 
     }
@@ -217,112 +151,117 @@ public class RecordVoiceActivity extends AppCompatActivity {
     }
 
 
-
-    public void geturls(Context context){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/voice-detail/",
-                new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("onResponse", response );
-                        JSONObject alljs = null;
-                        try {
-                            alljs = new JSONObject(response);
-                            if (alljs.has("token")){
-                                    JSONArray jsonArray=alljs.getJSONArray("VideoAddress");
-                                    int i=0;
-                                    while (i<jsonArray.length()){
-                                        voiceurl.add("https://im.kidsguard.ml"+jsonArray.getString(i));
-                                        i++;
-                                    }
-                                JSONArray datearray=alljs.getJSONArray("Date");
-                                int b=0;
-                                while (b<datearray.length()){
-                                    String[] all = datearray.getString( b ).split( "T" );
-                                    String[] date = all[0].split( "-" );
-                                    int year = Integer.parseInt( date[0] );
-                                    int mounth = Integer.parseInt( date[1] );
-                                    int day = Integer.parseInt( date[2] );
-                                    String[] time = all[1].split( ":" );
-                                    int hour = Integer.parseInt( time[0] );
-                                    int min = Integer.parseInt( time[1] );
-                                    Calendar callForDate = Calendar.getInstance();
-                                    callForDate.set( year, mounth, day, hour, min, 00 );
-                                    callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
-                                    SimpleDateFormat currentDate = new SimpleDateFormat( "dd-MMMM-yyyy" );
-
-//                                        final String saveCurrentDate = currentDate.format(callForDate.getTime());
-//                                        Calendar mCalendar = new GregorianCalendar();
-//                                        mCalendar.set(year,mounth,day,hour,min,00);
-//                                        Calendar.Builder calendar=new Calendar.Builder();
-//                                        calendar.setDate(year,mounth-1,day);
-//                                        calendar.setTimeOfDay(hour,min,0);
-//                                        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-                                    DateConverter converter = new DateConverter();
-                                    converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
-                                    String categorydate = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() );
-                                    String datee = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "  " + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() );
-                                    voiceNmae.add(datee);
-                                    b++;
-                                }
-
-
-                                setRecycler();}
-
-                        } catch (JSONException e) {
-                            Log.e("onResponse error", e.toString());
-                            SendEror.sender(RecordVoiceActivity.this, e.toString());
-
-                        }
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Alert.shows(context,"","please check the connection","ok","");
-                SendEror.sender(RecordVoiceActivity.this, error.toString());
-            }
-
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("token", getctoken(context));
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(stringRequest);
-    }
-    public void setRecycler(){
-        try {
-
-            recyclerViewgetvoice=(RecyclerView)findViewById(R.id.voiceRecyclerView);
-
-            adapter = new VoiceAdapterRecycler(voiceurl,voiceNmae, RecordVoiceActivity.this,fabremove,fab2);
-            recyclerViewgetvoice.setAdapter(adapter);
-            LayoutAnimationController animation =
-                    AnimationUtils.loadLayoutAnimation(RecordVoiceActivity.this, R.anim.layout_animation_fall_down);
-            recyclerViewgetvoice.setLayoutAnimation(animation);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(RecordVoiceActivity.this);
-            recyclerViewgetvoice.setLayoutManager(layoutManager);
-        }catch (Exception e){
-            Log.e("catch", e.toString() );
-        }
-
-    }
-    public void btnspicvid(View view){
-        PersianDatePickerDialog picker2 = new PersianDatePickerDialog(this)
-                .setPositiveButtonString("باشه")
-                .setNegativeButton("بیخیال")
+    //    public void geturls(Context context){
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/voice-detail/",
+//                new Response.Listener<String>() {
+//                    @RequiresApi(api = Build.VERSION_CODES.O)
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.e("onResponse", response );
+//                        JSONObject alljs = null;
+//                        try {
+//                            alljs = new JSONObject(response);
+//                            if (alljs.has("token")){
+//                                    JSONArray jsonArray=alljs.getJSONArray("VideoAddress");
+//                                    int i=0;
+//                                    while (i<jsonArray.length()){
+//                                        voiceurl.add("https://im.kidsguard.ml"+jsonArray.getString(i));
+//                                        i++;
+//                                    }
+//                                JSONArray datearray=alljs.getJSONArray("Date");
+//                                int b=0;
+//                                while (b<datearray.length()){
+//                                    String[] all = datearray.getString( b ).split( "T" );
+//                                    String[] date = all[0].split( "-" );
+//                                    int year = Integer.parseInt( date[0] );
+//                                    int mounth = Integer.parseInt( date[1] );
+//                                    int day = Integer.parseInt( date[2] );
+//                                    String[] time = all[1].split( ":" );
+//                                    int hour = Integer.parseInt( time[0] );
+//                                    int min = Integer.parseInt( time[1] );
+//                                    Calendar callForDate = Calendar.getInstance();
+//                                    callForDate.set( year, mounth, day, hour, min, 00 );
+//                                    callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
+//                                    SimpleDateFormat currentDate = new SimpleDateFormat( "dd-MMMM-yyyy" );
+//
+////                                        final String saveCurrentDate = currentDate.format(callForDate.getTime());
+////                                        Calendar mCalendar = new GregorianCalendar();
+////                                        mCalendar.set(year,mounth,day,hour,min,00);
+////                                        Calendar.Builder calendar=new Calendar.Builder();
+////                                        calendar.setDate(year,mounth-1,day);
+////                                        calendar.setTimeOfDay(hour,min,0);
+////                                        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+//                                    DateConverter converter = new DateConverter();
+//                                    converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
+//                                    String categorydate = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() );
+//                                    String datee = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "  " + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() );
+//                                    voiceNmae.add(datee);
+//                                    b++;
+//                                }
+//
+//
+////                                setRecycler()
+//                                ;}
+//
+//                        } catch (JSONException e) {
+//                            Log.e("onResponse error", e.toString());
+//                            SendEror.sender(RecordVoiceActivity.this, e.toString());
+//
+//                        }
+//
+//
+//                    }
+//                }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Alert.shows(context,"","please check the connection","ok","");
+//                SendEror.sender(RecordVoiceActivity.this, error.toString());
+//            }
+//
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("token", getctoken(context));
+//                return params;
+//            }
+//        };
+//        RequestQueue requestQueue = Volley.newRequestQueue(context);
+//        requestQueue.add(stringRequest);
+//    }
+//    public void setRecycler(){
+//        try {
+//
+//            recyclerViewgetvoice=(RecyclerView)findViewById(R.id.voiceRecyclerView);
+//
+//            adapter = new VoiceAdapterRecycler(voiceurl,voiceNmae, RecordVoiceActivity.this,fabremove,fab2);
+//            recyclerViewgetvoice.setAdapter(adapter);
+//            LayoutAnimationController animation =
+//                    AnimationUtils.loadLayoutAnimation(RecordVoiceActivity.this, R.anim.layout_animation_fall_down);
+//            recyclerViewgetvoice.setLayoutAnimation(animation);
+//            LinearLayoutManager layoutManager = new LinearLayoutManager(RecordVoiceActivity.this);
+//            recyclerViewgetvoice.setLayoutManager(layoutManager);
+//        }catch (Exception e){
+//            Log.e("catch", e.toString() );
+//        }
+//
+//    }
+    public void btnspicvid(View view) {
+        //TODO
+        editTextt.setVisibility( View.VISIBLE );
+        editText.setVisibility( View.VISIBLE );
+        bt.setVisibility( View.VISIBLE );
+        timePicker.setVisibility( View.VISIBLE );
+        PersianDatePickerDialog picker2 = new PersianDatePickerDialog( this )
+                .setPositiveButtonString( "باشه" )
+                .setNegativeButton( "بیخیال" )
                 //.setTypeFace(new Typeface())
-                .setActionTextColor(Color.GRAY)
-                .setListener(new Listener() {
+                .setActionTextColor( Color.GRAY )
+                .setListener( new Listener() {
                     @Override
                     public void onDateSelected(PersianCalendar persianCalendar) {
                         converter = new DateConverter();
-                        converter.persianToGregorian(persianCalendar.getPersianYear(),persianCalendar.getPersianMonth(),persianCalendar.getPersianDay());
+                        converter.persianToGregorian( persianCalendar.getPersianYear(), persianCalendar.getPersianMonth(), persianCalendar.getPersianDay() );
                       //  Toast.makeText(this, persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay(), Toast.LENGTH_SHORT).show();
                        // Datato.setText(persianCalendar.getPersianYear() + "/" + persianCalendar.getPersianMonth() + "/" + persianCalendar.getPersianDay());
 
@@ -389,13 +328,19 @@ public class RecordVoiceActivity extends AppCompatActivity {
             @RequiresApi(api = 29)
             @Override
             public void onReceive(Context context, Intent intent) {
-               // Toast.makeText(context, "file "+subpath+" downloaded ", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, "file "+subpath+" downloaded ", Toast.LENGTH_SHORT).show();
 
 
             }
         };
-        IntentFilter intentFilter=new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        this.registerReceiver(time,intentFilter);
+        IntentFilter intentFilter = new IntentFilter( DownloadManager.ACTION_DOWNLOAD_COMPLETE );
+        this.registerReceiver( time, intentFilter );
+    }
+
+    public void btnplayer(View view) {
+        Intent intent = new Intent( RecordVoiceActivity.this, Player.class );
+        startActivity( intent );
+
     }
 }
 

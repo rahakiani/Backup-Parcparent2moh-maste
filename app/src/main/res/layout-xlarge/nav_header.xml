@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="450dp"
-    android:background="@drawable/wel"
-    android:gravity="bottom"
+    android:layout_height="250dp"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
     android:theme="@style/ThemeOverlay.AppCompat.Dialog"
     android:layoutDirection="ltr">
 
-
-    <ImageView
-        android:layout_width="250dp"
-        android:layout_height="2500dp"
-        android:background="@drawable/icoon"
-        android:layout_centerInParent="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentRight="true"
-        android:textSize="30sp"
-        android:text="Kids Guard"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:background="@drawable/customborder"
-        android:textColor="#FFF" />
+        android:gravity="center"
+        android:minHeight="200dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/spacing_xsmall"
+            android:src="@drawable/ic_window"
+            android:tint="@android:color/white" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Madineh"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:layout_height="match_parent"
     tools:context=".SmsVerActivity"
-    android:background="@drawable/newone"
+    android:background="@color/grey_5"
     android:layoutDirection="ltr">
 
     <EditText

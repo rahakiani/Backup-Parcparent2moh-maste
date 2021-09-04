@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView android:elevation="12dp"
-    android:id="@+id/view3"
-    app:cardCornerRadius="40dp"
+<androidx.cardview.widget.CardView
+
+    android:elevation="12dp"
+    android:id="@+id/view22"
+    android:padding="10dp"
+    app:cardCornerRadius="10dp"
     android:layout_centerHorizontal="true"
     android:innerRadius="0dp"
     android:shape="ring"
+    app:cardBackgroundColor="#0C2E43"
+
     android:thicknessRatio="1.9"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="240dp"
+    android:layout_height="250dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_margin="30dp"
     android:layoutDirection="ltr">
 
-    <LinearLayout
+
+    <ImageView
+
+        android:id="@+id/imageVieww"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:elevation="12dp"
+        android:padding="10dp"
+
+        android:scaleType="fitXY"
+
+        />
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg2"
-        android:id="@+id/linearlayout"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        android:textColor="#FFF"
+        android:gravity="center"
+        android:fontFamily="@font/verdana"
+        android:layout_marginHorizontal="30dp"
+        android:id="@+id/txtdatee" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/whatsapp"
-            android:id="@+id/image_icon" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="icon"
-            android:layout_marginTop="20dp"
-            android:textColor="#FFF"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:id="@+id/txt_view_icoon" />
-    </LinearLayout>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/ic_tick"
+        android:id="@+id/imgcheck"
+        android:layout_marginHorizontal="15dp"
+        android:visibility="gone" />
+
+
 </androidx.cardview.widget.CardView>
-
-

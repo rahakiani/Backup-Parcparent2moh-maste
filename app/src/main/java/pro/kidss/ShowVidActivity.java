@@ -9,33 +9,41 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.MediaController;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
-
-import pro.kidss.R;
 
 public class ShowVidActivity extends AppCompatActivity {
     DownloadManager downloadManager;
     VideoView simpleVideoView;
     MediaController mediaControls;
+    CoordinatorLayout coordinatorLayout;
+
+
     Uri videoUri = Uri.parse( Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4" );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_show_vid );
+        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinator );
+
+
         File file = new File( Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4" );
         if (file.exists()) {
             file.delete();
         }
         Intent intent = getIntent();
         String path = intent.getStringExtra( "path" );
+        Log.e( "Path", path );
         downloadFile( path );
     }
     public void downloadFile(String path) {
@@ -47,7 +55,10 @@ public class ShowVidActivity extends AppCompatActivity {
         request.setDescription( "wait" );
         request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, "kidvideo.mp4" );
         long donid = downloadManager.enqueue( request );
-        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
+        ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Please Wait One Minute",
+                Snackbar.LENGTH_SHORT ) )
+                .show();
+//        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
         BroadcastReceiver time = new BroadcastReceiver() {
             @RequiresApi(api = 29)
             @Override
@@ -70,13 +81,19 @@ public class ShowVidActivity extends AppCompatActivity {
                 simpleVideoView.setOnCompletionListener( new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
-                        Toast.makeText( getApplicationContext(), "Thank You...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an video is completed
+                        ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Thank You...",
+                                Snackbar.LENGTH_SHORT ) )
+                                .show();
+//                        Toast.makeText( getApplicationContext(), "Thank You...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an video is completed
                     }
                 } );
                 simpleVideoView.setOnErrorListener( new MediaPlayer.OnErrorListener() {
                     @Override
                     public boolean onError(MediaPlayer mp, int what, int extra) {
-                        Toast.makeText( getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an error is occured while playing an video
+                        ColoredSnackbar.warning( Snackbar.make( coordinatorLayout, " Oops An Error Occur While Playing Video...!!!",
+                                Snackbar.LENGTH_SHORT ) )
+                                .show();
+//                        Toast.makeText( getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an error is occured while playing an video
                         return false;
                     }
                 } );

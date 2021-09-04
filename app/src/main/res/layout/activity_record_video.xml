@@ -1,158 +1,418 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".pictureActivity"
-    android:background="#D8D8D8"
-    android:layoutDirection="ltr">
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:contentInsetStartWithNavigation="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Toolbar.Light"
+        app:titleTextColor="@color/colorPrimary"
+        app:title="Video" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40dp">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/btncateapp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:onClick="btnShowVideo"
-            android:padding="10dp"
-            android:text="App recording"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            tools:ignore="OnClick"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_10" />
 
-            />
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nested_scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:scrollingCache="true">
 
-        <Button
-            android:id="@+id/btnscreen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:onClick="btnscreen"
-            android:visibility="visible"
-
-            android:padding="10dp"
-            android:layout_below="@+id/btncateapp"
-            android:text="Check permission"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            tools:ignore="OnClick"
-
-            />
-        <Button
-            android:id="@+id/btnShowCapturedVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custom_input"
-            android:onClick="btnShowVideo"
-            android:padding="10dp"
-            android:text="@string/showVideo"
-            android:textAllCaps="false"
-            android:textSize="17sp"
-            tools:ignore="OnClick"
-            android:layout_below="@+id/btnscreen"
-
-            />
-
-        <TextView
-            android:id="@+id/txt_videoRequest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_below="@id/btnShowCapturedVideo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/customborder"
-            android:text="@string/request_for_capture_video"
-            android:textAllCaps="false"
-            android:textColor="#000" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_videoRequest"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:id="@+id/line1">
-
-            <Button
-                android:id="@+id/btnFrontVideoCamera"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:layout_below="@+id/txt_videoRequest"
-                android:layout_marginRight="40dp"
-                android:onClick="requestFrontVideoCamera"
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:visibility="visible"
-                android:theme="@style/PrimaryFlatButton"
-                tools:ignore="OnClick"
-                android:background="@drawable/selfie"
-                android:padding="10dp" />
+                android:descendantFocusability="blocksDescendants"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_middle">
 
-            <Button
-                android:id="@+id/btnRearVideoCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:layout_below="@+id/txt_videoRequest"
-                android:layout_alignEnd="@+id/txt_videoRequest"
-                android:layout_marginTop="0dp"
-                android:onClick="requestRearVideoCamera"
-                android:visibility="visible"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_middle" />
 
-                android:textAllCaps="false"
-                android:textColor="#000"
-                android:theme="@style/PrimaryFlatButton"
-                tools:ignore="OnClick"
-                android:background="@drawable/rearcamera"
-                android:padding="10dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_middle"
+                    android:text="@string/request_for_capture_video"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Take capture in specific date"
-            android:textAllCaps="false"
-            android:layout_below="@+id/line1"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000"
-            android:visibility="visible"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            android:theme="@style/PrimaryFlatButton"
-            android:onClick="btnspicvid"
-            tools:ignore="OnClick"
-            android:background="@drawable/custom_input"
-            android:padding="10dp"
-            android:id="@+id/btnspicvid"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
 
-            />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/btnspicvid"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:id="@+id/line4"
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
 
-            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
 
+                                <ImageView
+                                    android:id="@+id/btnFrontVideoCamera"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_selfiee"
+                                    android:onClick="RequestFrontCamera"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Front camera"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
+
+                                <ImageView
+                                    android:id="@+id/btnRearVideoCamera"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+
+                                    android:onClick="requestRearCamera"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_selfie"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Rear camera"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_smlarge" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/spacing_middle"
+                    android:text="Other option"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/grey_90"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
+
+                                <ImageView
+                                    android:id="@+id/btnscreen"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_request"
+                                    android:onClick="btnscreen"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Check permission"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
+
+                                <ImageView
+                                    android:id="@+id/btncateapp"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:onClick="btnShowVideo"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_test"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="App recording"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
+
+                                <ImageView
+                                    android:id="@+id/btnShowCapturedVideo"
+                                    android:layout_width="90dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_play_button"
+                                    android:onClick="btnShowVideo"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/showVideo"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_smlarge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:clickable="true"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="@dimen/spacing_large">
+
+                                <ImageView
+                                    android:id="@+id/btnspicvid"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:layout_marginBottom="@dimen/spacing_smlarge"
+                                    android:layout_marginTop="@dimen/spacing_smlarge"
+                                    android:tint="@color/colorPrimary"
+                                    app:srcCompat="@drawable/ic_calendar__1_"
+                                    android:onClick="btnspicvid"
+                                    tools:ignore="VectorDrawableCompat" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pick Time"
+                                    android:textAlignment="center"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                    android:textColor="@color/grey_90" />
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="@color/grey_5"
+                        app:cardCornerRadius="3dp"
+                        app:cardElevation="0dp">
+
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            style="@style/RippleStyleBlack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
             <DatePicker
                 android:id="@+id/simpleDatePicker"
                 android:layout_width="match_parent"
@@ -161,53 +421,64 @@
                 android:spinnersShown="false"
                 android:alpha="0"
                 android:padding="10dp"
+                android:visibility="gone"
                 android:layout_margin="30dp" />
-
             <TimePicker
                 android:id="@+id/timePicker1"
-                android:layout_below="@+id/simpleDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/simpleDatePicker"
                 android:layout_marginTop="30dp"
                 android:alpha="0"
+                android:visibility="gone"
                 android:layout_margin="30dp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputTextPhoneReg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/timePicker1"
-                android:layout_centerHorizontal="true">
-
-                <EditText
-                    android:id="@+id/edtduration"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputTextPhoneReg"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:hint="زمان به دقیقه"
-                    android:ems="10"
-                    android:visibility="visible"
-                    android:fontFamily="@font/verdana" />
+                    android:visibility="gone"
+                    android:layout_below="@+id/timePicker1"
+                    android:layout_centerHorizontal="true">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <EditText
+                        android:id="@+id/edtduration"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/inputTextPhoneReg"
-                android:onClick="btnsenddate"
-                tools:ignore="OnClick"
-                android:theme="@style/PrimaryFlatButton"
-                android:background="#F1BE06"
-                android:padding="5dp"
-                android:text="Record"
-                android:textAllCaps="false"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:alpha="0"
-                android:id="@+id/btnrec" />
+                        android:hint="زمان به دقیقه"
+                        android:ems="10"
+                        android:visibility="gone"
+                        android:fontFamily="@font/verdana" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </RelativeLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputTextPhoneReg"
+                    android:onClick="btnsenddate"
+                    tools:ignore="OnClick"
+                    android:theme="@style/PrimaryFlatButton"
+                    android:background="@drawable/btn_rounded_primary"
+                    android:padding="5dp"
+                    android:text="R e c o r d"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="20dp"
+                    android:alpha="0"
+                    android:id="@+id/btnrec" />
+
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
     </RelativeLayout>
 
-</ScrollView>
+
+</LinearLayout>

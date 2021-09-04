@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,9 +34,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class VideoCategoryActivity extends AppCompatActivity {
@@ -48,16 +52,25 @@ public class VideoCategoryActivity extends AppCompatActivity {
     ArrayList<String> imageUrlList = new ArrayList<String>();
     ArrayList<String> ids = new ArrayList<String>();
     ArrayList<String> Type = new ArrayList<String>();
+    ArrayList<String> dating = new ArrayList<String>();
     ProgressDialog progressDialog;
     FloatingActionButton fabremove;
-    RecyclerviewImage dataAdapter;
+    //    RecyclerviewImage dataAdapter;
+    RecyclerviewVidcat dataAdapter;
+    ;
     private SwipeRefreshLayout swpref;
+    ArrayList<MsinData> dataList = new ArrayList<>();
+    CoordinatorLayout coordinatorLayout;
+    List<String> distincmsindata;
+    Roomdb roomdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         dialog1 = new Dialog( this );
         setContentView( R.layout.activity_video_category );
+        roomdb = Roomdb.getInstance( this );
+        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinatorr );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
         swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -91,19 +104,88 @@ public class VideoCategoryActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e( "Ex32123", response );
                         try {
-                            dialog1.dismiss();
+
                             JSONObject vidobject = new JSONObject( response );
                             if (vidobject.has( "token" )) {
+
                                 JSONArray viduri = vidobject.getJSONArray( "VideoAddress" );
                                 JSONArray Typearray = vidobject.getJSONArray( "Type" );
+                                JSONArray datearray = vidobject.getJSONArray( "Date" );
                                 int i = 0;
                                 while (i < viduri.length()) {
-                                    if (!Type.contains( Typearray.getString( i ) )) {
-                                        Type.add( Typearray.getString( i ) );
-                                        imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
-                                        //dating.add("");
+                                    String[] address = viduri.getString( i ).split( "A" );
+                                    String typee = Typearray.getString( i ).toString();
+                                    String[] all = datearray.getString( i ).split( "T" );
+                                    String[] date = all[0].split( "-" );
+                                    int year = Integer.parseInt( date[0] );
+                                    int mounth = Integer.parseInt( date[1] );
+                                    int day = Integer.parseInt( date[2] );
+                                    String[] time = all[1].split( ":" );
+                                    int hour = Integer.parseInt( time[0] );
+                                    int min = Integer.parseInt( time[1] );
+                                    Calendar callForDate = Calendar.getInstance();
+                                    callForDate.set( year, mounth, day, hour, min, 00 );
+                                    callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
+                                    java.text.SimpleDateFormat currentDate = new java.text.SimpleDateFormat( "dd-MMMM-yyyy" );
+
+                                    DateConverter converter = new DateConverter();
+                                    converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
+                                    String thisdate = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() );
+//                                    dating.addAll( Arrays.asList(datearray.getString(i).split("T")));
+
+//                                    if (!Type.contains( Typearray.getString( i ) )) {
+                                    dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "\n" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
+                                    Log.e( "DATEING", dating.toString() );
+//                                        String datee = dating.get( i ).toString();
+
+
+                                    Type.add( Typearray.getString( i ) );
+                                    imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
+
+                                    if (roomdb.mainDao().checkaddress( "https://im.kidsguard.ml" + viduri.getString( i ) ) == 0) {
+                                        MsinData data = new MsinData( "https://im.kidsguard.ml" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ) );
+                                        roomdb.mainDao().insert( data );
+
+                                        dataList.add( data );
                                         ids.add( "" );
+                                        Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
+                                        dialog1.dismiss();
+                                    } else {
+                                        Log.e( "DDDD", "FFFF" );
+                                        dialog1.dismiss();
+//                                            dataList.addAll( roomdb.mainDao().getall() );
                                     }
+
+//                                        switch (roomdb.mainDao().checkaddress(imageUrlList.toString())){
+//                                            case 0:
+////                                                switch (roomdb.mainDao().checkdate(datee.toString())){
+////                                                    case 0:
+////
+////                                                    default:
+////                                                        Log.e("JJJJJ","FFFF");
+////
+////
+////                                                }
+//                                                MsinData data = new MsinData(imageUrlList.toString(), 0, 0,datee.toString());
+//                                                roomdb.mainDao().insert(data);
+//                                                dataList.add(data);
+//                                                Log.e("DDDD",roomdb.mainDao().getall().toString());
+//
+//                                            default:
+//                                                Log.e("DDDD","FFFF");
+//
+//
+//
+//                                        }
+//
+//
+////                                            MsinData data = new MsinData(imageUrlList.toString(), 0, 0);
+////                                            roomdb.mainDao().insert(data);
+//                                            //dating.add("");
+//                                            ids.add("");
+//
+//                            }
+                                    //dating.add("");
                                     i++;
                                 }
 //                                JSONArray datearray=vidobject.getJSONArray("Date");
@@ -130,10 +212,12 @@ public class VideoCategoryActivity extends AppCompatActivity {
 //                                    dating.add(String.valueOf(converter.getYear()+"/"+converter.getMonth()+"/"+converter.getDay()+"\n"+calendar.build().getTime().getHours()+":"+calendar.build().getTime().getMinutes()+":"+calendar.build().getTime().getSeconds()));
 //                                    b++;
 //                                }
+                                Log.e( "DATALIST", dataList.toString() );
+                                distincmsindata = roomdb.mainDao().gettyper();
                                 recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
                                 gridLayoutManager = new GridLayoutManager( getApplicationContext(), 2 );
                                 recyclerView.setLayoutManager( gridLayoutManager );
-                                dataAdapter = new RecyclerviewImage( imageUrlList, VideoCategoryActivity.this, "vidcate", fabremove, ids, Type );
+                                dataAdapter = new RecyclerviewVidcat( imageUrlList, VideoCategoryActivity.this, fabremove, ids, Type, distincmsindata, dataList );
                                 recyclerView.setAdapter( dataAdapter );
                             }
                         } catch (JSONException e) {

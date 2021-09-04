@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ChildActivity"
-    android:background="@drawable/icoon">
+    android:background="@drawable/ic_window">
 
     <Button
         android:layout_width="wrap_content"

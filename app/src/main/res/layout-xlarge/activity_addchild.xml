@@ -5,63 +5,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     android:gravity="center"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="@drawable/newone"
+    android:background="@color/grey_5"
     android:layoutDirection="ltr">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/hintchildName"
-        android:textColor="#FFFF"
-        android:textSize="25sp"
-        android:background="@drawable/customborder"
-        android:drawableEnd="@drawable/ic_baseline_person_add_24" />
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:gravity="center">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="200dp"
-        android:id="@+id/relativeid">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/inputTextedttitle"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:alpha=".5"
-            android:layout_marginTop="80dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:onClick="edttitle"
-            tools:ignore="OnClick"
-            app:boxBackgroundMode="filled"
-            app:boxStrokeWidth="0dp"
-            app:hintTextColor="#FFF"
-            app:startIconTint="#FFF"
-            app:endIconTint="#FFFF">
+            android:text="ADD CHILD"
+            android:textColor="@color/grey_900"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:fontFamily="serif" />
 
-            <EditText
-                android:id="@+id/edtChildName"
-                android:layout_width="400dp"
-                android:layout_height="80dp"
-                android:inputType="textAutoComplete"
-                android:hint="@string/name"
-                android:textColorHint="#000"
-                android:textSize="26dp"
-                android:textColor="#000"
-                android:ems="10"
-                android:fontFamily="@font/verdana"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:background="@drawable/custom_input" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
+            android:inputType="text"
+            android:id="@+id/edtChildName"
+            android:maxLength="50"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="#0288D1"
+            android:textStyle="bold"
+            android:theme="@style/EditText.Grey" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_mlarge" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/inputTextedtText"
@@ -73,49 +60,58 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
             android:onClick="edtText"
+
             tools:ignore="OnClick">
 
-
         </com.google.android.material.textfield.TextInputLayout>
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="241dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtCodeAddchild"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/relativeid"
-        android:layout_centerInParent="true"
-        android:textSize="26dp"
-        tools:ignore="NotSibling"
-        android:gravity="center_horizontal" />
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtCodeAddchild"
-        app:layout_marginTopPercent="1%"
-        android:text="@string/btnAddChild"
-        android:textSize="27dp"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClickAddChild"
-        android:theme="@style/PrimaryFlatButton"
-        android:textAllCaps="false"
-        android:id="@+id/btnt" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnt"
-        android:layout_marginTop="100dp"
-        android:text="@string/dlapp"
-        android:layout_centerHorizontal="true"
-        android:onClick="btndl"
-        android:drawableEnd="@drawable/ic_downloadd"
-        android:theme="@style/PrimaryFlatButton"
-        android:textAllCaps="false"
-        android:textSize="27dp" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_mlarge" />
 
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
+            android:background="@drawable/btn_rounded_primary"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+
+            android:layout_marginTop="10dp"
+            android:text="@string/btnAddChild"
+            android:id="@+id/btnAddKidd"
+            android:layout_centerHorizontal="true"
+            android:onClick="onClickAddChild"
+            android:theme="@style/PrimaryFlatButton" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/spacing_mlarge" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:padding="10dp"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
+            android:background="@drawable/btn_rounded_primary"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+
+            android:layout_marginTop="10dp"
+            android:text="@string/dlapp"
+
+            android:layout_centerHorizontal="true"
+
+            android:theme="@style/PrimaryFlatButton"
+
+
+            android:textAllCaps="false"
+            android:onClick="btndl" />
+
+    </LinearLayout>
 </LinearLayout>

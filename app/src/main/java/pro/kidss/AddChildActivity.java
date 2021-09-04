@@ -3,11 +3,13 @@ package pro.kidss;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,18 +29,18 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import pro.kidss.R;
-
 public class AddChildActivity extends AppCompatActivity {
-
-    EditText etChildName, etIMEI;
+    TextInputEditText etChildName;
+    EditText etIMEI;
     String activity;
+    private View parent_view;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_addchild );
+        parent_view = findViewById( android.R.id.content );
         activity = "";
         Intent intent = getIntent();
         activity = intent.getStringExtra( "activity" );
@@ -47,14 +51,66 @@ public class AddChildActivity extends AppCompatActivity {
 
     //onClick attribute for Button AddChild
     public void onClickAddChild(View view) {
+        submitForm();
         add( AddChildActivity.this, "", etChildName.getText().toString() );
 
         // input here codes
     }
 
+    private void submitForm() {
+        if (!validatePhone()) {
+            return;
+        }
+
+    }
+
+    private boolean validatePhone() {
+        if (etChildName.getText().toString().trim().isEmpty()) {
+            snackBarIconError();
+            return false;
+        } else {
+            snackBarIconSuccess();
+
+        }
+        return true;
+    }
+
+    private void snackBarIconSuccess() {
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Success!" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_done );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.green_500 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
+    }
+
+
+    private void snackBarIconError() {
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please check Child name" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.red_600 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
+    }
+
     //findView method for input and populate all elements
     public void findView() {
-        etChildName = (EditText) findViewById( R.id.edtChildName );
+        etChildName = (TextInputEditText) findViewById( R.id.edtChildName );
 
 
     }
@@ -79,7 +135,7 @@ public class AddChildActivity extends AppCompatActivity {
                                     break;
                                 default:
                                     String message = jsonlogin.getString( "message" );
-                                    Toast.makeText( AddChildActivity.this, message, Toast.LENGTH_LONG ).show();
+//                                    Toast.makeText( AddChildActivity.this, message, Toast.LENGTH_LONG ).show();
                                     SendEror.sender( AddChildActivity.this, message.toString() );
                                     break;
 
@@ -94,7 +150,8 @@ public class AddChildActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText( context, "please check the connection", Toast.LENGTH_LONG ).show();
+                snackBarIconError();
+//                Toast.makeText( context, "please check the connection", Toast.LENGTH_LONG ).show();
                 SendEror.sender( AddChildActivity.this, error.toString() );
             }
 
@@ -121,7 +178,7 @@ public class AddChildActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent intent = getIntent();
         if (intent.getStringExtra( "activity" ).isEmpty()) {
-            Toast.makeText( this, "is empty", Toast.LENGTH_LONG ).show();
+            snackBarIconError();
             super.onBackPressed();
         } else {
             if (intent.getStringExtra( "activity" ).equals( "child1" )) {

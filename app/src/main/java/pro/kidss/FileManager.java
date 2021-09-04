@@ -39,14 +39,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import pro.kidss.R;
 import pro.kidss.model.DataClass;
 
 public class FileManager extends AppCompatActivity implements DataModel.OnGetResponse {
     CheckBox checkBox;
-    Button button;
+    TextView button;
     Button accept;
-    Button updatepage;
+    TextView updatepage;
     TextView messageTv, titleTv, timer;
     ImageView close;
 
@@ -63,9 +62,9 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
         setContentView( R.layout.activity_file_manager );
        // Toast.makeText(this, "File manager", Toast.LENGTH_SHORT).show();
         dialog = new Dialog( this );
-        updatepage = (Button) findViewById( R.id.updatefile );
+        updatepage = (TextView) findViewById( R.id.updatefile );
         cardView = findViewById( R.id.cardviewfile );
-        button = (Button) findViewById( R.id.bt_send );
+        button = (TextView) findViewById( R.id.bt_send );
         recyclerView = (RecyclerView) findViewById( R.id.recyclerView_List );
        // parsDataa( FileManager.this );
        // recyclerView.setLayoutManager( new LinearLayoutManager( this ) );

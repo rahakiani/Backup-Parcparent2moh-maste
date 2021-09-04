@@ -8,27 +8,37 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import pro.kidss.R;
-
 public class Main2Activity extends AppCompatActivity {
     Dialog dialog;
     Button accept, no;
     TextView messageTv, titleTv;
-    ImageView close;
+    ImageView image;
+    RelativeLayout relativeLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main2 );
         dialog = new Dialog( this );
+        image = findViewById( R.id.imgb );
         ShowQues();
+        image.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( Main2Activity.this, LoginActivity.class );
+                startActivity( intent );
+            }
+        } );
 //        AlertDialog.Builder alertClose = new AlertDialog.Builder( Main2Activity.this );
 //        alertClose.setTitle( R.string.Privacy ).
 //                setMessage( R.string.privacytwo ).
@@ -49,13 +59,14 @@ public class Main2Activity extends AppCompatActivity {
     }
 
     private void ShowQues() {
-        dialog.setContentView( R.layout.question_alert );
-        titleTv = (TextView) dialog.findViewById( R.id.title_ques );
+        dialog.requestWindowFeature( Window.FEATURE_NO_TITLE );
+        dialog.setContentView( R.layout.policedialog );
+        dialog.setCancelable( true );
 
-        accept = (Button) dialog.findViewById( R.id.bt_quest_yes );
-        no = (Button) dialog.findViewById( R.id.bt_quest_no );
-        messageTv = (TextView) dialog.findViewById( R.id.messaage_ques );
-        titleTv.setText( R.string.Privacy );
+
+        accept = (Button) dialog.findViewById( R.id.bt_accept );
+        no = (Button) dialog.findViewById( R.id.bt_decline );
+        messageTv = (TextView) dialog.findViewById( R.id.tv_content );
         messageTv.setText( R.string.privacytwo );
         no.setText( R.string.privacthree );
         no.setOnClickListener( new View.OnClickListener() {
@@ -83,10 +94,6 @@ public class Main2Activity extends AppCompatActivity {
         startActivity( launchBrowser );
     }
 
-    public void btparent(View view) {
-        Intent intent = new Intent( Main2Activity.this, MainActivity.class );
-        startActivity( intent );
-    }
 
     public void btchild(View view) {
         AlertDialog.Builder alertClose = new AlertDialog.Builder( Main2Activity.this );

@@ -7,7 +7,7 @@
     tools:context=".PhoneLockActivity"
     android:orientation="vertical"
 
-    android:background="@drawable/newone">
+    android:background="@color/grey_5">
 
     <LinearLayout
         android:layout_width="match_parent"

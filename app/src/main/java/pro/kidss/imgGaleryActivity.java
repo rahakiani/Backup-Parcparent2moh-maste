@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,26 +36,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import pro.kidss.R;
-
 public class imgGaleryActivity extends AppCompatActivity {
-    ArrayList<String> img=new ArrayList<String>();
-    ArrayList<String> ids=new ArrayList<String>();
-    ArrayList<String> dating=new ArrayList<String>();
+    ArrayList<String> img = new ArrayList<String>();
+    ArrayList<String> ids = new ArrayList<String>();
+    ArrayList<String> dating = new ArrayList<String>();
+    ArrayList<String> Type = new ArrayList<String>();
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
     ProgressDialog progressDialog;
     FloatingActionButton removefab;
     RecyclerviewImage dataAdapter;
     private SwipeRefreshLayout swpref;
+    ArrayList<MsinData> dataList = new ArrayList<>();
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_img_galery);
-        removefab=(FloatingActionButton)findViewById(R.id.fab);
-        swpref=(SwipeRefreshLayout)findViewById(R.id.swpref);
-        swpref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_img_galery );
+        removefab = (FloatingActionButton) findViewById( R.id.fab );
+        swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
+        swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 finish();
@@ -186,9 +188,9 @@ public class imgGaleryActivity extends AppCompatActivity {
 //                                Log.e("onResponse", img.get(i));
                                     recyclerView = (RecyclerView) findViewById(R.id.imgrecyclerView);
                                     gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-                                    recyclerView.setLayoutManager(gridLayoutManager);
-                                    dataAdapter = new RecyclerviewImage(img, imgGaleryActivity.this,"img",removefab,ids,dating);
-                                    recyclerView.setAdapter(dataAdapter);
+                                recyclerView.setLayoutManager( gridLayoutManager );
+                                dataAdapter = new RecyclerviewImage( img, imgGaleryActivity.this, "img", removefab, ids, dating, dataList );
+                                recyclerView.setAdapter( dataAdapter );
                         }
 
 

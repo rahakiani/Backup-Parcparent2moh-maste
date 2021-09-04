@@ -9,23 +9,36 @@
         <item
             android:id="@+id/nav_addChild"
             android:icon="@drawable/ic_addchilds"
-            android:title="Add kids" />
+            android:title="Add kids"
+            android:iconTint="#FFF" />
         <item
             android:id="@+id/nav_otherChild"
             android:icon="@drawable/ic_chooseotherkid"
-            android:title="My kids" />
+            android:title="My kids"
+            android:iconTint="#FFF" />
         <item
-            android:id="@+id/nav_aboutApp"
-            android:icon="@drawable/ic_android"
-            android:title="About app" />
+            android:id="@+id/Albums"
+            android:icon="@drawable/ic_saved"
+            android:title="Saved"
+            android:iconTint="#FFF" />
+
         <item
             android:id="@+id/Contact_us"
             android:title="Contact us"
+            android:iconTint="#FFF"
             android:icon="@drawable/ic_baseline_contact_mail_24" />
+
         <item
+            android:id="@+id/nav_aboutApp"
+            android:icon="@drawable/ic_infoo"
+            android:title="About app"
+
+            />
+        <item
+
             android:id="@+id/nav_Exit"
             android:icon="@drawable/ic_exit"
-            android:title="Exit" />
+            android:title="Log out" />
 
 
     </group>

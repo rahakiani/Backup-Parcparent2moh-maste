@@ -6,40 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".AboutAppActivity"
     android:layout_gravity="center"
-    android:background="@drawable/newone"
+    android:background="@color/colorPrimary"
     android:layoutDirection="ltr">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/txtdescapp"
-        android:textColor="#fff"
-        android:textSize="44dp"
-        android:text="Kids Guard"
-        app:layout_marginTopPercent="7%"
-        android:fontFamily="@font/scriptmtbold" />
-
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_centerHorizontal="true"
-        app:layout_marginTopPercent="15%"
-        app:layout_marginRightPercent="13%">
+        app:elevation="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtTeamapp"
-            android:gravity="left"
-            android:layout_centerHorizontal="true"
-            android:textSize="20dp"
-            android:fontFamily="@font/verdana"
-            android:textColor="#fff"
-            android:lineSpacingExtra="10dp" />
-    </ScrollView>
+        <include layout="@layout/toolbar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/spacing_xlarge"
+            android:paddingBottom="?attr/actionBarSize"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Madineh App"
+                android:id="@+id/txtdescapp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@android:color/white"
+                app:fontFamily="sans-serif-light" />
+
+            <View
+                android:layout_width="170dp"
+                android:layout_height="3dp"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:background="@android:color/white" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_large" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                app:layout_marginRightPercent="13%"
+                app:layout_marginTopPercent="15%">
+
+                <TextView
+                    android:id="@+id/txtTeamapp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/verdana"
+                    android:gravity="left"
+                    android:lineSpacingExtra="10dp"
+                    android:textColor="#fff"
+                    android:textSize="20dp" />
+            </ScrollView>
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </androidx.percentlayout.widget.PercentRelativeLayout>

@@ -105,7 +105,7 @@
                  "الموقع. \ n" +
                  "يمكنك الوصول إلى هاتف طفلك بنقرة واحدة فقط. \ n" +
                  "يمكنك استخدام هذا التطبيق لأطفالك الآخرين بتعليماتنا: \ n" +
-                 "1. أضف طفلك إلى صفحة" إضافة طفل "وإذا لم يكن لديك تطبيق Kids Guard KD ، فقم بتنزيله وتثبيته على جهاز أطفالك \ n" +
+                 "1. أضف طفلك إلى صفحة" إضافة طفل "وإذا لم يكن لديك تطبيق Madineh KD ، فقم بتنزيله وتثبيته على جهاز أطفالك \ n" +
                  "2.استخدم الرمز أو IMEI لتنشيط جهاز الطفل مع كل عنصر تريد التحقق منه \ n" +
                  3. افتح التطبيق واختر اسم ابنك من قائمة أطفالك \ n "+
                  "4.استخدم الخيارات التي اخترتها بالفعل \ n" +</string>
@@ -143,7 +143,7 @@
     <string name="privacthree">دراسة سياسة الخصوصية</string>
     <string name="privfour">لقد درست</string>
     <string name="Warnning">تحذير</string>
-    <string name="plsdown">يرجى تنزيل Kids Guard [للأطفال] من Google play</string>
+    <string name="plsdown">يرجى تنزيل Madineh [للأطفال] من Google play</string>
     <string name="down">تحميل</string>
     <string name="sms">SMS</string>
     <string name="contacts">Contacts</string>

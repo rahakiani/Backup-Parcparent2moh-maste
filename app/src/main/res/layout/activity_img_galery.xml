@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
-        android:background="@drawable/newone">
+        android:background="#fff">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,7 +30,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/onee"
                 android:layout_marginLeft="10dp"
+
                 android:layout_marginBottom="10dp"
+                app:backgroundTint="@color/colorPrimary"
+                android:tint="@android:color/white"
+                app:rippleColor="@android:color/white"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="-2dp"
                 android:layout_marginEnd="10dp"
@@ -59,9 +63,12 @@
                 android:layout_below="@+id/imgrecyclerView"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentEnd="true"
+                app:backgroundTint="@color/colorPrimary"
                 android:layout_marginTop="-2dp"
                 android:layout_marginEnd="10dp"
                 android:scrollbars="vertical"
+                android:tint="@android:color/white"
+                app:rippleColor="@android:color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dp"
                 android:src="@drawable/ic_upp"

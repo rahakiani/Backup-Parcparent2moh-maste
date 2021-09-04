@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@drawable/backgradiant"
+
     android:layoutDirection="ltr">
 
     <androidx.cardview.widget.CardView
@@ -16,8 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
+        android:id="@+id/card"
         android:alpha=".8"
-        app:cardBackgroundColor="#11BDD1"
+        app:cardBackgroundColor="@color/colorPrimary"
         android:layoutDirection="ltr">
 
         <LinearLayout
@@ -33,6 +33,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
+                    android:padding="5dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
@@ -41,59 +42,58 @@
                         android:fontFamily="@font/scriptmtbold"
                         android:textSize="24sp"
                         android:textStyle="bold"
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/kids_list" />
 
                     <LinearLayout
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_marginTop="10dp"
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:text="20 "
+                            android:layout_marginTop="30dp"
+                            android:gravity="center"
+                            android:textColor="#FFF"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/recent_shows"
+                            android:layout_marginTop="30dp"
+                            android:textColor="#FFF"
+                            android:gravity="center"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:fontFamily="serif" />
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="20 "
-                                android:layout_marginTop="30dp"
-                                android:gravity="center"
-                                android:textColor="#FFF"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                android:fontFamily="serif" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/recent_shows"
-                                android:layout_marginTop="30dp"
-                                android:textColor="#FFF"
-                                android:gravity="center"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                android:fontFamily="serif" />
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:padding="1dp"
+                            android:layout_height="wrap_content">
 
                             <ImageView
-
-                                android:layout_width="150dp"
-                                android:layout_height="150dp"
-                                android:src="@drawable/kidd"
-                                android:padding="20dp"
+                                android:layout_width="100dp"
+                                android:padding="15dp"
+                                android:layout_alignParentEnd="true"
+                                android:paddingRight="10dp"
+                                android:layout_height="100dp"
                                 android:background="@drawable/custom_borde"
+                                android:src="@drawable/kidd"
                                 android:layout_marginBottom="15dp"
-                                android:layout_marginStart="600dp"
-
-
+                                android:layout_marginRight="20dp"
+                                android:layout_marginStart="125dp"
                                 android:layout_gravity="end" />
-                        </LinearLayout>
+                        </RelativeLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -104,36 +104,102 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/recyclerViewGetChild"
-        android:layoutAnimation="@anim/layout_animation_fall_down"
-        android:scrollbars="vertical"
-
-        />
-
-    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/card"
+        android:scrollbars="vertical"
+        android:scrollingCache="true" />
+
+    <View
+        android:id="@+id/back_drop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/overlay_dark_30"
+        android:clickable="true"
+        android:fitsSystemWindows="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="end|right"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lyt_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end|right"
+                android:layout_margin="@dimen/spacing_middle"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="2dp"
+                app:contentPadding="@dimen/spacing_medium">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Add Child"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_middle"
+                android:layout_marginLeft="@dimen/spacing_smlarge"
+                android:layout_marginRight="@dimen/spacing_smlarge"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:clickable="true"
+                android:tint="@color/grey_80"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="mini"
+                app:rippleColor="@android:color/black"
+                app:srcCompat="@drawable/ic_addchild"
+                tools:ignore="VectorDrawableCompat" />
+
+            <View
+                android:layout_width="@dimen/spacing_xmedium"
+                android:layout_height="0dp" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="@dimen/spacing_xmedium"
+            android:layout_height="0dp" />
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="36dp"
-            android:elevation="6dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_add"
-            app:rippleColor="@color/colorPrimary"
+            android:layout_marginBottom="@dimen/spacing_middle"
+            android:layout_marginLeft="@dimen/spacing_smlarge"
+            android:layout_marginRight="@dimen/spacing_smlarge"
+            android:layout_marginTop="@dimen/spacing_middle"
             android:clickable="true"
-            android:background="@color/colorPrimary"
+            android:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabSize="normal"
+            app:rippleColor="@android:color/white"
+            app:srcCompat="@drawable/ic_add"
+            tools:ignore="VectorDrawableCompat" />
+    </LinearLayout>
 
-            android:focusable="true" />
+
+</RelativeLayout>
 
 
-    </RelativeLayout>
-
-</LinearLayout>

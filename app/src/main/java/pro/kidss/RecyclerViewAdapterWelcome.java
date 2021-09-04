@@ -43,8 +43,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-import pro.kidss.R;
-
 public class RecyclerViewAdapterWelcome extends RecyclerView.Adapter<RecyclerViewAdapterWelcome.ViewHolder> {
     ProgressDialog dialog = null;
     Intent i;
@@ -84,51 +82,51 @@ public class RecyclerViewAdapterWelcome extends RecyclerView.Adapter<RecyclerVie
         ImageView aboveIcon = (ImageView) cardView.findViewById( R.id.ivIconWelcome );
         TextView Onvan = (TextView) cardView.findViewById( R.id.Readonvan );
 
-        switch (position) {
-            case 0:
-                aboveIcon.setImageResource( R.drawable.chatchat );
-                Onvan.setText( R.string.readsms );
-                break;
-            case 1:
-                aboveIcon.setImageResource( R.drawable.concon );
-                Onvan.setText( R.string.readcontact );
-                break;
-            case 2:
-                aboveIcon.setImageResource( R.drawable.teletele );
-                Onvan.setText( R.string.readphone );
-                break;
-
+//        switch (position) {
+//            case 0:
+//                aboveIcon.setImageResource( R.drawable.chatchat );
+//                Onvan.setText( R.string.readsms );
+//                break;
+//            case 1:
+//                aboveIcon.setImageResource( R.drawable.concon );
+//                Onvan.setText( R.string.readcontact );
+//                break;
+//            case 2:
+//                aboveIcon.setImageResource( R.drawable.teletele );
+//                Onvan.setText( R.string.readphone );
+//                break;
+//
+////            case 3:
+////                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_apps_black);
+////                break;
+////            case 4:
+////                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_phone_locked_black);
+////                break;
+////            case 5:
+////                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_block_black);
+////                break;
 //            case 3:
-//                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_apps_black);
+//                aboveIcon.setImageResource( R.drawable.camcam );
+//                Onvan.setText( R.string.readcamera );
 //                break;
 //            case 4:
-//                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_phone_locked_black);
+//                aboveIcon.setImageResource( R.drawable.mapmap );
+//                Onvan.setText( R.string.readmaps );
 //                break;
 //            case 5:
-//                aboveIcon.setImageResource(pro.kidss.R.drawable.ic_block_black);
+//                aboveIcon.setImageResource( R.drawable.vidcalvidcal );
+//                Onvan.setText( R.string.readvidcal );
+//
 //                break;
-            case 3:
-                aboveIcon.setImageResource( R.drawable.camcam );
-                Onvan.setText( R.string.readcamera );
-                break;
-            case 4:
-                aboveIcon.setImageResource( R.drawable.mapmap );
-                Onvan.setText( R.string.readmaps );
-                break;
-            case 5:
-                aboveIcon.setImageResource( R.drawable.vidcalvidcal );
-                Onvan.setText( R.string.readvidcal );
-
-                break;
-            case 6:
-                aboveIcon.setImageResource( R.drawable.spospo );
-                Onvan.setText( R.string.readvoice );
-                break;
-            case 7:
-                aboveIcon.setImageResource( R.drawable.filemanager );
-                Onvan.setText( "View FileManager" );
-
-        }
+//            case 6:
+//                aboveIcon.setImageResource( R.drawable.spospo );
+//                Onvan.setText( R.string.readvoice );
+//                break;
+//            case 7:
+//                aboveIcon.setImageResource( R.drawable.filemanager );
+//                Onvan.setText( "View FileManager" );
+//
+//        }
 
         LinearLayout linearLayout = (LinearLayout) cardView.findViewById( R.id.welcomeLayout );
         linearLayout.setOnClickListener( new View.OnClickListener() {

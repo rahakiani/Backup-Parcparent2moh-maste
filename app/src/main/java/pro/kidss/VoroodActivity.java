@@ -9,8 +9,6 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import pro.kidss.R;
-
 public class VoroodActivity extends AppCompatActivity {
     int activity;
 
@@ -30,6 +28,7 @@ public class VoroodActivity extends AppCompatActivity {
             activity = 2;
 
         }
+
         Handler handler = new Handler();
         handler.postDelayed( new Runnable() {
             @Override
@@ -38,7 +37,7 @@ public class VoroodActivity extends AppCompatActivity {
                     CtokenDataBaseManager ctoken = new CtokenDataBaseManager( VoroodActivity.this );
                     if (ctoken.getctoken().equals( "12" )) {
                         Log.e( "KIDDd", getctoken( VoroodActivity.this ) );
-                        Intent intent = new Intent( VoroodActivity.this, Main2Activity.class );
+                        Intent intent = new Intent( VoroodActivity.this, HelpingActivity.class );
                         startActivity( intent );
                     } else {
                         Log.e( "KIDDd", getctoken( VoroodActivity.this ) );
@@ -47,7 +46,7 @@ public class VoroodActivity extends AppCompatActivity {
                     }
                 } else {
                     Log.e( "KIDDd", getctoken( VoroodActivity.this ) );
-                    Intent intent = new Intent( VoroodActivity.this, Main2Activity.class );
+                    Intent intent = new Intent( VoroodActivity.this, HelpingActivity.class );
                     startActivity( intent );
                 }
             }

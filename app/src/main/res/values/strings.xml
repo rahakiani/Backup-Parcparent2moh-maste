@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kids Guard</string>
+    <string name="app_name">Madineh</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -15,7 +15,7 @@
     <string name="showVideo">Show captured video</string>
     <string name="btnphoto">show the requested picture</string>
     <string name="err_phone">Please enter your username</string>
-    <string name="err_email">Please enter valid email</string>
+    <string name="err_email">Please enter your email</string>
     <string name="err_password">Please enter password</string>
     <string name="hinttitle">Please enter title....</string>
     <string name="hinttext">Please enter text....</string>
@@ -75,7 +75,7 @@
     <string name="labalePhoneLock">Lock Phone</string>
     <string name="labalePicture">Picture</string>
     <string name="labaleProfile">Profile</string>
-    <string name="labaleWelco">Kids Guard</string>
+    <string name="labaleWelco">Madineh</string>
     <!-- structure-->
     <string name="title">Structure for using Application</string>
     <string name="teamdescbutton">View Site</string>
@@ -92,10 +92,10 @@
     <string name="request_for_record_voice">Request for record voice</string>
     <string name="record_voice">Record voice</string>
     <string name="play_voice_of_your_kid_device">Play voice of your kid device</string>
-    <string name="add_kid_code_explain">If you want to activate your kid\'s cellphone you\'ve added on the previous page, you should enter the above code on kids guard application that has installed on your kid\'s device otherwise, you won\'t access your kid\'s information</string>
+    <string name="add_kid_code_explain">If you want to activate your kid\'s cellphone you\'ve added on the previous page, you should enter the above code on Madineh application that has installed on your kid\'s device otherwise, you won\'t access your kid\'s information</string>
     <string name="change_language">change language</string>
     <string name="choose_who_will_use_the_device">choose who will use the device</string>
-    <string name="kids_guard">Kids Guard</string>
+    <string name="kids_guard">Madineh</string>
     <string name="assign_this_device_to_a_kid">Assign this device to a kid</string>
     <string name="parent_mode">Parent Mode</string>
     <string name="kid_mode">Kid Mode</string>
@@ -105,7 +105,7 @@
                 "location.\n"
                 "You can access your kid's phone by just one click.\n"
                 "You can use this app for your other kids with our instruction:\n"
-                "1.Add your kid in add kid page and if you don’t have Kids Guard KD app download and install it on your kids' device\n"
+                "1.Add your kid in add kid page and if you don’t have Madineh KD app download and install it on your kids' device\n"
                 "2.Use the code or IMEI to activate the kid's device with every item you want to check it \n"
                 "3.Open th is app and choose your kid name form your kids' list\n"
                 "4.Use the options that you had already chosen \n "
@@ -145,7 +145,7 @@
     <string name="privacthree">Studying Privacy Policy</string>
     <string name="privfour">I have Studied</string>
     <string name="Warnning">Warnning</string>
-    <string name="plsdown">Please download Kids Guard[for kids] from Google play</string>
+    <string name="plsdown">Please download Madineh[for kids] from Google play</string>
     <string name="down">Download</string>
     <string name="sms">SMS</string>
     <string name="contacts">Contacts</string>
@@ -155,6 +155,8 @@
     <string name="takevid">Take Video</string>
     <string name="takevoice">Take Voice</string>
     <string name="filemanage">File Manager</string>
+    <string name="GOT_IT">GOT IT</string>
+    <string name="NEXT">NEXT</string>
 
 
 </resources>

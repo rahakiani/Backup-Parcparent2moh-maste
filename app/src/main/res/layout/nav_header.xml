@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:background="@drawable/backgradiant"
-    android:gravity="bottom"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
     android:theme="@style/ThemeOverlay.AppCompat.Dialog"
     android:layoutDirection="ltr">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/wel"
-        android:gravity="bottom"
-        android:theme="@style/ThemeOverlay.AppCompat.Dialog">
-
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="200dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
         <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/icoon"
+            android:id="@+id/image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="@dimen/spacing_xsmall"
+            android:src="@drawable/ic_window"
+            android:tint="@android:color/white" />
 
-            android:layout_centerInParent="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginRight="10dp"
-            android:layout_alignParentRight="true"
-            android:text="Kids Guard"
+            android:text="Madineh"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
-            android:background="@drawable/customborder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="#FFFDFD" />
-
-    </RelativeLayout>
-</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

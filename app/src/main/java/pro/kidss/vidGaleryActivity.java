@@ -3,7 +3,6 @@ package pro.kidss;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,11 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -40,12 +38,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-
-import pro.kidss.R;
 
 public class vidGaleryActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -53,6 +50,7 @@ public class vidGaleryActivity extends AppCompatActivity {
     ArrayList<String> imageUrlList = new ArrayList<String>();
     ArrayList<String> ids = new ArrayList<String>();
     ArrayList<String> dating = new ArrayList<String>();
+    ArrayList<String> Type = new ArrayList<String>();
     ProgressDialog progressDialog;
     ScrollView scrollView;
     Dialog dialog1;
@@ -60,21 +58,29 @@ public class vidGaleryActivity extends AppCompatActivity {
     TextView messageTv, titleTv, timer;
     ImageView close;
     FloatingActionButton fabremove, up, down;
-    RecyclerviewImage dataAdapter;
+    RecyclerviewVIDGAL dataAdapter;
     Intent intent3;
     String type = "";
     String datess = "";
+    Roomdb roomdb;
+    List<String> vidaddress;
     private SwipeRefreshLayout swpref;
+    ArrayList<MsinData> dataList = new ArrayList<>();
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_vid_galery );
+        roomdb = Roomdb.getInstance( this );
+        dataList.addAll( roomdb.mainDao().getall() );
         dialog1 = new Dialog( this );
         intent3 = getIntent();
+
         if (intent3 != null) {
-            type = intent3.getStringExtra( "Type" ).split( ",,::" )[2];
-            datess = intent3.getStringExtra( "Type" ).split( ",,::" )[1];
+            type = intent3.getStringExtra( "Type" );
+//            datess = intent3.getStringExtra( "Date" ).split( ",,::" )[0];
+            datess = intent3.getStringExtra( "Date" );
         }
         fabremove = (FloatingActionButton) findViewById( R.id.fab );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
@@ -86,76 +92,85 @@ public class vidGaleryActivity extends AppCompatActivity {
                 swpref.setRefreshing( false );
             }
         } );
+        vidaddress = roomdb.mainDao().getaddressss( type, datess );
+        Log.e( "Vidadress", vidaddress.toString() );
+        recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
+        gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
+        recyclerView.setLayoutManager( gridLayoutManager );
+        Log.e( "Typer", type );
+        dataAdapter = new RecyclerviewVIDGAL( vidGaleryActivity.this, vidaddress, datess );
+        recyclerView.setAdapter( dataAdapter );
 
-        loadvideo();
-        fabremove.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                JSONObject jsonObject = new JSONObject();
-                JSONArray jsonArray = new JSONArray();
-                int ii = 0;
-                while (ii < dataAdapter.getremovelist().size()) {
-                    jsonArray.put( "/static/" + dataAdapter.getremovelist().get( ii ).split( "/static/" )[1] );
-                    ii++;
-                }
-                CtokenDataBaseManager ctokenDataBaseManager = new CtokenDataBaseManager( vidGaleryActivity.this );
-                try {
-                    jsonObject.put( "token", ctokenDataBaseManager.getctoken() );
-                    jsonObject.put( "videoUrl", jsonArray );
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                //send to server
-                Log.e( "fuuuuuuuuuuuuuuukit", jsonObject.toString() );
-                AlertDialog.Builder alertClose = new AlertDialog.Builder( vidGaleryActivity.this );
-                alertClose.setMessage( "Do you want to delete the videos?" )
-                        .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //send
-                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/delete-video/",
-                                        new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Toast.makeText( vidGaleryActivity.this, "Successfully removed", Toast.LENGTH_SHORT ).show();
-//                                                loadvideo();
-                                                finish();
-                                                startActivity( getIntent() );
-
-
-                                            }
-                                        }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        ShowTry();
-                                        progressDialog.dismiss();
-                                        Alert.shows( vidGaleryActivity.this, "", "please check the connection", "ok", "" );
-                                        SendEror.sender( vidGaleryActivity.this, error.toString() );
-                                    }
-
-                                } ) {
-                                    @Override
-                                    protected Map<String, String> getParams() {
-                                        Map<String, String> params = new HashMap<String, String>();
-                                        params.put( "data", jsonObject.toString() );
-                                        return params;
-                                    }
-                                };
-                                RequestQueue requestQueue = Volley.newRequestQueue( vidGaleryActivity.this );
-                                requestQueue.add( stringRequest );
-
-
-                            }
-                        } ).setNegativeButton( "No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        loadvideo();
-
-                    }
-                } ).show();
-
-            }
-        } );
+//        loadvideo();
+//        fabremove.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                JSONObject jsonObject = new JSONObject();
+//                JSONArray jsonArray = new JSONArray();
+//                int ii = 0;
+////                while (ii < dataAdapter.getremovelist().size()) {
+////                    jsonArray.put( "/static/" + dataAdapter.getremovelist().get( ii ).split( "/static/" )[1] );
+////                    ii++;
+////                }
+//                CtokenDataBaseManager ctokenDataBaseManager = new CtokenDataBaseManager( vidGaleryActivity.this );
+//                try {
+//                    jsonObject.put( "token", ctokenDataBaseManager.getctoken() );
+//                    jsonObject.put( "videoUrl", jsonArray );
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                //send to server
+//                Log.e( "fuuuuuuuuuuuuuuukit", jsonObject.toString() );
+//                AlertDialog.Builder alertClose = new AlertDialog.Builder( vidGaleryActivity.this );
+//                alertClose.setMessage( "Do you want to delete the videos?" )
+//                        .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                //send
+//                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/delete-video/",
+//                                        new Response.Listener<String>() {
+//                                            @Override
+//                                            public void onResponse(String response) {
+//                                                Toast.makeText( vidGaleryActivity.this, "Successfully removed", Toast.LENGTH_SHORT ).show();
+////                                                loadvideo();
+//                                                finish();
+//                                                startActivity( getIntent() );
+//
+//
+//                                            }
+//                                        }, new Response.ErrorListener() {
+//                                    @Override
+//                                    public void onErrorResponse(VolleyError error) {
+//                                        ShowTry();
+//                                        progressDialog.dismiss();
+//                                        Alert.shows( vidGaleryActivity.this, "", "please check the connection", "ok", "" );
+//                                        SendEror.sender( vidGaleryActivity.this, error.toString() );
+//                                    }
+//
+//                                } ) {
+//                                    @Override
+//                                    protected Map<String, String> getParams() {
+//                                        Map<String, String> params = new HashMap<String, String>();
+//                                        params.put( "data", jsonObject.toString() );
+//                                        return params;
+//                                    }
+//                                };
+//                                RequestQueue requestQueue = Volley.newRequestQueue( vidGaleryActivity.this );
+//                                requestQueue.add( stringRequest );
+//
+//
+//                            }
+//                        } ).setNegativeButton( "No", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+////                        loadvideo();
+//
+//                    }
+//                } ).show();
+//
+//            }
+//        } );
 
 
     }
@@ -196,7 +211,17 @@ public class vidGaleryActivity extends AppCompatActivity {
                                 JSONArray datearray = vidobject.getJSONArray( "Date" );
                                 int i = 0;
                                 while (i < viduri.length()) {
-                                    if (Typeaaray.get( i ).equals( type )) {
+                                    Log.e( "GGGG", Typeaaray.get( i ).toString() );
+                                    Log.e( "TTTTT", type );
+                                    if (Typeaaray.get( i ).toString().equals( type )) {
+
+
+                                        String[] address = viduri.getString( i ).split( "A" );
+//                                                MsinData data = new MsinData( Arrays.toString( address ), 0, 0 );
+//                                                roomdb.mainDao().insert( data );
+                                        Type.add( Typeaaray.getString( i ) );
+
+
                                         String[] all = datearray.getString( i ).split( "T" );
                                         String[] date = all[0].split( "-" );
                                         int year = Integer.parseInt( date[0] );
@@ -223,11 +248,7 @@ public class vidGaleryActivity extends AppCompatActivity {
                                     i++;
                                 }
 
-                                recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
-                                gridLayoutManager = new GridLayoutManager( getApplicationContext(), 2 );
-                                recyclerView.setLayoutManager( gridLayoutManager );
-                                dataAdapter = new RecyclerviewImage( imageUrlList, vidGaleryActivity.this, "vid", fabremove, ids, dating );
-                                recyclerView.setAdapter( dataAdapter );
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -237,8 +258,9 @@ public class vidGaleryActivity extends AppCompatActivity {
                             //Alert.shows(vidGaleryActivity.this,"","please check the connection","ok","");
                             SendEror.sender( vidGaleryActivity.this, e.toString() );
                         }
-
                     }
+
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {

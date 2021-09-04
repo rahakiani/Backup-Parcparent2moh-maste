@@ -32,22 +32,60 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import pro.kidss.R;
-
 public class getChildActivity extends AppCompatActivity {
     ProgressDialog dialog = null;
     String activity = "1";
+    private View parent_view;
+    private View back_drop;
+    private boolean rotate = false;
+    private View lyt_add;
     String a = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_get_child );
+        back_drop = findViewById( R.id.back_drop );
+        parent_view = findViewById( android.R.id.content );
+        back_drop = findViewById( R.id.back_drop );
+        final FloatingActionButton fab_add = (FloatingActionButton) findViewById( R.id.fab_add );
+        final FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
         getchild( getChildActivity.this );
-        FloatingActionButton fab = (FloatingActionButton) findViewById( R.id.fab );
+        lyt_add = findViewById( R.id.lyt_add );
+        ViewAnimation.initShowOut( lyt_add );
+        back_drop.setVisibility( View.GONE );
+
         fab.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                toggleFabMode( view );
+
+
+            }
+
+
+        } );
+        back_drop.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleFabMode( fab );
+            }
+
+            private void toggleFabMode(View v) {
+                rotate = ViewAnimation.rotateFab( v, !rotate );
+                if (rotate) {
+                    ViewAnimation.showIn( lyt_add );
+
+                    back_drop.setVisibility( View.VISIBLE );
+                } else {
+                    ViewAnimation.showOut( lyt_add );
+                    back_drop.setVisibility( View.GONE );
+                }
+            }
+        } );
+        fab_add.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Intent intent = getIntent();
                 if (intent.getStringExtra( "activity" ).isEmpty()) {
                 } else {
@@ -59,13 +97,27 @@ public class getChildActivity extends AppCompatActivity {
                 Intent b9 = new Intent( getChildActivity.this, AddChildActivity.class );
                 b9.putExtra( "activity", "child" + a );
                 startActivity( b9 );
-
             }
         } );
+
 
         dialog = ProgressDialog.show( getChildActivity.this, "please wait", "connecting to server...", true );
 
     }
+
+
+    private void toggleFabMode(View view) {
+        rotate = ViewAnimation.rotateFab( view, !rotate );
+        if (rotate) {
+            ViewAnimation.showIn( lyt_add );
+
+            back_drop.setVisibility( View.VISIBLE );
+        } else {
+            ViewAnimation.showOut( lyt_add );
+            back_drop.setVisibility( View.GONE );
+        }
+    }
+
 
     public void getchild(final Context context) {
 

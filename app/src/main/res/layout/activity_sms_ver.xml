@@ -9,7 +9,7 @@
 
     tools:context=".SmsVerActivity"
     android:layoutDirection="ltr"
-    android:background="@drawable/newone">
+    android:background="@color/grey_5">
 
     <EditText
         android:padding="5dp"

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BlankFragmentwrl9">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="OU CAN SEE ALL THE FOLDERS  \n \n OF YOUR KID DEVICE IN THIS SECTION \n \n AND DOWNLOAD THEM"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:id="@+id/d1"
+                android:layout_centerInParent="true"
+
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="120dp"
+                android:id="@+id/d2"
+                android:background="@android:color/white" />
+
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_gp9"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+</LinearLayout>

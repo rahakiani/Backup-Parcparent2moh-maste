@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:elevation="12dp"
     android:id="@+id/view2"
     android:padding="10dp"
@@ -8,75 +9,109 @@
     android:layout_centerHorizontal="true"
     android:innerRadius="0dp"
     android:shape="ring"
-    app:cardBackgroundColor="#0C2E43"
+    app:cardBackgroundColor="@color/grey_5"
+    android:layout_marginBottom="@dimen/spacing_medium"
+    android:layout_marginLeft="@dimen/spacing_middle"
+    android:layout_marginRight="@dimen/spacing_middle"
+    android:layout_marginTop="@dimen/spacing_medium"
 
     android:thicknessRatio="1.9"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="250dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="150dp"
+    android:layout_width="wrap_content"
     android:layout_margin="30dp"
     android:layoutDirection="ltr">
 
-
-    <ImageView
-
-        android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        android:elevation="12dp"
-        android:padding="10dp"
-
-        android:scaleType="fitXY"
-
-        />
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:textColor="#FFF"
-        android:gravity="center"
-        android:fontFamily="@font/verdana"
-        android:layout_marginHorizontal="30dp"
-        android:id="@+id/txtdate" />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+        android:id="@+id/liner"
+        android:orientation="vertical">
 
-        android:layout_marginBottom="5dp"
-        android:gravity="left"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="100dp"
-        android:src="@drawable/ic_download"
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_margin="10dp"
 
-        android:id="@+id/download" />
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
+            android:scaleType="centerCrop"
+            android:id="@+id/imageView"
 
-        android:layout_marginBottom="5dp"
-        android:gravity="right"
-        android:layout_marginEnd="100dp"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_share"
+            />
 
-        android:id="@+id/share" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+
+            android:textColor="@color/grey_80"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:textStyle="bold"
 
 
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/ic_tick"
-        android:id="@+id/imgcheck"
-        android:layout_marginHorizontal="15dp"
-        android:visibility="gone" />
+            android:text="Camera"
+
+            android:id="@+id/txtdate" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:orientation="horizontal"
+            android:id="@+id/linew">
+
+            <ImageButton
+                android:id="@+id/delete"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/grey_60"
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="VectorDrawableCompat" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:indeterminate="true"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/download"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/grey_60"
+                app:srcCompat="@drawable/ic_download"
+                tools:ignore="VectorDrawableCompat" />
+
+            <ImageButton
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:tint="@color/grey_60"
+                android:id="@+id/Likee"
+                app:srcCompat="@drawable/ic_savent"
+                tools:ignore="VectorDrawableCompat" />
+
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_tick"
+                android:id="@+id/imgcheck"
+                android:layout_marginHorizontal="15dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </androidx.cardview.widget.CardView>

@@ -41,6 +41,8 @@ public class WelcomePager extends FragmentStatePagerAdapter {
                 return new BlankFragmentwel7();
             case 7:
                 return new BlankFragmentwel8();
+            case 8:
+                return new BlankFragmentwrl9();
 
 
             default:
