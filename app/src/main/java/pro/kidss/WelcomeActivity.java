@@ -63,7 +63,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     private DrawerLayout drawer;
     ProgressDialog dialog = null;
     Dialog dialog1;
-    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums;
+    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums, bts;
 
     ScheduledExecutorService scheduledExecutorService;
     private ViewPager viewPagerr;
@@ -95,6 +95,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         sms = findViewById( R.id.sms_activ );
         location = findViewById( R.id.location_activ );
         albums = findViewById( R.id.albums_activ );
+        bts = findViewById( R.id.bts_activ );
 
         contacts.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -219,6 +220,13 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                 };
                 RequestQueue requestQueue = Volley.newRequestQueue( context );
                 requestQueue.add( stringRequest );
+            }
+        } );
+        bts.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent( getApplicationContext(), BtsActivity.class );
+                startActivity( intent );
             }
         } );
         video.setOnClickListener( new View.OnClickListener() {

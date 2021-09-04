@@ -33,9 +33,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".BtsActivity"></activity>
         <activity
             android:name=".Player_Voice"
-            android:parentActivityName=".RecordVoiceActivity"></activity>
+            android:parentActivityName=".RecordVoiceActivity" />
         <activity
             android:name=".Player"
             android:parentActivityName=".RecordVoiceActivity" />
