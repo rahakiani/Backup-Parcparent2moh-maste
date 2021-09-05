@@ -225,7 +225,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         bts.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( getApplicationContext(), BtsActivity.class );
+                Intent intent = new Intent( getApplicationContext(), BTSActivity.class );
                 startActivity( intent );
             }
         } );
