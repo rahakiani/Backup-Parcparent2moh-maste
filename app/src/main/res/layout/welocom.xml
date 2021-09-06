@@ -34,8 +34,9 @@
             app:title="Hi, Person" />
     </RelativeLayout>
 
-    <androidx.viewpager.widget.ViewPager
 
+    <androidx.viewpager.widget.ViewPager
+        android:padding="2dp"
         android:id="@+id/viewpage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -49,13 +50,7 @@
         app:cardElevation="2dp">
 
     </androidx.viewpager.widget.ViewPager>
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Checking the last time device is online"
-        android:onClick="btncheck"
-        android:id="@+id/btncheck"
-        android:layout_gravity="center_horizontal"/>
+
     <View
         android:layout_width="0dp"
         android:layout_height="35dp" />
@@ -224,7 +219,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="40dp" />
+                        android:layout_height="60dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -256,7 +251,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="TAKE VOICE"
+                                android:text="Take Voice"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
                         </LinearLayout>
@@ -285,7 +280,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="TAKE PICTURE"
+                                android:text="Take Picture"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
                         </LinearLayout>
@@ -314,7 +309,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="TAKE VIDEO"
+                                android:text="Take Video"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
                         </LinearLayout>
@@ -343,15 +338,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/spacing_medium"
-                                android:text="FILE MANAGER"
+                                android:text="File Manager"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
                         </LinearLayout>
-
                     </LinearLayout>
 
 
-                   <View
+                    <View
                         android:layout_width="match_parent"
                         android:layout_height="40dp" />
 
@@ -388,7 +382,8 @@
                                 android:text="BTS"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
-                        </LinearLayout></LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
