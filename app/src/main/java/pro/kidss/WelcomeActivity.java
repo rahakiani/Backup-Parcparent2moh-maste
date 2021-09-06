@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -666,6 +670,46 @@ ProgressDialog dialog = null;
     /**
      *
      */
+    public void btncheck(View view){
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/btsList/",
+                new Response.Listener<String>() {
+                    @TargetApi(Build.VERSION_CODES.N)
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONArray jsonArray=new JSONArray(response);
+                            Toast.makeText(WelcomeActivity.this, "last time device was online is "+jsonArray.getJSONObject(jsonArray.length()-1).getString("date"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+                            dialog.dismiss();
+                            e.printStackTrace();
+                            SendEror.sender(WelcomeActivity.this,e.toString());
 
 
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Alert.shows(WelcomeActivity.this,"","please check the connection","ok","");
+                SendEror.sender(WelcomeActivity.this,error.toString());
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String,String> params=new HashMap<String, String>();
+                params.put("kidToken",getctoken(WelcomeActivity.this));
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(100000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue= Volley.newRequestQueue(WelcomeActivity.this);
+        requestQueue.add(stringRequest);
+    }
 }
