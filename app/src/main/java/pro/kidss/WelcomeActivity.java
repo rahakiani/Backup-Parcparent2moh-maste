@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -33,6 +34,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -61,8 +63,9 @@ import java.util.concurrent.ScheduledExecutorService;
 public class WelcomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Context context;
     private DrawerLayout drawer;
-    ProgressDialog dialog = null;
+ProgressDialog dialog = null;
     Dialog dialog1;
+    JSONArray jsonArray;
     FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums, bts;
 
     ScheduledExecutorService scheduledExecutorService;
@@ -96,6 +99,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         location = findViewById( R.id.location_activ );
         albums = findViewById( R.id.albums_activ );
         bts = findViewById( R.id.bts_activ );
+
 
         contacts.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -420,6 +424,9 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case  R.id.nav_check_online:
+                ShowDialog();
+                break;
             case R.id.nav_addChild:
                 Intent b1 = new Intent( this, AddChildActivity.class );
                 b1.putExtra( "activity", "welcome" );
@@ -457,6 +464,87 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
 
         drawer.closeDrawer( GravityCompat.START );
         return true;
+    }
+
+    private void ShowDialog() {
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/btsList/",
+                new Response.Listener<String>() {
+//                    @TargetApi(Build.VERSION_CODES.N)
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            jsonArray=new JSONArray(response);
+                            final Dialog dialog2 = new Dialog( WelcomeActivity.this );
+                            dialog2.setContentView( R.layout.contactus );
+                            TextView tst = dialog2.findViewById( R.id.testre );
+                            TextView em = dialog2.findViewById( R.id.text_email );
+                            ImageView im = dialog2.findViewById( R.id.img_email );
+                            tst.setText( "Last time device was online is :" );
+                            String date = jsonArray.getJSONObject(jsonArray.length()-1).getString("date");
+                            String[] all =  date.split( "T" );
+                            String[] datee = all[0].split( "-" );
+                            int year = Integer.parseInt( datee[0] );
+                            int mounth = Integer.parseInt( datee[1] );
+                            int day = Integer.parseInt( datee[2] );
+                            String[] time = all[1].split( ":" );
+                            int hour = Integer.parseInt( time[0] );
+                            int min = Integer.parseInt( time[1] );
+                            Calendar callForDate = Calendar.getInstance();
+                            callForDate.set( year, mounth, day, hour, min, 00 );
+                            callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
+                            java.text.SimpleDateFormat currentDate = new java.text.SimpleDateFormat( "dd-MMMM-yyyy" );
+                            DateConverter converter = new DateConverter();
+                            converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
+                            em.setText( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + " <----> " + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
+//
+                            im.setVisibility( View.GONE );
+                            dialog2.getWindow().setBackgroundDrawable( new ColorDrawable( android.graphics.Color.TRANSPARENT ) );
+                            dialog2.setCancelable( true );
+                            (dialog2.findViewById( R.id.bt_close )).setOnClickListener( new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog2.dismiss();
+                                }
+                            } );
+                            dialog2.show();
+
+
+//                            Toast.makeText(WelcomeActivity.this, "last time device was online is "+jsonArray.getJSONObject(jsonArray.length()-1).getString("date"), Toast.LENGTH_SHORT).show();
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                            SendEror.sender(WelcomeActivity.this,e.toString());
+
+
+                        }
+                    }
+
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Alert.shows(WelcomeActivity.this,"","please check the connection","ok","");
+                SendEror.sender(WelcomeActivity.this,error.toString());
+            }
+
+        })
+        {
+            @Override
+            protected Map<String, String> getParams(){
+                Map<String,String> params=new HashMap<String, String>();
+                params.put("kidToken",getctoken(WelcomeActivity.this));
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(100000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue= Volley.newRequestQueue(WelcomeActivity.this);
+        requestQueue.add(stringRequest);
+
     }
 
     private void showDialogImage() {

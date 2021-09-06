@@ -4,8 +4,11 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
-
+        <item
+            android:id="@+id/nav_check_online"
+            android:icon="@drawable/ic_browser"
+            android:title="Check Online"
+            android:iconTint="#FFF" />
         <item
             android:id="@+id/nav_addChild"
             android:icon="@drawable/ic_addchilds"
