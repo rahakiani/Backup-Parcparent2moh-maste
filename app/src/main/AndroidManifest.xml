@@ -40,13 +40,17 @@
         <activity
             android:name=".Player"
             android:parentActivityName=".RecordVoiceActivity" />
-        <activity android:name=".GalleryActivity" />
+        <activity android:name=".GalleryActivity"
+            android:label="SAVED"
+            android:parentActivityName=".WelcomeActivity"/>
         <activity android:name=".Albums" />
         <activity android:name=".HomeAcitivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".FileManagerNamayesh" />
-        <activity android:name=".FileManager" />
+        <activity android:name=".FileManagerNamayesh"
+            android:parentActivityName=".WelcomeActivity"/>
+        <activity android:name=".FileManager"
+            android:parentActivityName=".WelcomeActivity"/>
         <activity
             android:name=".RecordVoiceActivity"
             android:parentActivityName=".WelcomeActivity" />

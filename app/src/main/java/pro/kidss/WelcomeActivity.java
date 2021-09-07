@@ -47,6 +47,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,6 +71,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
 ProgressDialog dialog = null;
     Dialog dialog1;
     JSONArray jsonArray;
+    View parent_view;
     FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums, bts;
 
     ScheduledExecutorService scheduledExecutorService;
@@ -97,6 +99,7 @@ ProgressDialog dialog = null;
         file = findViewById( R.id.file_activ );
         calls = findViewById( R.id.calls_activ );
         voice = findViewById( R.id.voice_activ );
+        parent_view = findViewById( android.R.id.content );
         video = findViewById( R.id.video_activ );
         photo = findViewById( R.id.photo_activ );
         sms = findViewById( R.id.sms_activ );
@@ -140,7 +143,8 @@ ProgressDialog dialog = null;
         location.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                jsoparse();
+                Snackbarsucess();
+//                jsoparse();
 
 
             }
@@ -346,6 +350,23 @@ ProgressDialog dialog = null;
 //        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager( 4, StaggeredGridLayoutManager.VERTICAL );
 //        recyclerViewwelcome.setLayoutManager( layoutManager );
     }
+
+    private void Snackbarsucess() {
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please use the original version of the application" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_grey_400 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
+    }
+
 
     private void ShowAlert() {
         dialog1.setContentView( R.layout.alert_accept );

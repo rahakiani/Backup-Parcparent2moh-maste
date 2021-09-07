@@ -62,7 +62,7 @@ public class BTSActivity extends AppCompatActivity {
         mnc=new ArrayList<String>();
         mcc=new ArrayList<String>();
         dating=new ArrayList<String>();
-        dialog = ProgressDialog.show(BTSActivity.this, "please wait", "connecting to server...", true);
+        dialog = ProgressDialog.show(BTSActivity.this, "Please Wait", "connecting to server...", true);
         ryclrbts = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
 
@@ -109,7 +109,7 @@ public class BTSActivity extends AppCompatActivity {
                                     java.text.SimpleDateFormat currentDate = new java.text.SimpleDateFormat( "dd-MMMM-yyyy" );
                                     DateConverter converter = new DateConverter();
                                     converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
-                                    dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "\n" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
+                                    dating.add( String.valueOf( "DATE:"+converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "     "+"TIME: " + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
 //
                                     i++;
                                 }

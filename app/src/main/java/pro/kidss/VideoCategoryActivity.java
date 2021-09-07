@@ -134,7 +134,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
 //                                    dating.addAll( Arrays.asList(datearray.getString(i).split("T")));
 
 //                                    if (!Type.contains( Typearray.getString( i ) )) {
-                                    dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "\n" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
+                                    dating.add( String.valueOf( "DATE :"+converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "   "+"TIME :" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
                                     Log.e( "DATEING", dating.toString() );
 //                                        String datee = dating.get( i ).toString();
 

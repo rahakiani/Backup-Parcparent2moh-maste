@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" lac:"
+                android:text=" LAC:"
                 android:textColor="@color/grey_60"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
@@ -80,7 +80,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" cell:"
+                android:text=" CELL:"
                 android:textColor="@color/grey_60"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" mnc:"
+                android:text=" MNC:"
                 android:textColor="@color/grey_60"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
@@ -119,7 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" mcc:"
+                android:text=" MCC:"
                 android:textColor="@color/grey_60"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
