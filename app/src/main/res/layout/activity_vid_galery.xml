@@ -67,6 +67,7 @@
             android:background="@color/overlay_dark_40"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:padding="@dimen/spacing_middle">
 
             <androidx.appcompat.widget.AppCompatSeekBar

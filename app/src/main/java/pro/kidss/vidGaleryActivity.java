@@ -98,14 +98,15 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     List<MsinData> all;
     List<String> vidaddress;
     private MusicUtils utils;
-
+    String fileaddres;
+    Uri videoUri;
     ArrayList<MsinData> dataList = new ArrayList<>();
     MediaPlayer mp;
     OnvideoDate videodate;
     VideoView videoView;
     private ProgressBar download_progress;
     FloatingActionButton ply;
-    Uri videoUri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4");
+
     SeekBar seekBar;
 
 
@@ -118,6 +119,8 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         dialog1 = new Dialog(this);
         download_progress = (ProgressBar) findViewById(R.id.song_progressbar);
         videoView = findViewById(R.id.image);
+
+        videoUri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo"+datess+type+".mp4");
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/"+vidaddress+"kidvideo.mp4");
         if (file.exists()) {
             file.delete();
@@ -139,6 +142,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         int i = 0;
         while (i < vidaddress.size()) {
             all = roomdb.mainDao().getaall(vidaddress.get(i));
+
             i++;
         }
 
@@ -225,11 +229,15 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
     @Override
     public void onImageClick(String videodate) {
-
+fileaddres = roomdb.mainDao().getfilee(videodate);
         if (roomdb.mainDao().checkdown( videodate ) == 1) {
-            videoView.setVideoURI(videoUri);
+
+
+            mediaController = new MediaController( vidGaleryActivity.this );
             videoView.setMediaController(mediaController);
             mediaController.setAnchorView(videoView);
+            videoView.setVideoURI(videoUri);
+            videoView.start();;
 
         }else {
             downloadfile(videodate);
