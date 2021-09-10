@@ -5,12 +5,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.RequiresApi;
@@ -115,4 +119,6 @@ public class ShowVidActivity extends AppCompatActivity {
         CtokenDataBaseManager ctok = new CtokenDataBaseManager( context );
         return ctok.getctoken();
     }
+
+
 }

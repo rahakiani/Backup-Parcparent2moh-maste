@@ -83,7 +83,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     GridLayoutManager gridLayoutManager;
     Dialog dialog1;
     Button accept;
-    private View parent_view;
+
     private AppCompatSeekBar seek_song_progressbar;
     TextView messageTv, titleTv, timer;
     ImageView close;
@@ -104,6 +104,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     MediaPlayer mp;
     OnvideoDate videodate;
     VideoView videoView;
+    View parent_view;
     private ProgressBar download_progress;
     FloatingActionButton ply;
 
@@ -116,6 +117,8 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         setContentView(R.layout.activity_vid_galery);
         roomdb = Roomdb.getInstance(this);
         dataList.addAll(roomdb.mainDao().getall());
+
+        parent_view = findViewById( android.R.id.content );
         dialog1 = new Dialog(this);
         download_progress = (ProgressBar) findViewById(R.id.song_progressbar);
         videoView = findViewById(R.id.image);
@@ -150,7 +153,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 //        List<MsinData> all= roomdb.mainDao().getaall(vidaddress.get(i));
         Log.e("Vidadress", vidaddress.toString());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_item);
-        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         Log.e("Typer", type);
         dataAdapter = new RecyclerviewVIDGAL(vidGaleryActivity.this, all, vidGaleryActivity.this);
@@ -229,6 +232,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
     @Override
     public void onImageClick(String videodate) {
+        ply.setVisibility(View.GONE);
 
         if (roomdb.mainDao().checkdown( videodate ) == 1) {
 
@@ -418,6 +422,25 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
             filename = datess + ".jpg";
         }
         return filename;
+    }
+    public void play_bt(View view) {
+        Snackbarsucess();
+    }
+
+    private void Snackbarsucess() {
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please click on the photos" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_grey_400 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
     }
 
     }
