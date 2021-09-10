@@ -229,7 +229,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
     @Override
     public void onImageClick(String videodate) {
-fileaddres = roomdb.mainDao().getfilee(videodate);
+
         if (roomdb.mainDao().checkdown( videodate ) == 1) {
 
 
