@@ -66,10 +66,10 @@ public class HelpingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_helping );
-//        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-//        startActivity(intent);
-
-        initComponent();
+        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+        startActivity(intent);
+//
+//        initComponent();
 
 
     }

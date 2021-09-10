@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,6 +35,7 @@ public class Player_Voice extends AppCompatActivity {
     private Handler mHandler = new Handler();
     ArrayList<String> voicename;
     ArrayList<String> voiceaddres;
+    VideoView videoView;
     int position;
 
     //private SongsManager songManager;
@@ -44,6 +46,7 @@ public class Player_Voice extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.playervoice );
         Intent intent = getIntent();
+
         position = intent.getIntExtra( "Voice_position", 0 );
         voicename = intent.getStringArrayListExtra( "Voice_name" );
 

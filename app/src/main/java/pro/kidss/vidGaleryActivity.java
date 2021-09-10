@@ -1,24 +1,47 @@
 package pro.kidss;
 
+import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,12 +52,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.downloader.Error;
+import com.downloader.OnCancelListener;
+import com.downloader.OnDownloadListener;
+import com.downloader.OnPauseListener;
+import com.downloader.OnProgressListener;
+import com.downloader.OnStartOrResumeListener;
+import com.downloader.PRDownloader;
+import com.downloader.PRDownloaderConfig;
+import com.downloader.Progress;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -44,293 +78,420 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-public class vidGaleryActivity extends AppCompatActivity {
+public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate {
     RecyclerView recyclerView;
     GridLayoutManager gridLayoutManager;
-    ArrayList<String> imageUrlList = new ArrayList<String>();
-    ArrayList<String> ids = new ArrayList<String>();
-    ArrayList<String> dating = new ArrayList<String>();
-    ArrayList<String> Type = new ArrayList<String>();
-    ProgressDialog progressDialog;
-    ScrollView scrollView;
     Dialog dialog1;
     Button accept;
+    private View parent_view;
+    private AppCompatSeekBar seek_song_progressbar;
     TextView messageTv, titleTv, timer;
     ImageView close;
-    FloatingActionButton fabremove, up, down;
+    DownloadManager downloadManager;
+    MediaController mediaController;
     RecyclerviewVIDGAL dataAdapter;
     Intent intent3;
     String type = "";
     String datess = "";
     Roomdb roomdb;
+    private Handler mHandler = new Handler();
+    List<MsinData> all;
     List<String> vidaddress;
-    private SwipeRefreshLayout swpref;
+    private MusicUtils utils;
+
     ArrayList<MsinData> dataList = new ArrayList<>();
-    CoordinatorLayout coordinatorLayout;
+    MediaPlayer mp;
+    OnvideoDate videodate;
+    VideoView videoView;
+    private ProgressBar download_progress;
+    FloatingActionButton ply;
+    Uri videoUri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4");
+    SeekBar seekBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_vid_galery );
-        roomdb = Roomdb.getInstance( this );
-        dataList.addAll( roomdb.mainDao().getall() );
-        dialog1 = new Dialog( this );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_vid_galery);
+        roomdb = Roomdb.getInstance(this);
+        dataList.addAll(roomdb.mainDao().getall());
+        dialog1 = new Dialog(this);
+        download_progress = (ProgressBar) findViewById(R.id.song_progressbar);
+        videoView = findViewById(R.id.image);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/"+vidaddress+"kidvideo.mp4");
+        if (file.exists()) {
+            file.delete();
+        }
+        ply = findViewById(R.id.bt_play);
+        seekBar = findViewById(R.id.seek_bar);
+
         intent3 = getIntent();
 
         if (intent3 != null) {
-            type = intent3.getStringExtra( "Type" );
+            type = intent3.getStringExtra("Type");
 //            datess = intent3.getStringExtra( "Date" ).split( ",,::" )[0];
-            datess = intent3.getStringExtra( "Date" );
+            datess = intent3.getStringExtra("Date");
+//            path = intent3.getStringExtra("path");
+
+
         }
-        fabremove = (FloatingActionButton) findViewById( R.id.fab );
-        swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
-        swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                finish();
-                startActivity( getIntent() );
-                swpref.setRefreshing( false );
-            }
-        } );
-        vidaddress = roomdb.mainDao().getaddressss( type, datess );
-        Log.e( "Vidadress", vidaddress.toString() );
-        recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
-        gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
-        recyclerView.setLayoutManager( gridLayoutManager );
-        Log.e( "Typer", type );
-        dataAdapter = new RecyclerviewVIDGAL( vidGaleryActivity.this, vidaddress, datess );
-        recyclerView.setAdapter( dataAdapter );
-
-//        loadvideo();
-//        fabremove.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                JSONObject jsonObject = new JSONObject();
-//                JSONArray jsonArray = new JSONArray();
-//                int ii = 0;
-////                while (ii < dataAdapter.getremovelist().size()) {
-////                    jsonArray.put( "/static/" + dataAdapter.getremovelist().get( ii ).split( "/static/" )[1] );
-////                    ii++;
-////                }
-//                CtokenDataBaseManager ctokenDataBaseManager = new CtokenDataBaseManager( vidGaleryActivity.this );
-//                try {
-//                    jsonObject.put( "token", ctokenDataBaseManager.getctoken() );
-//                    jsonObject.put( "videoUrl", jsonArray );
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                //send to server
-//                Log.e( "fuuuuuuuuuuuuuuukit", jsonObject.toString() );
-//                AlertDialog.Builder alertClose = new AlertDialog.Builder( vidGaleryActivity.this );
-//                alertClose.setMessage( "Do you want to delete the videos?" )
-//                        .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                //send
-//                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/delete-video/",
-//                                        new Response.Listener<String>() {
-//                                            @Override
-//                                            public void onResponse(String response) {
-//                                                Toast.makeText( vidGaleryActivity.this, "Successfully removed", Toast.LENGTH_SHORT ).show();
-////                                                loadvideo();
-//                                                finish();
-//                                                startActivity( getIntent() );
-//
-//
-//                                            }
-//                                        }, new Response.ErrorListener() {
-//                                    @Override
-//                                    public void onErrorResponse(VolleyError error) {
-//                                        ShowTry();
-//                                        progressDialog.dismiss();
-//                                        Alert.shows( vidGaleryActivity.this, "", "please check the connection", "ok", "" );
-//                                        SendEror.sender( vidGaleryActivity.this, error.toString() );
-//                                    }
-//
-//                                } ) {
-//                                    @Override
-//                                    protected Map<String, String> getParams() {
-//                                        Map<String, String> params = new HashMap<String, String>();
-//                                        params.put( "data", jsonObject.toString() );
-//                                        return params;
-//                                    }
-//                                };
-//                                RequestQueue requestQueue = Volley.newRequestQueue( vidGaleryActivity.this );
-//                                requestQueue.add( stringRequest );
-//
-//
-//                            }
-//                        } ).setNegativeButton( "No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-////                        loadvideo();
-//
-//                    }
-//                } ).show();
-//
-//            }
-//        } );
+        vidaddress = roomdb.mainDao().getaddressss(type, datess);
+        int i = 0;
+        while (i < vidaddress.size()) {
+            all = roomdb.mainDao().getaall(vidaddress.get(i));
+            i++;
+        }
 
 
+//        List<MsinData> all= roomdb.mainDao().getaall(vidaddress.get(i));
+        Log.e("Vidadress", vidaddress.toString());
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_item);
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        Log.e("Typer", type);
+        dataAdapter = new RecyclerviewVIDGAL(vidGaleryActivity.this, all, vidGaleryActivity.this);
+        recyclerView.setAdapter(dataAdapter);
     }
 
     private void ShowTry() {
-        dialog1.setContentView( R.layout.try_alert );
-        close = (ImageView) dialog1.findViewById( R.id.close_try );
-        accept = (Button) dialog1.findViewById( R.id.bt_try );
-        messageTv = (TextView) dialog1.findViewById( R.id.messaage_try );
-        messageTv.setText( "please check the connection" );
-        close.setOnClickListener( new View.OnClickListener() {
+        dialog1.setContentView(R.layout.try_alert);
+        close = (ImageView) dialog1.findViewById(R.id.close_try);
+        accept = (Button) dialog1.findViewById(R.id.bt_try);
+        messageTv = (TextView) dialog1.findViewById(R.id.messaage_try);
+        messageTv.setText("please check the connection");
+
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog1.dismiss();
             }
-        } );
+        });
 
-        dialog1.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
     }
 
-    public void loadvideo() {
-        ShowDialog();
-        //progressDialog = ProgressDialog.show(vidGaleryActivity.this, "please wait", "connecting to server...", true);
-        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/video-detail/",
-                new Response.Listener<String>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e( "Ex32123", response );
-                        try {
-                            dialog1.dismiss();
-                            //progressDialog.dismiss();
-                            JSONObject vidobject = new JSONObject( response );
-                            if (vidobject.has( "token" )) {
-                                JSONArray viduri = vidobject.getJSONArray( "VideoAddress" );
-                                JSONArray Typeaaray = vidobject.getJSONArray( "Type" );
-                                JSONArray datearray = vidobject.getJSONArray( "Date" );
-                                int i = 0;
-                                while (i < viduri.length()) {
-                                    Log.e( "GGGG", Typeaaray.get( i ).toString() );
-                                    Log.e( "TTTTT", type );
-                                    if (Typeaaray.get( i ).toString().equals( type )) {
-
-
-                                        String[] address = viduri.getString( i ).split( "A" );
-//                                                MsinData data = new MsinData( Arrays.toString( address ), 0, 0 );
-//                                                roomdb.mainDao().insert( data );
-                                        Type.add( Typeaaray.getString( i ) );
-
-
-                                        String[] all = datearray.getString( i ).split( "T" );
-                                        String[] date = all[0].split( "-" );
-                                        int year = Integer.parseInt( date[0] );
-                                        int mounth = Integer.parseInt( date[1] );
-                                        int day = Integer.parseInt( date[2] );
-                                        String[] time = all[1].split( ":" );
-                                        int hour = Integer.parseInt( time[0] );
-                                        int min = Integer.parseInt( time[1] );
-                                        Calendar callForDate = Calendar.getInstance();
-                                        callForDate.set( year, mounth, day, hour, min, 00 );
-                                        callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
-                                        java.text.SimpleDateFormat currentDate = new java.text.SimpleDateFormat( "dd-MMMM-yyyy" );
-
-                                        DateConverter converter = new DateConverter();
-                                        converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
-                                        String thisdate = String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() );
-                                        if (thisdate.equals( datess )) {
-                                            dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "\n" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
-                                            imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
-                                            //dating.add("");
-                                            ids.add( "" );
-                                        }
-                                    }
-                                    i++;
-                                }
-
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            dialog1.dismiss();
-                            ShowTry();
-                            //progressDialog.dismiss();
-                            //Alert.shows(vidGaleryActivity.this,"","please check the connection","ok","");
-                            SendEror.sender( vidGaleryActivity.this, e.toString() );
-                        }
-                    }
-
-
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // progressDialog.dismiss();
-                dialog1.dismiss();
-                ShowTry();
-                //Alert.shows(vidGaleryActivity.this,"","please check the connection","ok","");
-                SendEror.sender( vidGaleryActivity.this, error.toString() );
-            }
-
-        } ) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put( "token", getctoken( vidGaleryActivity.this ) );
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue( vidGaleryActivity.this );
-        requestQueue.add( stringRequest );
-    }
 
     private void ShowDialog() {
 
-        dialog1.setContentView( R.layout.alert_wait );
-        close = (ImageView) dialog1.findViewById( R.id.close_accept );
-        accept = (Button) dialog1.findViewById( R.id.btnAccept );
-        timer = (TextView) dialog1.findViewById( R.id.text_timer );
-        titleTv = (TextView) dialog1.findViewById( R.id.title_go );
-        messageTv = (TextView) dialog1.findViewById( R.id.messaage_acceot );
-        titleTv.setText( "Please Wait" );
-        messageTv.setText( "Connecting To Server..." );
-        long duration = TimeUnit.SECONDS.toMillis( 1 );
-        new CountDownTimer( duration, 100 ) {
+        dialog1.setContentView(R.layout.alert_wait);
+        close = (ImageView) dialog1.findViewById(R.id.close_accept);
+        accept = (Button) dialog1.findViewById(R.id.btnAccept);
+        timer = (TextView) dialog1.findViewById(R.id.text_timer);
+        titleTv = (TextView) dialog1.findViewById(R.id.title_go);
+        messageTv = (TextView) dialog1.findViewById(R.id.messaage_acceot);
+        titleTv.setText("Please Wait");
+        messageTv.setText("Connecting To Server...");
+        long duration = TimeUnit.SECONDS.toMillis(1);
+        new CountDownTimer(duration, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
-                String sDuration = String.format( Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds( 0 )
-                        , TimeUnit.SECONDS.toSeconds( 59 ) -
-                                TimeUnit.SECONDS.toSeconds( TimeUnit.SECONDS.toSeconds( 1 ) ) );
-                timer.setText( sDuration );
+                String sDuration = String.format(Locale.ENGLISH, "%02d:%02d"
+                        , TimeUnit.MINUTES.toSeconds(0)
+                        , TimeUnit.SECONDS.toSeconds(59) -
+                                TimeUnit.SECONDS.toSeconds(TimeUnit.SECONDS.toSeconds(1)));
+                timer.setText(sDuration);
             }
 
             @Override
             public void onFinish() {
-                timer.setVisibility( View.GONE );
-                accept.setVisibility( View.VISIBLE );
+                timer.setVisibility(View.GONE);
+                accept.setVisibility(View.VISIBLE);
 
 
             }
         }.start();
-        close.setOnClickListener( new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog1.dismiss();
             }
-        } );
-        accept.setOnClickListener( new View.OnClickListener() {
+        });
+        accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog1.dismiss();
             }
-        } );
+        });
 
-        dialog1.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
+        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog1.show();
     }
 
     public String getctoken(Context context) {
-        CtokenDataBaseManager ctok = new CtokenDataBaseManager( context );
+        CtokenDataBaseManager ctok = new CtokenDataBaseManager(context);
         return ctok.getctoken();
     }
-}
+
+    @Override
+    public void onImageClick(String videodate) {
+
+        if (roomdb.mainDao().checkdown( videodate ) == 1) {
+            videoView.setVideoURI(videoUri);
+            videoView.setMediaController(mediaController);
+            mediaController.setAnchorView(videoView);
+
+        }else {
+            downloadfile(videodate);
+        }
+
+//        videoView.setVideoPath(videodate);
+//        videoView.start();
+//        ply.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                videodate.
+//            }
+//        });
+
+//        if (roomdb.mainDao().checkdown(videodate) == 1){
+//
+//        }else {
+//
+//        }
+
+    }
+
+    private void downloadfile(String videodate) {
+
+
+            Uri uri = Uri.parse( videodate );
+            downloadManager = (DownloadManager) getSystemService( DOWNLOAD_SERVICE );
+            DownloadManager.Request request = new DownloadManager.Request( uri );
+            request.setTitle( "downloading" );
+            request.setDescription( "wait" );
+            request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, "kidvideo.mp4" );
+            long donid = downloadManager.enqueue( request );
+//            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Please Wait One Minute",
+//                    Snackbar.LENGTH_SHORT ) )
+//                    .show();
+        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
+            BroadcastReceiver time = new BroadcastReceiver() {
+                @RequiresApi(api = 29)
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+
+                    if (mediaController == null) {
+                        // create an object of media controller class
+                        mediaController = new MediaController( vidGaleryActivity.this );
+                        mediaController.setAnchorView( videoView );
+                    }
+                    // set the media controller for video view
+                    videoView.setMediaController( mediaController );
+                    // set the uri for the video view
+                    videoView.setVideoURI( videoUri );
+                    // start a video
+                    videoView.start();
+
+                    // implement on completion listener on video view
+                    videoView.setOnCompletionListener( new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mp) {
+//                            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Thank You...",
+//                                    Snackbar.LENGTH_SHORT ) )
+//                                    .show();
+                            roomdb.mainDao().adddown( videodate );
+                        Toast.makeText( getApplicationContext(), "Thank You...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an video is completed
+                        }
+                    } );
+                    videoView.setOnErrorListener( new MediaPlayer.OnErrorListener() {
+                        @Override
+                        public boolean onError(MediaPlayer mp, int what, int extra) {
+//                            ColoredSnackbar.warning( Snackbar.make( coordinatorLayout, " Oops An Error Occur While Playing Video...!!!",
+//                                    Snackbar.LENGTH_SHORT ) )
+//                                    .show();
+                        Toast.makeText( getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an error is occured while playing an video
+                            return false;
+                        }
+                    } );
+
+                }
+            };
+            IntentFilter intentFilter = new IntentFilter( DownloadManager.ACTION_DOWNLOAD_COMPLETE );
+            this.registerReceiver( time, intentFilter );
+        }
+
+
+
+
+
+
+
+//    private void initComponent(String videodate) {
+//        parent_view = findViewById(R.id.coordinator);
+//        seek_song_progressbar = (AppCompatSeekBar) findViewById(R.id.seek_bar);
+//        seek_song_progressbar.setProgress(0);
+//        seek_song_progressbar.setMax(MusicUtils.MAX_PROGRESS);
+//        mp = new MediaPlayer();
+//        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                // Changing button image to play button
+//                ply.setImageResource(R.drawable.ic_play_arrow);
+//            }
+//        });
+//        try {
+//            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//            mp.setDataSource(videodate);
+////            AssetFileDescriptor afd = getAssets().openFd(videodate);
+////            mp.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+////            afd.close();
+//            mp.prepare();
+//            mp.start();
+//        } catch (Exception e) {
+//            Snackbar.make(parent_view, "Cannot load audio file", Snackbar.LENGTH_SHORT).show();
+//        }
+//        utils = new MusicUtils();
+//        seek_song_progressbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//                // remove message Handler from updating progress bar
+//                mHandler.removeCallbacks(mUpdateTimeTask);
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//                mHandler.removeCallbacks(mUpdateTimeTask);
+//                int totalDuration = mp.getDuration();
+//                int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
+//
+//                // forward or backward to certain seconds
+//                mp.seekTo(currentPosition);
+//
+//                // update timer progress again
+//                mHandler.post(mUpdateTimeTask);
+//            }
+//        });
+//        buttonPlayerAction();
+//        updateTimerAndSeekbar();
+//    }
+
+    /**
+     * Play button click event plays a song and changes button to pause image
+     * pauses a song and changes button to play image
+     */
+    private void buttonPlayerAction() {
+        ply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                // check for already playing
+                if (mp.isPlaying()) {
+                    mp.pause();
+                    // Changing button image to play button
+                    ply.setImageResource(R.drawable.ic_play_arrow);
+                } else {
+                    // Resume song
+                    mp.start();
+                    // Changing button image to pause button
+                    ply.setImageResource(R.drawable.ic_pause);
+                    // Updating progress bar
+                    mHandler.post(mUpdateTimeTask);
+                }
+//                rotateImageAlbum();
+            }
+        });
+    }
+
+//    public void controlClick(View v) {
+//        int id = v.getId();
+//        switch (id) {
+//            case R.id.bt_repeat: {
+//                toggleButtonColor((ImageButton) v);
+//                Snackbar.make(parent_view, "Repeat", Snackbar.LENGTH_SHORT).show();
+//                break;
+//            }
+//            case R.id.bt_shuffle: {
+//                toggleButtonColor((ImageButton) v);
+//                Snackbar.make(parent_view, "Shuffle", Snackbar.LENGTH_SHORT).show();
+//                break;
+//            }
+//            case R.id.bt_prev: {
+//                toggleButtonColor((ImageButton) v);
+//                Snackbar.make(parent_view, "Previous", Snackbar.LENGTH_SHORT).show();
+//                break;
+//            }
+//            case R.id.bt_next: {
+//                toggleButtonColor((ImageButton) v);
+//                Snackbar.make(parent_view, "Next", Snackbar.LENGTH_SHORT).show();
+//                break;
+//            }
+//        }
+//    }
+
+    private boolean toggleButtonColor(ImageButton bt) {
+        String selected = (String) bt.getTag(bt.getId());
+        if (selected != null) { // selected
+            bt.setColorFilter(getResources().getColor(R.color.grey_90), PorterDuff.Mode.SRC_ATOP);
+            bt.setTag(bt.getId(), null);
+            return false;
+        } else {
+            bt.setTag(bt.getId(), "selected");
+            bt.setColorFilter(getResources().getColor(R.color.red_500), PorterDuff.Mode.SRC_ATOP);
+            return true;
+        }
+    }
+
+    /**
+     * Background Runnable thread
+     */
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            updateTimerAndSeekbar();
+
+            // Running this thread after 10 milliseconds
+            if (mp.isPlaying()) {
+                mHandler.postDelayed(this, 100);
+            }
+        }
+    };
+
+    private void updateTimerAndSeekbar() {
+        long totalDuration = mp.getDuration();
+        long currentDuration = mp.getCurrentPosition();
+
+
+        // Updating progress bar
+        int progress = (int) (utils.getProgressSeekBar(currentDuration, totalDuration));
+        seek_song_progressbar.setProgress(progress);
+    }
+
+//    private void rotateImageAlbum() {
+//        if (!mp.isPlaying()) return;
+//        image.animate().setDuration(100).rotation(image.getRotation() + 2f).setListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                rotateImageAlbum();
+//                super.onAnimationEnd(animation);
+//            }
+//        });
+//    }
+
+    // stop player when destroy
+
+
+
+
+    private String namefail(String url) {
+        String filename;
+        if (url.endsWith( ".mp4" )) {
+            filename = datess + ".mp4";
+
+
+        } else if (url.endsWith( ".mew" )) {
+            filename = datess +type + "kidvideo.mp4";
+        } else {
+            filename = datess + ".jpg";
+        }
+        return filename;
+    }
+
+    }
+
+
+

@@ -23,6 +23,10 @@ public class MsinData implements Serializable {
 
     @ColumnInfo(name = "type")
     private String type;
+    @ColumnInfo(name = "file")
+    private String file;
+    @ColumnInfo(name = "time")
+    private String time;
 
 
     public MsinData() {
@@ -37,7 +41,25 @@ public class MsinData implements Serializable {
                 ", down=" + down +
                 ", date=" + date +
                 ", type=" + type +
+                ", file=" + file +
+                ", time=" + time +
                 '}';
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 
     public String getDate() {
@@ -57,13 +79,16 @@ public class MsinData implements Serializable {
     }
 
     @Ignore
-    public MsinData(String addres, int lik, int down, String date, String type) {
+    public MsinData(String addres, int lik, int down, String date, String type,String file,String time) {
+
 //        this.ID = ID;
         this.address = addres;
         this.lik = lik;
         this.down = down;
         this.date = date;
         this.type = type;
+        this.file = file;
+        this.time = time;
     }
 
 

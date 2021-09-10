@@ -53,6 +53,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
     ArrayList<String> ids = new ArrayList<String>();
     ArrayList<String> Type = new ArrayList<String>();
     ArrayList<String> dating = new ArrayList<String>();
+    ArrayList<String> timing = new ArrayList<String>();
     ProgressDialog progressDialog;
     FloatingActionButton fabremove;
     //    RecyclerviewImage dataAdapter;
@@ -134,7 +135,8 @@ public class VideoCategoryActivity extends AppCompatActivity {
 //                                    dating.addAll( Arrays.asList(datearray.getString(i).split("T")));
 
 //                                    if (!Type.contains( Typearray.getString( i ) )) {
-                                    dating.add( String.valueOf( "DATE :"+converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay() + "   "+"TIME :" + callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
+                                    dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay()));
+                                    timing.add(String.valueOf( callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
                                     Log.e( "DATEING", dating.toString() );
 //                                        String datee = dating.get( i ).toString();
 
@@ -143,7 +145,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
                                     imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
 
                                     if (roomdb.mainDao().checkaddress( "https://im.kidsguard.ml" + viduri.getString( i ) ) == 0) {
-                                        MsinData data = new MsinData( "https://im.kidsguard.ml" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ) );
+                                        MsinData data = new MsinData( "https://im.kidsguard.ml" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ),"/Download/kidvideo.mp4",timing.get(i) );
                                         roomdb.mainDao().insert( data );
 
                                         dataList.add( data );

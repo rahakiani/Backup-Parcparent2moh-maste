@@ -74,15 +74,16 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
     Dialog dialog1;
 
 
-    List<String> vidaddress;
+    List<MsinData> all;
     Roomdb roomdb;
+    MsinData msinData;
+    OnvideoDate vidodate;
 
-    public RecyclerviewVIDGAL(Context context, List<String> vidaddress, String typee) {
+    public RecyclerviewVIDGAL(Context context, List<MsinData> all,OnvideoDate vidodate) {
 
         this.context = context;
-        this.vidaddress = vidaddress;
-        this.typee = typee;
-
+        this.all = all;
+        this.vidodate=vidodate;
     }
 
     @NonNull
@@ -94,8 +95,15 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerviewVIDGAL.ViewHolder viewHolder, int i) {
+
         roomdb = Roomdb.getInstance( context );
-        viewHolder.txtdate.setText( typee );
+        msinData = all.get(i);
+        String date = msinData.getDate();
+        String time = msinData.getTime();
+        String addresss = msinData.getAddress();
+
+        viewHolder.txtdate.setText( date );
+        viewHolder.txttime.setText( time );
         viewHolder.delete.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,7 +114,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
                 CtokenDataBaseManager ctokenDataBaseManager = new CtokenDataBaseManager( context );
                 try {
                     jsonObject.put( "token", ctokenDataBaseManager.getctoken() );
-                    jsonObject.put( "videoUrl", vidaddress.get( i ) );
+                    jsonObject.put( "videoUrl", addresss );
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -164,7 +172,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
         viewHolder.like.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                roomdb.mainDao().like( vidaddress.get( i ) );
+                roomdb.mainDao().like( addresss );
                 Log.e( "ADDLIKE", roomdb.mainDao().getall().toString() );
 
 
@@ -173,7 +181,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
 
             }
         } );
-        if (roomdb.mainDao().checklike( vidaddress.get( i ) ) == 1) {
+        if (roomdb.mainDao().checklike( addresss ) == 1) {
             viewHolder.like.setImageResource( R.drawable.ic_saved );
             Log.e( "LIKE", roomdb.mainDao().getall().toString() );
 
@@ -181,7 +189,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
         } else {
             viewHolder.like.setImageResource( R.drawable.ic_savent );
         }
-        if (roomdb.mainDao().checkdown( vidaddress.get( i ) ) == 1) {
+        if (roomdb.mainDao().checkdown( addresss ) == 1) {
             viewHolder.download.setImageResource( R.drawable.ic_done );
             viewHolder.download.setEnabled( false );
 
@@ -190,7 +198,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
         }
         long thumb = i * 1000;
         RequestOptions options = new RequestOptions().frame( thumb );
-        Glide.with( context ).load( vidaddress.get( i ) ).apply( options ).into( viewHolder.img );
+        Glide.with( context ).load( addresss ).apply( options ).into( viewHolder.img );
         viewHolder.download.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,7 +221,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
                         .setConnectTimeout( 30_000 )
                         .build();
                 PRDownloader.initialize( context, config );
-                int downloadId = PRDownloader.download( vidaddress.get( i ), Environment.getExternalStorageDirectory() + "/" + "parent" + "/", namefail( vidaddress.get( i ) ) )
+                int downloadId = PRDownloader.download( addresss, Environment.getExternalStorageDirectory() + "/" + "parent" + "/", namefail( addresss ) )
                         .build()
                         .setOnStartOrResumeListener( new OnStartOrResumeListener() {
                             @Override
@@ -246,7 +254,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
                         .start( new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
-                                roomdb.mainDao().adddown( vidaddress.get( i ) );
+                                roomdb.mainDao().adddown( addresss );
                                 viewHolder.progress.setVisibility( View.GONE );
                                 viewHolder.download.setImageResource( R.drawable.ic_done );
                                 viewHolder.download.setVisibility( View.VISIBLE );
@@ -292,63 +300,75 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
 
 
         } );
-        if (removeList.contains( vidaddress.get( i ) )) {
+        if (removeList.contains( addresss )) {
             viewHolder.imgcheck.setVisibility( View.VISIBLE );
         } else {
             viewHolder.imgcheck.setVisibility( View.GONE );
         }
-        viewHolder.img.setOnLongClickListener( new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-
-                if (!removeList.contains( vidaddress.get( i ) )) {
-                    removeList.add( vidaddress.get( i ) );
-
-                    viewHolder.imgcheck.setVisibility( View.VISIBLE );
-                } else {
-                    removeList.remove( vidaddress.get( i ) );
-
-                    viewHolder.imgcheck.setVisibility( View.GONE );
-
-                }
-
-                return true;
-            }
-        } );
+//        viewHolder.img.setOnLongClickListener( new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//
+//
+//                if (!removeList.contains( addresss )) {
+//                    removeList.add( addresss );
+//
+//                    viewHolder.imgcheck.setVisibility( View.VISIBLE );
+//                } else {
+//                    removeList.remove( addresss );
+//
+//                    viewHolder.imgcheck.setVisibility( View.GONE );
+//
+//                }
+//
+//                return true;
+//            }
+//        } );
         viewHolder.img.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (removeList.size() == 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-                        Intent intent = new Intent( context, ShowVidActivity.class );
-                        intent.putExtra( "path", vidaddress.get( i ) );
-                        context.startActivity( intent );
-
-                    } else {
-                        goToUrl( imageUrls.get( i ), context );
-                    }
-                } else {
-                    if (!removeList.contains( imageUrls.get( i ) )) {
-                        removeList.add( imageUrls.get( i ) );
-
-                        viewHolder.imgcheck.setVisibility( View.VISIBLE );
-                    } else {
-                        removeList.remove( imageUrls.get( i ) );
-
-                        viewHolder.imgcheck.setVisibility( View.GONE );
-
-                    }
-                    if (removeList.size() == 0) {
-                        removefab.setVisibility( View.GONE );
-                    }
-                    if (removeList.size() == 1) {
-                        removefab.setVisibility( View.VISIBLE );
-                    }
-
-                }
+                vidodate.onImageClick(addresss);
+//                if (roomdb.mainDao().checkdown(addresss) == 1) {
+//                    Intent intent = new Intent(context  ,ShowVidActivity.class);
+////                    intent.putExtra("status","yes");
+//                    intent.putExtra("path",addresss);
+//                    context.startActivity(intent);
+//                } else {
+//
+//
+//                    if (removeList.size() == 0) {
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+//                            Intent intent = new Intent(context, vidGaleryActivity.class);
+//                            intent.putExtra("path", addresss);
+////                            intent.putExtra("status","no");
+//                            context.startActivity(intent);
+//
+//                        } else {
+//                            goToUrl(addresss, context);
+//                        }
+//                    } else {
+//                        if (!removeList.contains(imageUrls.get(i))) {
+//                            removeList.add(imageUrls.get(i));
+//
+//                            viewHolder.imgcheck.setVisibility(View.VISIBLE);
+//                        } else {
+//                            removeList.remove(imageUrls.get(i));
+//
+//                            viewHolder.imgcheck.setVisibility(View.GONE);
+//
+//                        }
+//                        if (removeList.size() == 0) {
+//                            removefab.setVisibility(View.GONE);
+//                        }
+//                        if (removeList.size() == 1) {
+//                            removefab.setVisibility(View.VISIBLE);
+//                        }
+//
+//
+//                    }
+//                }
             }
-
+//
         } );
     }
 
@@ -378,13 +398,13 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
 
     @Override
     public int getItemCount() {
-        return vidaddress.size();
+        return all.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img, imgcheck;
         ImageButton like, download, delete;
-        TextView txtdate;
+        TextView txtdate,txttime;
         ProgressBar progress;
         LinearLayout linearLayout, linew;
         private final View parent_view;
@@ -400,6 +420,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
             img = view.findViewById( R.id.imageView );
             imgcheck = view.findViewById( R.id.imgcheck );
             txtdate = view.findViewById( R.id.txtdate );
+            txttime = view.findViewById( R.id.txttime );
             linew = view.findViewById( R.id.linew );
         }
     }

@@ -26,7 +26,7 @@ public class ShowVidActivity extends AppCompatActivity {
     VideoView simpleVideoView;
     MediaController mediaControls;
     CoordinatorLayout coordinatorLayout;
-
+    private MediaPlayer mp;
 
     Uri videoUri = Uri.parse( Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4" );
 
@@ -43,6 +43,14 @@ public class ShowVidActivity extends AppCompatActivity {
         }
         Intent intent = getIntent();
         String path = intent.getStringExtra( "path" );
+        if (intent.getStringExtra("status").equals("yes")){
+
+
+
+        }else {
+
+        }
+
         Log.e( "Path", path );
         downloadFile( path );
     }
