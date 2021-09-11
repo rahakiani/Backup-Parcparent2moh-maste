@@ -412,7 +412,7 @@ public class RecyclerviewImage extends RecyclerView.Adapter<RecyclerviewImage.Vi
             public void onClick(View view) {
                 if (removeList.size()==0){
                 if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.GINGERBREAD){
-                    Intent intent=new Intent(context, ShowVidActivity.class);
+                    Intent intent=new Intent(context, vidGaleryActivity.class);
                     intent.putExtra( "path", addres );
                     context.startActivity( intent );
 //                    RxPermissions rxPermissions=new RxPermissions((FragmentActivity) context);
@@ -493,32 +493,6 @@ public class RecyclerviewImage extends RecyclerView.Adapter<RecyclerviewImage.Vi
                 viewHolder.txtdate.setText( typer );
             }
 
-
-//                    break;
-//                case "com.whatsapp":
-//
-//                    break;
-//                case "com.instagram.android":
-//
-//                    break;
-//                case "org.telegram.messenger":
-//
-//                    break;
-//                case "com.facebook.katana":
-//
-//                    break;
-//                case "ir.alibaba":
-//
-//                    break;
-//                default:
-//
-////                    viewHolder.txtdate.setText(dating.get(i));
-//
-//                    break;
-//
-//
-//            }
-
             viewHolder.img.setOnClickListener( new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -565,25 +539,6 @@ public class RecyclerviewImage extends RecyclerView.Adapter<RecyclerviewImage.Vi
                 public boolean onLongClick(View view) {
 
 
-                    //  viewHolder.img.setBackground(ContextCompat.getDrawable(context,R.drawable.backgradiant));
-
-//                    if (removeList.contains(ids.get(i))){
-//                        removeList.remove(ids.get(i));
-//                        String img2=address.replace("\\n","\n");
-//                        Bitmap bitmap = Utils2.getBitmap(img2);
-//                        viewHolder.img.setImageBitmap(bitmap);
-//                    }else {
-//                        removeList.add(ids.get(i));
-//                        viewHolder.img.setImageResource(R.drawable.backgradiant);
-//                    }
-//                    if (removeList.size()==0){
-//                        removefab.setVisibility(View.GONE);
-//                    }
-//                    if (removeList.size()==1){
-//                        removefab.setVisibility(View.VISIBLE);
-//                    }
-//                    return true;
-                    //  viewHolder.img.setBackground(ContextCompat.getDrawable(context,R.drawable.backgradiant));
                     if (!removeList.contains(ids.get(i))){
                         removeList.add(ids.get(i));
                         //viewHolder.img.setImageResource(R.drawable.backgradiant);
@@ -630,12 +585,7 @@ public class RecyclerviewImage extends RecyclerView.Adapter<RecyclerviewImage.Vi
                             viewHolder.imgcheck.setVisibility( View.GONE );
 
                         }
-//                        if (removeList.size()==0){
-//                            removefab.setVisibility(View.GONE);
-//                        }
-//                        if (removeList.size()==1){
-//                            removefab.setVisibility(View.VISIBLE);
-//                        }
+
 
                     }
 

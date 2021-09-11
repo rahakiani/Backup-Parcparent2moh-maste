@@ -71,7 +71,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
         dialog1 = new Dialog( this );
         setContentView( R.layout.activity_video_category );
         roomdb = Roomdb.getInstance( this );
-        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinatorr );
+//        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinatorr );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
         swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override

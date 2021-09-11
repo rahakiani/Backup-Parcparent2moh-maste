@@ -58,7 +58,7 @@ import java.util.Map;
 public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGallery.ViewHolder> {
     ArrayList<MsinData> dataList;
     ArrayList<String> dataaddres;
-    ArrayList<String> datadate;
+    ArrayList<String> datadate,datatime;
     Context context;
     Roomdb roomdb;
     Button accept;
@@ -71,14 +71,14 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
     FloatingActionButton removefab;
     ArrayList<String> addresss;
     CoordinatorLayout coordinatorLayout;
-
-    public RecyclerviewGallery(ArrayList<MsinData> dataList, Context context, FloatingActionButton removefab, ArrayList<String> dataaddres, CoordinatorLayout coordinatorLayout, ArrayList<String> datadate) {
+    OnvideoDate vidodate;
+    public RecyclerviewGallery(ArrayList<MsinData> dataList, Context context, ArrayList<String> dataaddres, ArrayList<String> datadate,ArrayList<String>datatime,OnvideoDate vidodate) {
         this.context = context;
         this.dataaddres = dataaddres;
         this.dataList = dataList;
-        this.removefab = removefab;
-        this.coordinatorLayout = coordinatorLayout;
         this.datadate = datadate;
+        this.datatime = datatime;
+        this.vidodate = vidodate;
     }
 
     @NonNull
@@ -97,71 +97,20 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
 
         String addres = dataaddres.get( position );
 
+
         holder.txtdate.setText( datadate.get( position ) );
 
         dialog1 = new Dialog( context );
 
         Log.e( "ADDRES", addres );
-        holder.img.setOnLongClickListener( new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-
-
-                if (!removeList.contains( addres )) {
-                    removeList.add( addres );
-
-                    holder.imgcheck.setVisibility( View.VISIBLE );
-                } else {
-                    removeList.remove( addres );
-
-                    holder.imgcheck.setVisibility( View.GONE );
-
-                }
-                if (removeList.size() == 0) {
-                    removefab.setVisibility( View.GONE );
-                }
-                if (removeList.size() == 1) {
-                    removefab.setVisibility( View.VISIBLE );
-                }
-
-
-                return true;
-            }
-        } );
+        holder.txttime.setText(datatime.get( position )  );
         holder.img.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (removeList.size() == 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-                        Intent intent = new Intent( context, ShowVidActivity.class );
-                        intent.putExtra( "path", addres );
-                        Log.e( "LIST", addres );
-                        context.startActivity( intent );
 
-                    } else {
-                        goToUrl( addres, context );
-                    }
-                } else {
-                    if (!removeList.contains( addres )) {
-                        removeList.add( addres );
-
-                        holder.imgcheck.setVisibility( View.VISIBLE );
-                    } else {
-                        removeList.remove( addres );
-
-                        holder.imgcheck.setVisibility( View.GONE );
-
-                    }
-                    if (removeList.size() == 0) {
-                        removefab.setVisibility( View.GONE );
-                    }
-                    if (removeList.size() == 1) {
-                        removefab.setVisibility( View.VISIBLE );
-                    }
-
-
+                    vidodate.onImageClick( addres );
                 }
-            }
+
 
         } );
         holder.delete.setOnClickListener( new View.OnClickListener() {
@@ -250,9 +199,10 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
         holder.like.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ColoredSnackbar.warning( Snackbar.make( coordinatorLayout, " Unarchived ",
-                        Snackbar.LENGTH_SHORT ) )
-                        .show();
+//                ColoredSnackbar.warning( Snackbar.make( coordinatorLayout, " Unarchived ",
+//                        Snackbar.LENGTH_SHORT ) )
+//                        .show();
+                Toast.makeText( context, "Unarchived", Toast.LENGTH_SHORT ).show();
                 roomdb.mainDao().deletlike( addres );
                 holder.like.setImageResource( R.drawable.ic_savent );
 
@@ -262,9 +212,10 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
 
         if (roomdb.mainDao().checkdown( addres ) == 1) {
             holder.download.setImageResource( R.drawable.ic_done );
-            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " This file is already saved in the pernt folder ",
-                    Snackbar.LENGTH_SHORT ) )
-                    .show();
+//            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " This file is already saved in the pernt folder ",
+//                    Snackbar.LENGTH_SHORT ) )
+//                    .show();
+            Toast.makeText( context, "This file is already saved in the pernt folder", Toast.LENGTH_SHORT ).show();
             holder.download.setEnabled( false );
 
         } else {
@@ -335,9 +286,10 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
                                 holder.download.setImageResource( R.drawable.ic_done );
                                 holder.download.setVisibility( View.VISIBLE );
                                 holder.download.setClickable( false );
-                                ColoredSnackbar.success( Snackbar.make( coordinatorLayout, " The File You Want Was Downloaded In The Prent Folder ",
-                                        Snackbar.LENGTH_SHORT ) )
-                                        .show();
+//                                ColoredSnackbar.success( Snackbar.make( coordinatorLayout, " The File You Want Was Downloaded In The Prent Folder ",
+//                                        Snackbar.LENGTH_SHORT ) )
+//                                        .show();
+                                Toast.makeText( context, "This file is already saved in the pernt folder", Toast.LENGTH_SHORT ).show();
 
 
                                 Log.e( "ABBBBA", "AAAAAAAAAA" );
@@ -349,10 +301,10 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
                             @Override
                             public void onError(Error error) {
                                 holder.progress.setVisibility( View.GONE );
-                                ColoredSnackbar.error( Snackbar.make( coordinatorLayout, " Please Check Your Connection Internet ",
-                                        Snackbar.LENGTH_SHORT ) )
-                                        .show();
-//                                Toast.makeText( context, "please check your internet", Toast.LENGTH_SHORT ).show();
+//                                ColoredSnackbar.error( Snackbar.make( coordinatorLayout, " Please Check Your Connection Internet ",
+//                                        Snackbar.LENGTH_SHORT ) )
+//                                        .show();
+                                Toast.makeText( context, "please check your internet", Toast.LENGTH_SHORT ).show();
                                 Log.e( "EDDDDDDDD", error.toString() );
 
 
@@ -407,7 +359,7 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img, imgcheck;
         ImageButton like, download, delete;
-        TextView txtdate;
+        TextView txtdate,txttime;
         ProgressBar progress;
         private final View parent_view;
 
@@ -421,6 +373,7 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
             img = view.findViewById( R.id.imageView );
             imgcheck = view.findViewById( R.id.imgcheck );
             txtdate = view.findViewById( R.id.txtdate );
+            txttime = view.findViewById( R.id.txttime );
         }
 
     }

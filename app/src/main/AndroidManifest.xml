@@ -155,9 +155,6 @@
             android:name=".AddKidCodeActivity"
             android:parentActivityName=".getChildActivity" />
         <activity
-            android:name=".ShowVidActivity"
-            android:parentActivityName=".VideoCategoryActivity" />
-        <activity
             android:name=".imageActivity"
             android:parentActivityName=".WelcomeActivity" />
         <activity

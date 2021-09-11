@@ -123,8 +123,8 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         download_progress = (ProgressBar) findViewById(R.id.song_progressbar);
         videoView = findViewById(R.id.image);
 
-        videoUri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo"+datess+type+".mp4");
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/"+vidaddress+"kidvideo.mp4");
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo.mp4");
         if (file.exists()) {
             file.delete();
         }
@@ -138,7 +138,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 //            datess = intent3.getStringExtra( "Date" ).split( ",,::" )[0];
             datess = intent3.getStringExtra("Date");
 //            path = intent3.getStringExtra("path");
-
+            videoUri = Uri.parse(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/kidvideo"+datess+type+".mp4");
 
         }
         vidaddress = roomdb.mainDao().getaddressss(type, datess);
@@ -247,20 +247,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
             downloadfile(videodate);
         }
 
-//        videoView.setVideoPath(videodate);
-//        videoView.start();
-//        ply.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                videodate.
-//            }
-//        });
 
-//        if (roomdb.mainDao().checkdown(videodate) == 1){
-//
-//        }else {
-//
-//        }
 
     }
 
@@ -272,12 +259,23 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
             DownloadManager.Request request = new DownloadManager.Request( uri );
             request.setTitle( "downloading" );
             request.setDescription( "wait" );
-            request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, "kidvideo.mp4" );
+            request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, "kidvideo"+datess+type+".mp4" );
             long donid = downloadManager.enqueue( request );
-//            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Please Wait One Minute",
-//                    Snackbar.LENGTH_SHORT ) )
-//                    .show();
-        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
+
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "please wait one minute" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_loading );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_500 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
+//        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
             BroadcastReceiver time = new BroadcastReceiver() {
                 @RequiresApi(api = 29)
                 @Override
@@ -288,6 +286,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
                         // create an object of media controller class
                         mediaController = new MediaController( vidGaleryActivity.this );
                         mediaController.setAnchorView( videoView );
+
                     }
                     // set the media controller for video view
                     videoView.setMediaController( mediaController );
@@ -295,25 +294,48 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
                     videoView.setVideoURI( videoUri );
                     // start a video
                     videoView.start();
+                    roomdb.mainDao().adddown( videodate );
 
                     // implement on completion listener on video view
                     videoView.setOnCompletionListener( new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
-//                            ColoredSnackbar.info( Snackbar.make( coordinatorLayout, " Thank You...",
-//                                    Snackbar.LENGTH_SHORT ) )
-//                                    .show();
-                            roomdb.mainDao().adddown( videodate );
-                        Toast.makeText( getApplicationContext(), "Thank You...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an video is completed
+
+
+                            final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+                            //inflate view
+                            View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+                            snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+                            Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+                            snackBarView.setPadding( 0, 0, 0, 0 );
+
+                            ((TextView) custom_view.findViewById( R.id.message )).setText( "Thank You..." );
+                            ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_done );
+                            (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.green_500 ) );
+                            snackBarView.addView( custom_view, 0 );
+                            snackbar.show();
+
                         }
                     } );
                     videoView.setOnErrorListener( new MediaPlayer.OnErrorListener() {
                         @Override
                         public boolean onError(MediaPlayer mp, int what, int extra) {
-//                            ColoredSnackbar.warning( Snackbar.make( coordinatorLayout, " Oops An Error Occur While Playing Video...!!!",
-//                                    Snackbar.LENGTH_SHORT ) )
-//                                    .show();
-                        Toast.makeText( getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG ).show(); // display a toast when an error is occured while playing an video
+
+                            final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+                            //inflate view
+                            View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+                            snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+                            Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+                            snackBarView.setPadding( 0, 0, 0, 0 );
+
+                            ((TextView) custom_view.findViewById( R.id.message )).setText( "Oops An Error Occur While Playing Video...!!!" );
+                            ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
+                            (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.red_500 ) );
+                            snackBarView.addView( custom_view, 0 );
+                            snackbar.show();
+
                             return false;
                         }
                     } );
@@ -331,98 +353,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
 
 
-//    public void controlClick(View v) {
-//        int id = v.getId();
-//        switch (id) {
-//            case R.id.bt_repeat: {
-//                toggleButtonColor((ImageButton) v);
-//                Snackbar.make(parent_view, "Repeat", Snackbar.LENGTH_SHORT).show();
-//                break;
-//            }
-//            case R.id.bt_shuffle: {
-//                toggleButtonColor((ImageButton) v);
-//                Snackbar.make(parent_view, "Shuffle", Snackbar.LENGTH_SHORT).show();
-//                break;
-//            }
-//            case R.id.bt_prev: {
-//                toggleButtonColor((ImageButton) v);
-//                Snackbar.make(parent_view, "Previous", Snackbar.LENGTH_SHORT).show();
-//                break;
-//            }
-//            case R.id.bt_next: {
-//                toggleButtonColor((ImageButton) v);
-//                Snackbar.make(parent_view, "Next", Snackbar.LENGTH_SHORT).show();
-//                break;
-//            }
-//        }
-//    }
 
-    private boolean toggleButtonColor(ImageButton bt) {
-        String selected = (String) bt.getTag(bt.getId());
-        if (selected != null) { // selected
-            bt.setColorFilter(getResources().getColor(R.color.grey_90), PorterDuff.Mode.SRC_ATOP);
-            bt.setTag(bt.getId(), null);
-            return false;
-        } else {
-            bt.setTag(bt.getId(), "selected");
-            bt.setColorFilter(getResources().getColor(R.color.red_500), PorterDuff.Mode.SRC_ATOP);
-            return true;
-        }
-    }
-
-    /**
-     * Background Runnable thread
-     */
-    private Runnable mUpdateTimeTask = new Runnable() {
-        public void run() {
-            updateTimerAndSeekbar();
-
-            // Running this thread after 10 milliseconds
-            if (mp.isPlaying()) {
-                mHandler.postDelayed(this, 100);
-            }
-        }
-    };
-
-    private void updateTimerAndSeekbar() {
-        long totalDuration = mp.getDuration();
-        long currentDuration = mp.getCurrentPosition();
-
-
-        // Updating progress bar
-        int progress = (int) (utils.getProgressSeekBar(currentDuration, totalDuration));
-        seek_song_progressbar.setProgress(progress);
-    }
-
-//    private void rotateImageAlbum() {
-//        if (!mp.isPlaying()) return;
-//        image.animate().setDuration(100).rotation(image.getRotation() + 2f).setListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                rotateImageAlbum();
-//                super.onAnimationEnd(animation);
-//            }
-//        });
-//    }
-
-    // stop player when destroy
-
-
-
-
-    private String namefail(String url) {
-        String filename;
-        if (url.endsWith( ".mp4" )) {
-            filename = datess + ".mp4";
-
-
-        } else if (url.endsWith( ".mew" )) {
-            filename = datess +type + "kidvideo.mp4";
-        } else {
-            filename = datess + ".jpg";
-        }
-        return filename;
-    }
     public void play_bt(View view) {
         Snackbarsucess();
     }
@@ -436,7 +367,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
         snackBarView.setPadding( 0, 0, 0, 0 );
 
-        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please click on the photos" );
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please click on the video" );
         ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
         (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_grey_400 ) );
         snackBarView.addView( custom_view, 0 );
