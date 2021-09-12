@@ -56,7 +56,8 @@
             android:parentActivityName=".WelcomeActivity" />
         <activity
             android:name=".imgGaleryActivity"
-            android:parentActivityName=".imageActivity" />
+            android:label="Pictures"
+            android:parentActivityName=".WelcomeActivity"/>
         <activity
             android:name=".vidGaleryActivity"
             android:parentActivityName=".VideoCategoryActivity" />

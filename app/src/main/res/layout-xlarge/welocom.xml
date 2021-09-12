@@ -34,6 +34,7 @@
             app:title="Hi, Person" />
     </RelativeLayout>
 
+
     <androidx.viewpager.widget.ViewPager
         android:padding="2dp"
         android:id="@+id/viewpage"
@@ -218,7 +219,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="80dp" />
+                        android:layout_height="60dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -268,7 +269,7 @@
                                 android:id="@+id/photo_activ"
                                 android:clickable="true"
                                 android:tint="@android:color/white"
-                                app:backgroundTint="@color/light_green_400"
+                                app:backgroundTint="@color/amber_900"
                                 app:elevation="0dp"
                                 app:fabSize="mini"
                                 app:rippleColor="@android:color/white"
@@ -297,7 +298,7 @@
                                 android:id="@+id/video_activ"
                                 android:clickable="true"
                                 android:tint="@android:color/white"
-                                app:backgroundTint="@color/orange_300"
+                                app:backgroundTint="@color/pink_500"
                                 app:elevation="0dp"
                                 app:fabSize="mini"
                                 app:rippleColor="@android:color/white"
@@ -381,8 +382,8 @@
                                 android:text="BTS"
                                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
-                        </LinearLayout></LinearLayout>
-
+                        </LinearLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
