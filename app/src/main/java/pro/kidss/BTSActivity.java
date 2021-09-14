@@ -22,7 +22,6 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -41,6 +40,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
+import pro.kidss.database.CtokenDataBaseManager;
+import pro.kidss.wlcome.WelcomeActivity;
 
 public class BTSActivity extends AppCompatActivity {
     RecyclerView ryclrbts;
@@ -169,7 +171,7 @@ public class BTSActivity extends AppCompatActivity {
         close.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),WelcomeActivity.class);
+                Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity( intent );
                 dialog1.dismiss();
             }

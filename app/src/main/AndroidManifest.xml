@@ -33,34 +33,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BTSActivity"></activity>
+        <activity android:name=".SMSactivity"></activity>
+        <activity android:name=".BTSActivity" />
         <activity
-            android:name=".Player_Voice"
-            android:parentActivityName=".RecordVoiceActivity" />
+            android:name=".voice.Player_Voice"
+            android:parentActivityName=".voice.RecordVoiceActivity" />
         <activity
-            android:name=".Player"
-            android:parentActivityName=".RecordVoiceActivity" />
-        <activity android:name=".GalleryActivity"
+            android:name=".voice.Player"
+            android:parentActivityName=".voice.RecordVoiceActivity" />
+        <activity
+            android:name=".wlcome.GalleryActivity"
             android:label="SAVED"
-            android:parentActivityName=".WelcomeActivity"/>
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity android:name=".Albums" />
         <activity android:name=".HomeAcitivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".FileManagerNamayesh"
-            android:parentActivityName=".WelcomeActivity"/>
-        <activity android:name=".FileManager"
-            android:parentActivityName=".WelcomeActivity"/>
         <activity
-            android:name=".RecordVoiceActivity"
-            android:parentActivityName=".WelcomeActivity" />
+            android:name=".file.FileManagerNamayesh"
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
-            android:name=".imgGaleryActivity"
+            android:name=".file.FileManager"
+            android:parentActivityName=".wlcome.WelcomeActivity" />
+        <activity
+            android:name=".voice.RecordVoiceActivity"
+            android:parentActivityName=".wlcome.WelcomeActivity" />
+        <activity
+            android:name=".images.imgGaleryActivity"
             android:label="Pictures"
-            android:parentActivityName=".WelcomeActivity"/>
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
-            android:name=".vidGaleryActivity"
-            android:parentActivityName=".VideoCategoryActivity" />
+            android:name=".videoes.vidGaleryActivity"
+            android:parentActivityName=".videoes.VideoCategoryActivity" />
         <activity
             android:name=".VoroodActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -71,13 +75,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".wlcome.WelcomeActivity"
             android:label="@string/labaleWelco"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/labaleProfile"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
             android:name=".AddChildActivity"
             android:label="@string/labaleAddChild"
@@ -85,24 +89,24 @@
         <activity
             android:name=".ExplainItemActivity"
             android:label=""
-            android:parentActivityName=".WelcomeActivity"
+            android:parentActivityName=".wlcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CurrentAppActivity"
             android:label="@string/labaleCurrApp"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
             android:name=".PhoneLockActivity"
             android:label="@string/labalePhoneLock"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
             android:name=".BlockAppActivity"
             android:label="@string/labaleBlockApp"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
-            android:name=".AboutAppActivity"
+            android:name=".wlcome.AboutAppActivity"
             android:label="@string/lableAboutApp"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity android:name=".UnblockedAppItemActivity" />
         <activity
             android:name=".NotblockappsActivity"
@@ -112,7 +116,7 @@
             android:parentActivityName=".BlockAppActivity" />
         <activity
             android:name=".blockTimeActivity"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity android:name=".SmsVerActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -133,12 +137,12 @@
             android:name=".getChildActivity"
             android:label="@string/labalegetChild" />
         <activity
-            android:name=".pictureActivity"
+            android:name=".images.pictureActivity"
             android:label="@string/labalePicture"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
             android:name=".StructureActivity"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".ChildActivity" />
         <activity
@@ -148,22 +152,22 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
-            android:parentActivityName=".WelcomeActivity" />
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
-            android:name=".RecordVideoActivity"
-            android:parentActivityName=".WelcomeActivity" />
+            android:name=".videoes.RecordVideoActivity"
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
             android:name=".AddKidCodeActivity"
             android:parentActivityName=".getChildActivity" />
         <activity
-            android:name=".imageActivity"
-            android:parentActivityName=".WelcomeActivity" />
+            android:name=".images.imageActivity"
+            android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity
-            android:name=".VideoCategoryActivity"
-            android:parentActivityName=".vidGaleryActivity" />
+            android:name=".videoes.VideoCategoryActivity"
+            android:parentActivityName=".videoes.vidGaleryActivity" />
         <activity
-            android:name=".VideoDateActivity"
-            android:parentActivityName=".vidGaleryActivity" />
+            android:name=".videoes.VideoDateActivity"
+            android:parentActivityName=".videoes.vidGaleryActivity" />
     </application>
 
 </manifest>

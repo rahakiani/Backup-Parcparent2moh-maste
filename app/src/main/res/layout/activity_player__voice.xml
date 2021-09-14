@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Player_Voice">
+    tools:context=".voice.Player_Voice">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:layout_margin="5dp"
     android:padding="5dp"
-    tools:context=".GalleryActivity"
+    tools:context=".wlcome.GalleryActivity"
     android:layoutDirection="ltr">
     <View
         android:layout_width="match_parent"

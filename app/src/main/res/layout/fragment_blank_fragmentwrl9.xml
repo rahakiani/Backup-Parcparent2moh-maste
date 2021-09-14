@@ -6,7 +6,7 @@
     android:layout_margin="10dp"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".BlankFragmentwrl9">
+    tools:context=".wlcome.BlankFragmentwrl9">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

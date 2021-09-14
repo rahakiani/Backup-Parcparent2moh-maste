@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -38,10 +39,16 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import pro.kidss.R;
+import pro.kidss.database.CtokenDataBaseManager;
+import pro.kidss.database.MainData;
+import pro.kidss.database.MsinData;
+import pro.kidss.database.Roomdb;
+import pro.kidss.database.Roomdbb;
+import pro.kidss.wlcome.WelcomeActivity;
 
 
 public class ExplainItemActivity extends AppCompatActivity {
@@ -57,11 +64,17 @@ public class ExplainItemActivity extends AppCompatActivity {
     private ImageButton imgleftdra;
     private String text;
     SwipeRefreshLayout swpref;
+    Roomdbb roomdb;
+    recyclersmsdate dataAdapter;
+    List<String> distincmsindata;
 
+    GridLayoutManager gridLayoutManager;
+    ArrayList<MainData> dataList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explainitem);
+        roomdb = Roomdbb.getInstance( this );
         dialog = ProgressDialog.show(ExplainItemActivity.this, "please wait", "connecting to server...", true);
         recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
@@ -100,19 +113,33 @@ public class ExplainItemActivity extends AppCompatActivity {
                                             JSONArray diraray=jsonsms.getJSONArray("direction");
                                             JSONArray bodyaray=jsonsms.getJSONArray("body");
                                             JSONArray numberaray=jsonsms.getJSONArray("number");
+                                            JSONArray idarray=jsonsms.getJSONArray("id");
                                             int i=0;
                                            // ArrayList<String> res=new ArrayList<String>();
                                             while (i<numberaray.length()){
                                                 String name=numberaray.getString(i);
                                                 String number=bodyaray.getString(i);
                                                 String dir=diraray.getString(i);
-                                                res.add(name+":"+"\n"+number+"\n"+dir);
+                                                int id=idarray.getInt(i);
+
+                                                String[] send = diraray.getString( i ).split( "\\n" );
+                                                Log.e( "Sendin",send.toString() );
+                                                Log.e( "IID", String.valueOf( id ) );
+//                                                res.add(name+":"+"\n"+number+"\n"+dir+"\n"+idd+"\n"+id);
+                                                MainData data = new MainData(id,name,number,dir);
+                                                roomdb.mainDao().insert( data );
+                                                dataList.add( data );
 
                                                 i++;
                                             }
-
+                                            distincmsindata = roomdb.mainDao().getnumber();
                                            recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                           recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+
+                                            gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
+                                            recyclerViewDetail.setLayoutManager( gridLayoutManager );
+                                            dataAdapter=new recyclersmsdate(getApplicationContext(),distincmsindata);
+                                            recyclerViewDetail.setAdapter( dataAdapter );
+//                                           recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
 
 
                                             break;
@@ -376,7 +403,7 @@ public class ExplainItemActivity extends AppCompatActivity {
 
         }
 
-        setress();
+//        setress();
 
     }
     public String getctoken(Context context){
@@ -406,61 +433,62 @@ public class ExplainItemActivity extends AppCompatActivity {
         Intent intent=new Intent(this, WelcomeActivity.class);
         startActivity(intent);
     }
-    public void setress(){
-        edtphonesearch=(EditText) findViewById(R.id.edtphonesearch);
-        imgleftdra=(ImageButton)findViewById(R.id.imgleftdra);
-        edtphonesearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                Drawable img = getResources().getDrawable(R.drawable.ic_close);
-                img.setBounds(0, 0, 60, 60);
-                imgleftdra.setImageDrawable(img);
-                text=editable.toString();
-                Handler handler=new Handler();
-                handler.postDelayed(new Runnable() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void run() {
-                        if (editable.toString().equals(text)){
-                            if (editable.toString().equals("")){
-                                Drawable img = getResources().getDrawable(R.drawable.ic_search_black_24dp);
-                                img.setBounds(0, 0, 60, 60);
-                                imgleftdra.setImageDrawable(img);
-                                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
-                            }else {
-                                ArrayList<String> resfilter =new ArrayList<>( res.stream()
-                                        .filter(x->x.toLowerCase().contains(editable.toString()))
-                                        .collect(Collectors.toList()));
-                                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                recyclerViewAddList(getApplicationContext(),resfilter,recyclerViewDetail);
-
-                            }
-                        }
-                    }
-                },300);
-
-            }
-        });
-        imgleftdra.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                edtphonesearch.setText("");
-                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
-            }
-        });
-            }
+    //TODO
+//    public void setress(){
+//        edtphonesearch=(EditText) findViewById(R.id.edtphonesearch);
+//        imgleftdra=(ImageButton)findViewById(R.id.imgleftdra);
+//        edtphonesearch.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                Drawable img = getResources().getDrawable(R.drawable.ic_close);
+//                img.setBounds(0, 0, 60, 60);
+//                imgleftdra.setImageDrawable(img);
+//                text=editable.toString();
+//                Handler handler=new Handler();
+//                handler.postDelayed(new Runnable() {
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+//                    @Override
+//                    public void run() {
+//                        if (editable.toString().equals(text)){
+//                            if (editable.toString().equals("")){
+//                                Drawable img = getResources().getDrawable(R.drawable.ic_search_black_24dp);
+//                                img.setBounds(0, 0, 60, 60);
+//                                imgleftdra.setImageDrawable(img);
+//                                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
+//                                recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+//                            }else {
+//                                ArrayList<String> resfilter =new ArrayList<>( res.stream()
+//                                        .filter(x->x.toLowerCase().contains(editable.toString()))
+//                                        .collect(Collectors.toList()));
+//                                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
+//                                recyclerViewAddList(getApplicationContext(),resfilter,recyclerViewDetail);
+//
+//                            }
+//                        }
+//                    }
+//                },300);
+//
+//            }
+//        });
+//        imgleftdra.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                edtphonesearch.setText("");
+//                recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
+//                recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+//            }
+//        });
+//            }
 
 
 

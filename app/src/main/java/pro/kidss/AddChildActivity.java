@@ -29,6 +29,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import pro.kidss.wlcome.WelcomeActivity;
+
 public class AddChildActivity extends AppCompatActivity {
     TextInputEditText etChildName;
     EditText etIMEI;

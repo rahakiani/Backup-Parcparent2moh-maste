@@ -16,7 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import pro.kidss.R;
+import pro.kidss.database.CtokenDataBaseManager;
+import pro.kidss.wlcome.WelcomeActivity;
 
 public class RecyclerViewGetchildAdapter extends RecyclerView.Adapter<RecyclerViewGetchildAdapter.ViewHolder> {
 

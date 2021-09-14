@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import pro.kidss.R;
+import pro.kidss.wlcome.WelcomeActivity;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     String x, y, Adress;

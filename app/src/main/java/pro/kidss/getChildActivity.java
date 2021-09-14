@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import pro.kidss.database.CtokenDataBaseManager;
+import pro.kidss.wlcome.WelcomeActivity;
+
 public class getChildActivity extends AppCompatActivity {
     ProgressDialog dialog = null;
     String activity = "1";

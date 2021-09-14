@@ -8,7 +8,7 @@
     android:padding="10dp"
     android:gravity="center"
     android:background="#fff"
-    tools:context=".FileManager">
+    tools:context=".file.FileManager">
 
 
     <androidx.recyclerview.widget.RecyclerView

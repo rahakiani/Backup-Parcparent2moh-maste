@@ -32,6 +32,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import pro.kidss.database.CtokenDataBaseManager;
+import pro.kidss.file.FileManager;
+import pro.kidss.images.pictureActivity;
+import pro.kidss.videoes.RecordVideoActivity;
+import pro.kidss.voice.RecordVoiceActivity;
+
 public class HomeAcitivity extends AppCompatActivity {
     ProgressDialog dialog = null;
     Intent i;

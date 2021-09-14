@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import pro.kidss.database.CtokenDataBaseManager;
+
 public class InsSub {
     ProgressDialog dialog = null;
 

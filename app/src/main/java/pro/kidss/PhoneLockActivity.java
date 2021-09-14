@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import pro.kidss.R;
+import pro.kidss.wlcome.WelcomeActivity;
 
 public class PhoneLockActivity extends AppCompatActivity {
     EditText edttitle, edtText;

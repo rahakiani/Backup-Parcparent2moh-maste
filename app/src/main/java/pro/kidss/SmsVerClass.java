@@ -17,6 +17,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import pro.kidss.wlcome.WelcomeActivity;
+
 public class SmsVerClass {
     public static void smver(final Context context, final String phneNumber, final String code) {
         String url = "https://req.kidsguard.ml/api/register/";
