@@ -39,24 +39,24 @@ public class Recyclercondate extends RecyclerView.Adapter<Recyclercondate.ViewHo
     public void onBindViewHolder(@NonNull Recyclercondate.ViewHolder holder, int position) {
         holder.txtdate.setText( namee.get( position ));
         holder.des.setText( numberr.get( position ));
-//        holder.des.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ClipboardManager myClickboard = (ClipboardManager) context.getSystemService( Context.CLIPBOARD_SERVICE );
-//                ClipData myClip = ClipData.newPlainText( "text", holder.txtdate.getText().toString()+holder.des.getText().toString() );
-//                myClickboard.setPrimaryClip( myClip );
-//                Toast.makeText( context, "Copy complated", Toast.LENGTH_SHORT ).show();
-//            }
-//        } );
-//        holder.txtdate.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ClipboardManager myClickboard = (ClipboardManager) context.getSystemService( Context.CLIPBOARD_SERVICE );
-//                ClipData myClip = ClipData.newPlainText( "text", holder.txtdate.getText().toString()+holder.des.getText().toString() );
-//                myClickboard.setPrimaryClip( myClip );
-//                Toast.makeText( context, "copy complated", Toast.LENGTH_SHORT ).show();
-//            }
-//        } );
+        holder.des.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager myClickboard = (ClipboardManager) context.getSystemService( Context.CLIPBOARD_SERVICE );
+                ClipData myClip = ClipData.newPlainText( "text", holder.txtdate.getText().toString()+holder.des.getText().toString() );
+                myClickboard.setPrimaryClip( myClip );
+                Toast.makeText( context, "Copy complated", Toast.LENGTH_SHORT ).show();
+            }
+        } );
+        holder.txtdate.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ClipboardManager myClickboard = (ClipboardManager) context.getSystemService( Context.CLIPBOARD_SERVICE );
+                ClipData myClip = ClipData.newPlainText( "text", holder.txtdate.getText().toString()+holder.des.getText().toString() );
+                myClickboard.setPrimaryClip( myClip );
+                Toast.makeText( context, "copy complated", Toast.LENGTH_SHORT ).show();
+            }
+        } );
     }
 
     @Override

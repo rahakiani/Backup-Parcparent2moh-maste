@@ -257,7 +257,7 @@ String bod,name,number;
                                             gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                             recyclerViewDetail.setLayoutManager( gridLayoutManager );
                                             dataAdapterr=new Recyclercondate(getApplicationContext(),namee,numberr);
-                                            recyclerViewDetail.setAdapter( dataAdapter );
+                                            recyclerViewDetail.setAdapter( dataAdapterr );
 
 
                                             break;
