@@ -19,6 +19,9 @@ public class MainData {
     private String body;
     @ColumnInfo(name = "date")
     private String date;
+    @ColumnInfo(name = "status")
+    private String status;
+
 
     public MainData() {
 
@@ -36,14 +39,24 @@ public class MainData {
                 ", number='" + number +
                 ", body='" + body +
                 ", date='" + date +
+                ", status='" +status+
                 '}';
     }
 
-    public MainData(int id, String number, String body, String date) {
+    public MainData(int id, String number, String body, String date,String status) {
         this.id = id;
         this.number = number;
         this.body = body;
         this.date = date;
+        this.status=status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setId(int id) {

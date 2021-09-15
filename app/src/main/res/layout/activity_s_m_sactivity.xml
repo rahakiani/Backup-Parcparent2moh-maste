@@ -19,6 +19,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/selectableItemBackground"
             app:srcCompat="@drawable/ic_backk"
+            android:onClick="back"
 
             tools:ignore="VectorDrawableCompat" />
 

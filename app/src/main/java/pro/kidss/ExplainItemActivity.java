@@ -16,7 +16,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import androidx.annotation.ArrayRes;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -59,15 +61,20 @@ public class ExplainItemActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     RecyclerView recyclerViewDetail;
     ProgressDialog dialog = null;
+    ArrayList<String> namee = new ArrayList<>();
     ArrayList<String> res=new ArrayList<String>();
+    ArrayList<String> numberr=new ArrayList<>();
     EditText edtphonesearch;
     private ImageButton imgleftdra;
-    private String text;
+    private ArrayList<String> text;
     SwipeRefreshLayout swpref;
     Roomdbb roomdb;
     recyclersmsdate dataAdapter;
+    Recyclercondate dataAdapterr;
+    List<String> bodyy;
+    int id;
     List<String> distincmsindata;
-
+String bod,name,number;
     GridLayoutManager gridLayoutManager;
     ArrayList<MainData> dataList = new ArrayList<>();
     @Override
@@ -75,7 +82,7 @@ public class ExplainItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explainitem);
         roomdb = Roomdbb.getInstance( this );
-        dialog = ProgressDialog.show(ExplainItemActivity.this, "please wait", "connecting to server...", true);
+        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "connecting to server...", true);
         recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
         swpref=(SwipeRefreshLayout)findViewById(R.id.swpref);
@@ -120,24 +127,54 @@ public class ExplainItemActivity extends AppCompatActivity {
                                                 String name=numberaray.getString(i);
                                                 String number=bodyaray.getString(i);
                                                 String dir=diraray.getString(i);
-                                                int id=idarray.getInt(i);
+                                                 id=idarray.getInt(i);
 
-                                                String[] send = diraray.getString( i ).split( "\\n" );
-                                                Log.e( "Sendin",send.toString() );
+                                                String[] send = diraray.getString( i ).split( "\\n");
+
+//                                                while (i<diraray.length()){
+//                                                    String stat = send[0].split("\\n").toString();
+                                                    Log.e( "Sendinnn",send[0] );
+//                                                }
+//                                                String[] sendd = send[1].split( "\n" );
+//                                                Log.e( "Sendin",send.toString() );
                                                 Log.e( "IID", String.valueOf( id ) );
 //                                                res.add(name+":"+"\n"+number+"\n"+dir+"\n"+idd+"\n"+id);
-                                                MainData data = new MainData(id,name,number,dir);
-                                                roomdb.mainDao().insert( data );
-                                                dataList.add( data );
+                                                if (roomdb.mainDao().checkid( id )==0){
+                                                    MainData data = new MainData(id,name,number,send[1],send[0]);
+                                                    Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
+                                                    roomdb.mainDao().insert( data );
+                                                    dataList.add( data );
+                                                    dialog.dismiss();
+
+
+                                                }else{
+                                                 Log.e( "ASDADE","ADADE" );
+                                                }
+
+
+
+
+
 
                                                 i++;
+
                                             }
-                                            distincmsindata = roomdb.mainDao().getnumber();
+
                                            recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
+                                            distincmsindata = roomdb.mainDao().getnumber();
+//                                            int b = 0;
+//                                            while (b == distincmsindata.size()){
+//                                                bodyy = roomdb.mainDao().bodyy( distincmsindata.get( b ) );
+////                                                bod = bodyy.get( b );
+//                                                Log.e( "DADA",bodyy.get( b ) );
+//                                                b++;
+//                                            }
+
+
 
                                             gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                             recyclerViewDetail.setLayoutManager( gridLayoutManager );
-                                            dataAdapter=new recyclersmsdate(getApplicationContext(),distincmsindata);
+                                            dataAdapter=new recyclersmsdate(getApplicationContext(),distincmsindata,bod);
                                             recyclerViewDetail.setAdapter( dataAdapter );
 //                                           recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
 
@@ -161,7 +198,7 @@ public class ExplainItemActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         dialog.dismiss();
-                        Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
+                        Alert.shows(ExplainItemActivity.this,"","Please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
                     }
 
@@ -204,16 +241,23 @@ public class ExplainItemActivity extends AppCompatActivity {
 
                                             int i=0;
                                             while (i<contactname.length()){
-                                                String name=contactname.getString(i);
-                                                String number=contactnum.getString(i);
-                                                res.add(name+":"+"\n"+number);
+                                                String nameeee=contactname.getString( i );
+                                                String nuuum=contactnum.getString( i );
+                                                namee.add( nameeee);
+                                               Log.e( "CHIIIII",namee.toString() );
+
+                                                numberr.add( nuuum);
+                                                Log.e( "CHII52572I",numberr.toString() );
 
                                                 i++;
+                                                dialog.dismiss();
                                             }
 
 
-                                            recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                            recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+                                            gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
+                                            recyclerViewDetail.setLayoutManager( gridLayoutManager );
+                                            dataAdapterr=new Recyclercondate(getApplicationContext(),namee,numberr);
+                                            recyclerViewDetail.setAdapter( dataAdapter );
 
 
                                             break;

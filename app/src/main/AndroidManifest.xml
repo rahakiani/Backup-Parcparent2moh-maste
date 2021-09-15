@@ -33,7 +33,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SMSactivity"></activity>
+        <activity android:name=".SMSactivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".BTSActivity" />
         <activity
             android:name=".voice.Player_Voice"

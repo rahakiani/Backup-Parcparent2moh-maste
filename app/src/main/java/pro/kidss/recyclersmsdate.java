@@ -13,15 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import pro.kidss.database.MainData;
+import pro.kidss.database.Roomdb;
+import pro.kidss.database.Roomdbb;
 import pro.kidss.videoes.RecyclerviewVidcat;
 
 public class recyclersmsdate extends RecyclerView.Adapter<recyclersmsdate.ViewHolder> {
     List<String>distinc;
     private int animation_type = 0;
     Context context;
-    public recyclersmsdate(Context context, List<String> distincmsindata) {
+    Roomdbb roomdb;
+    String bodyy;
+    public recyclersmsdate(Context context, List<String> distincmsindata,String bod) {
         this.context=context;
         this.distinc = distincmsindata;
+        this.bodyy = bod;
 
 
     }
@@ -35,6 +41,18 @@ public class recyclersmsdate extends RecyclerView.Adapter<recyclersmsdate.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+
+//        holder.des.setText( bodyy);
+        holder.des.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,SMSactivity.class);
+                intent.putExtra( "NAME",distinc.get( position ) );
+                intent.setFlags( intent.FLAG_ACTIVITY_NEW_TASK );
+                context.startActivity( intent );
+            }
+        } );
         holder.txtdate.setText( distinc.get( position ) );
         holder.txtdate.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -68,7 +86,7 @@ public class recyclersmsdate extends RecyclerView.Adapter<recyclersmsdate.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView txtdate;
+        TextView txtdate,des;
 
 
         private final View parent_view;
@@ -79,7 +97,7 @@ public class recyclersmsdate extends RecyclerView.Adapter<recyclersmsdate.ViewHo
             parent_view = view.findViewById( android.R.id.content );
 
 
-
+            des =view.findViewById( R.id.description );
             txtdate = view.findViewById( R.id.name );
         }
     }
