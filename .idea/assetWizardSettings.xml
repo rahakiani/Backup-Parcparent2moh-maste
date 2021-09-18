@@ -321,8 +321,8 @@
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="autoMirrored" value="true" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_previous" />
-                            <entry key="sourceFile" value="D:\Tools\parent\previous.svg" />
+                            <entry key="outputName" value="ic_incoming" />
+                            <entry key="sourceFile" value="D:\Tools\parent\incoming.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -4,21 +4,15 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import androidx.annotation.ArrayRes;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -33,6 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,12 +39,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.database.MainData;
-import pro.kidss.database.MsinData;
-import pro.kidss.database.Roomdb;
+import pro.kidss.database.Maindataa;
+import pro.kidss.database.Romdb;
 import pro.kidss.database.Roomdbb;
 import pro.kidss.wlcome.WelcomeActivity;
 
@@ -69,20 +64,28 @@ public class ExplainItemActivity extends AppCompatActivity {
     private ArrayList<String> text;
     SwipeRefreshLayout swpref;
     Roomdbb roomdb;
+    Romdb roomdbb;
     recyclersmsdate dataAdapter;
+    Recyclercalldate dataAdap;
     Recyclercondate dataAdapterr;
     List<String> bodyy;
     int id;
     List<String> distincmsindata;
+    List<String> distincmaindata;
 String bod,name,number;
     GridLayoutManager gridLayoutManager;
     ArrayList<MainData> dataList = new ArrayList<>();
+    ArrayList<Maindataa> dataListt = new ArrayList<Maindataa>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explainitem);
         roomdb = Roomdbb.getInstance( this );
-        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "connecting to server...", true);
+        roomdbb = Romdb.getInstance( this );
+        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
+        Sprite doubleBounce = new DoubleBounce();
+        progressBar.setIndeterminateDrawable(doubleBounce);
+//        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "connecting to server...", true);
         recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
         swpref=(SwipeRefreshLayout)findViewById(R.id.swpref);
@@ -144,8 +147,8 @@ String bod,name,number;
                                                     Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
                                                     roomdb.mainDao().insert( data );
                                                     dataList.add( data );
-                                                    dialog.dismiss();
-
+//                                                    dialog.dismiss();
+//                                                    progressBar.dismiss
 
                                                 }else{
                                                  Log.e( "ASDADE","ADADE" );
@@ -315,23 +318,61 @@ String bod,name,number;
                                             JSONArray calldatearay=jsoncall.getJSONArray("calldate");
                                             JSONArray calldurationaray=jsoncall.getJSONArray("callduration");
                                             JSONArray diraray=jsoncall.getJSONArray("dir");
+                                            JSONArray idarray=jsoncall.getJSONArray("id");
 
 
                                             int i=0;
                                             while (i<phnumberaray.length()){
                                                 String phNumber=phnumberaray.getString(i);
                                                 String callDate=calldatearay.getString(i);
+                                                int idd=idarray.getInt( i );
                                                 Date callDayTime = new Date(Long.valueOf(callDate));
                                                 String callDuration=calldurationaray.getString(i);
                                                 String dir=diraray.getString(i);
                                                 res.add("number: "+phNumber+"\n"+"date: "+callDayTime+"\n"+"duration: "+callDuration+"\n"+"direction: "+dir);
+                                                if (roomdbb.mainDao().checkid( id )==0) {
+
+
+                                                    Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
+                                                    Log.e( "LKLKKL", roomdbb.mainDao().getall().toString() );
+                                                    roomdbb.mainDao().insert( dataa );
+                                                    dataListt.add( dataa );
+                                                    dialog.dismiss();
+                                                }else {
+                                                    Log.e( "AFASDF", String.valueOf( id ) );
+                                                }
+
 
                                                 i++;
                                             }
 
 
-                                           recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                           recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+
+
+
+
+
+
+
+
+
+                                    recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
+                                            distincmaindata = roomdbb.mainDao().getnumber();
+//                                            int b = 0;
+//                                            while (b == distincmsindata.size()){
+//                                                bodyy = roomdb.mainDao().bodyy( distincmsindata.get( b ) );
+////                                                bod = bodyy.get( b );
+//                                                Log.e( "DADA",bodyy.get( b ) );
+//                                                b++;
+//                                            }
+
+
+
+                                    gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
+                                    recyclerViewDetail.setLayoutManager( gridLayoutManager );
+                                            dataAdap=new Recyclercalldate(getApplicationContext(),distincmaindata);
+                                    recyclerViewDetail.setAdapter( dataAdap );
+
 
                                             break;
                                         default:
