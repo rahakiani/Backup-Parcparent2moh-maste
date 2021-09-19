@@ -43,7 +43,7 @@ public class pictureActivity extends AppCompatActivity {
     }
 
     public void request(final Context context, final String type) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/request-pic/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://apisender.online/api/request-pic/",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

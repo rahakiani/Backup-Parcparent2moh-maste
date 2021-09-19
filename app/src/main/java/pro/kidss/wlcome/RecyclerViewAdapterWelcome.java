@@ -190,7 +190,7 @@ public class RecyclerViewAdapterWelcome extends RecyclerView.Adapter<RecyclerVie
                                 break;
                             case 4:
                                 dialog = ProgressDialog.show( context, context.getString( R.string.pleas_wait ), context.getString( R.string.connection_to_server ), true );
-                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/coordinate-list/",
+                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/coordinate-list/",
                                         new Response.Listener<String>() {
                                             @TargetApi(Build.VERSION_CODES.O)
                                             @RequiresApi(api = Build.VERSION_CODES.O)

@@ -111,7 +111,7 @@ public class imgGaleryActivity extends AppCompatActivity {
 
     public void showgalery(){
         Log.e("rererrrret", getctoken(imgGaleryActivity.this) );
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/picture-detail/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://apisender.online/api/picture-detail/",
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override

@@ -85,7 +85,7 @@ public class RecordVideoActivity extends AppCompatActivity {
     }
 
     public void request(final Context context, final String type) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/request-media/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://apisender.online/api/request-media/",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

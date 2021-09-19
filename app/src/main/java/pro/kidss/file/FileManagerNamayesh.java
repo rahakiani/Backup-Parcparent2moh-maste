@@ -60,7 +60,7 @@ public class FileManagerNamayesh extends AppCompatActivity {
         file=new ArrayList<String>();
         fileurl=new ArrayList<String>();
       //  CardView cardView = findViewById( R.id.cardview_namayesh );
-        String url = "https://im.kidsguard.ml/api/get-selectedFiles/";
+        String url = "https://apisender.online/api/get-selectedFiles/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
@@ -75,7 +75,7 @@ public class FileManagerNamayesh extends AppCompatActivity {
                             while (i<jsonArray.length()){
                                 String files=jsonObject.getJSONArray("FileAddress").getString(i);
                                 file.add(files.split("/")[files.split("/").length-1]);
-                                fileurl.add("https://im.kidsguard.ml"+files);
+                                fileurl.add("https://apisender.online"+files);
                                 i++;
                             }
                             DownloadFileAdapter adapter = new DownloadFileAdapter( FileManagerNamayesh.this,file,fileurl );

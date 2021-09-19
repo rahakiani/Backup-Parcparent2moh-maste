@@ -208,7 +208,7 @@ public class RecyclerviewImage extends RecyclerView.Adapter<RecyclerviewImage.Vi
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //send
-                                    StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/delete-picture/",
+                                    StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/delete-picture/",
                                             new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String response) {

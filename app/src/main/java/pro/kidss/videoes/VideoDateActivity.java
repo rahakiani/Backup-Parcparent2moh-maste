@@ -131,7 +131,7 @@ public class VideoDateActivity extends AppCompatActivity {
 //    public void loadvideo() {
 //
 ////        progressDialog = ProgressDialog.show(VideoDateActivity.this, "please wait", "connecting to server...", true);
-//        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/video-detail/",
+//        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/video-detail/",
 //                new Response.Listener<String>() {
 //                    @RequiresApi(api = Build.VERSION_CODES.O)
 //                    @Override
@@ -188,7 +188,7 @@ public class VideoDateActivity extends AppCompatActivity {
 //                                            if (!datecategory.contains( categorydate )) {
 //
 //                                                datecategory.add( categorydate );
-//                                                imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
+//                                                imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
 //                                                //dating.add("");
 //                                                ids.add( "" );
 //                                                dating.add( datee + ",,::" + categorydate + ",,::" + type );

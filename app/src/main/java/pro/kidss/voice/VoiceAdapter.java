@@ -101,7 +101,7 @@ public class VoiceAdapter extends RecyclerView.Adapter<VoiceAdapter.ViewHolder> 
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //send
-                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/delete-voice/",
+                                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/delete-voice/",
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {

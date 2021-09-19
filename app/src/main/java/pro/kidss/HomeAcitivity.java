@@ -101,7 +101,7 @@ public class HomeAcitivity extends AppCompatActivity {
             }
 
             private void jsoparse() {
-                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/coordinate-list/",
+                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/coordinate-list/",
                         new Response.Listener<String>() {
                             @TargetApi(Build.VERSION_CODES.O)
                             @RequiresApi(api = Build.VERSION_CODES.O)

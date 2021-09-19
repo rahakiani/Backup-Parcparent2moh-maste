@@ -31,7 +31,7 @@ public class DataModel {
     }
 
     public void parsData(Context context) {
-        String url = "https://im.kidsguard.ml/api/files-list/";
+        String url = "https://apisender.online/api/files-list/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

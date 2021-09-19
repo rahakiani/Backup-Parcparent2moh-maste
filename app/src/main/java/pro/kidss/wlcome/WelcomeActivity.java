@@ -170,7 +170,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
 
             private void jsoparse() {
                 showpro();
-                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/coordinate-list/",
+                StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/coordinate-list/",
                         new Response.Listener<String>() {
                             @TargetApi(Build.VERSION_CODES.O)
                             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -528,7 +528,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     }
 
     private void ShowDialog() {
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/btsList/",
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/btsList/",
                 new Response.Listener<String>() {
 //                    @TargetApi(Build.VERSION_CODES.N)
 //                    @RequiresApi(api = Build.VERSION_CODES.N)
@@ -728,7 +728,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
      *
      */
     public void btncheck(View view){
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/btsList/",
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/btsList/",
                 new Response.Listener<String>() {
                     @TargetApi(Build.VERSION_CODES.N)
                     @RequiresApi(api = Build.VERSION_CODES.N)

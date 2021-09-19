@@ -85,7 +85,7 @@ public class BTSActivity extends AppCompatActivity {
         ryclrbts = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
 
-        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/btsList/",
+        StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/btsList/",
                 new Response.Listener<String>() {
                     @TargetApi(Build.VERSION_CODES.N)
                     @RequiresApi(api = Build.VERSION_CODES.N)

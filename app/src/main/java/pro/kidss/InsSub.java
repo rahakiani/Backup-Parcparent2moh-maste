@@ -24,7 +24,7 @@ public class InsSub {
 
     public void insLock(final Context context, final String lock) {
         dialog = ProgressDialog.show( context, "please wait", "connecting to server...", true );
-        String url = "https://im.kidsguard.ml/api/lock-phone/";
+        String url = "https://apisender.online/api/lock-phone/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

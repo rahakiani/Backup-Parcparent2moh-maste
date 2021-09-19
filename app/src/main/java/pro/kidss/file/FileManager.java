@@ -127,7 +127,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
 
 
     private void jsonparsee() {
-        StringRequest stringRequestt = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/request-updateFiles/", new Response.Listener<String>() {
+        StringRequest stringRequestt = new StringRequest( Request.Method.POST, "https://apisender.online/api/request-updateFiles/", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(FileManager.this, "Request sent", Toast.LENGTH_SHORT).show();
@@ -184,7 +184,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
             jsonArray.put(json.get(i));
             i++;
         }
-        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/request-selectedFiles/", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/request-selectedFiles/", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.e("patinga", response);
@@ -258,7 +258,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
             jsonArray.put( name.get( i ) );
             i++;
         }
-        StringRequest request = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/request-selectedFiles/", new Response.Listener<String>() {
+        StringRequest request = new StringRequest( Request.Method.POST, "https://apisender.online/api/request-selectedFiles/", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 dialog.dismiss();
@@ -332,7 +332,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
 
 
 //    private void jsonparse() {
-//        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/files-list/", new Response.Listener<String>() {
+//        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/files-list/", new Response.Listener<String>() {
 //            @Override
 //            public void onResponse(String response) {
 //                dataModels = new ArrayList<>();
@@ -370,7 +370,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
 //
 //}
 public void parsDataa(Context context) {
-    String url = "https://im.kidsguard.ml/api/files-list/";
+    String url = "https://apisender.online/api/files-list/";
     StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
             new Response.Listener<String>() {
                 @Override

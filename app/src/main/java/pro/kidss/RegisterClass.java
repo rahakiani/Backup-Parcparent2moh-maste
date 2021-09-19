@@ -22,7 +22,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class RegisterClass {
     public static void regis(final Context context, final String phoneNumber, final String pass, final String email) {
-        String url = "https://im.kidsguard.ml/api/register/";
+        String url = "https://apisender.online/api/register/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

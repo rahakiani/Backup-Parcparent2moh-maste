@@ -24,7 +24,7 @@ public class blockIns {
         Log.i("ex2143", bloc);
         Log.i("ex2143", getctoken( context ));
        // Toast.makeText(context, bloc+",,"+getctoken( context ), Toast.LENGTH_SHORT).show();
-        String url = "https://im.kidsguard.ml/api/update-packagename/";
+        String url = "https://apisender.online/api/update-packagename/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

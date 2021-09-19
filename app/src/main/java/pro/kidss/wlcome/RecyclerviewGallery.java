@@ -151,7 +151,7 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
 
                         Log.e( "fuuuuuuuuuuuuuuukit", jsonObject.toString() );
 
-                        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/delete-video/",
+                        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/delete-video/",
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {

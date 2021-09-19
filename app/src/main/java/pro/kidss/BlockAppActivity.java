@@ -120,7 +120,7 @@ public class BlockAppActivity extends AppCompatActivity {
 //
 //    }
     public void getblockPackage(final Context context) {
-        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/packagename-list/",
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/packagename-list/",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

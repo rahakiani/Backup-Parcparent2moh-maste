@@ -140,7 +140,7 @@ public class getChildActivity extends AppCompatActivity {
 
     public void getchild(final Context context) {
 
-        String url = "https://im.kidsguard.ml/api/all-kids/";
+        String url = "https://apisender.online/api/all-kids/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

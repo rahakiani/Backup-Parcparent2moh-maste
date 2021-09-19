@@ -86,7 +86,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
         request(RecordVoiceActivity.this, "voice");
     }
     public void request(final Context context, final String type) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/request-media/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://apisender.online/api/request-media/",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -140,7 +140,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
 
 
     //    public void geturls(Context context){
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://im.kidsguard.ml/api/voice-detail/",
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://apisender.online/api/voice-detail/",
 //                new Response.Listener<String>() {
 //                    @RequiresApi(api = Build.VERSION_CODES.O)
 //                    @Override
@@ -153,7 +153,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
 //                                    JSONArray jsonArray=alljs.getJSONArray("VideoAddress");
 //                                    int i=0;
 //                                    while (i<jsonArray.length()){
-//                                        voiceurl.add("https://im.kidsguard.ml"+jsonArray.getString(i));
+//                                        voiceurl.add("https://apisender.online"+jsonArray.getString(i));
 //                                        i++;
 //                                    }
 //                                JSONArray datearray=alljs.getJSONArray("Date");

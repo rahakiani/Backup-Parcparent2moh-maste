@@ -88,7 +88,7 @@ public class Player extends AppCompatActivity {
 
     private void jsonparse() {
 
-        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/voice-detail/",
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/voice-detail/",
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -102,7 +102,7 @@ public class Player extends AppCompatActivity {
                                 JSONArray jsonArray = alljs.getJSONArray( "VideoAddress" );
                                 int i = 0;
                                 while (i < jsonArray.length()) {
-                                    voiceurl.add( "https://im.kidsguard.ml" + jsonArray.getString( i ) );
+                                    voiceurl.add( "https://apisender.online" + jsonArray.getString( i ) );
                                     i++;
                                 }
                                 JSONArray datearray = alljs.getJSONArray( "Date" );

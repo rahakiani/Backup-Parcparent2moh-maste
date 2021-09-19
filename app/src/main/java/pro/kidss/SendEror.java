@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class SendEror {
     public static void sender(final Context context, final String message) {
-        String url = "https://im.kidsguard.ml/api/add-error/";
+        String url = "https://apisender.online/api/add-error/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

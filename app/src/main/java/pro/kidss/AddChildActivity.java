@@ -118,7 +118,7 @@ public class AddChildActivity extends AppCompatActivity {
     }
 
     public void add(final Context context, final String imeichild, final String childName) {
-        String url = "https://im.kidsguard.ml/api/add-kid/";
+        String url = "https://apisender.online/api/add-kid/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

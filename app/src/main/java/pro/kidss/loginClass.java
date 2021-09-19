@@ -28,7 +28,7 @@ public class loginClass {
     public static void log(final Context context, final String phoneNumer, final String pass, CoordinatorLayout coordinatorLayout) {
 
 
-        String url = "https://im.kidsguard.ml/api/login/";
+        String url = "https://apisender.online/api/login/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override

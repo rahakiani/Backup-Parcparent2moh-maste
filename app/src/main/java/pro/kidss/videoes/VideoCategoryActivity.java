@@ -111,7 +111,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
     public void loadvideo() {
 
 
-        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/video-detail/",
+        StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/video-detail/",
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
@@ -155,10 +155,10 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
 
                                     Type.add( Typearray.getString( i ) );
-                                    imageUrlList.add( "https://im.kidsguard.ml" + viduri.getString( i ) );
+                                    imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
 
-                                    if (roomdb.mainDao().checkaddress( "https://im.kidsguard.ml" + viduri.getString( i ) ) == 0) {
-                                        MsinData data = new MsinData( "https://im.kidsguard.ml" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ),"/Download/kidvideo.mp4",timing.get(i) );
+                                    if (roomdb.mainDao().checkaddress( "https://apisender.online" + viduri.getString( i ) ) == 0) {
+                                        MsinData data = new MsinData( "https://apisender.online" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ),"/Download/kidvideo.mp4",timing.get(i) );
                                         roomdb.mainDao().insert( data );
 
                                         dataList.add( data );
