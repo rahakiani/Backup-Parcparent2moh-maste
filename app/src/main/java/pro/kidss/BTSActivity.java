@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +49,7 @@ public class BTSActivity extends AppCompatActivity {
     RecyclerView ryclrbts;
     ProgressDialog dialog = null;
     SwipeRefreshLayout swpref;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     ArrayList<String> lac,cell,mnc,mcc,dating;
     Dialog dialog1;
     ImageView close;
@@ -64,7 +66,22 @@ public class BTSActivity extends AppCompatActivity {
         mnc=new ArrayList<String>();
         mcc=new ArrayList<String>();
         dating=new ArrayList<String>();
-        dialog = ProgressDialog.show(BTSActivity.this, "Please Wait", "connecting to server...", true);
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
+//        dialog = ProgressDialog.show(BTSActivity.this, "Please Wait", "connecting to server...", true);
         ryclrbts = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
 
@@ -75,7 +92,7 @@ public class BTSActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                        // Toast.makeText(BTSActivity.this, response, Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
+                        progressBarGIFDialog.clear();
 
                         try {
 
@@ -130,7 +147,7 @@ public class BTSActivity extends AppCompatActivity {
 //                            }
 
                         } catch (JSONException e) {
-                            dialog.dismiss();
+                           progressBarGIFDialog.clear();
                             e.printStackTrace();
                             SendEror.sender(BTSActivity.this,e.toString());
 
@@ -140,8 +157,8 @@ public class BTSActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
-                Alert.shows(BTSActivity.this,"","please check the connection","ok","");
+                progressBarGIFDialog.clear();
+                ShowTry();
                 SendEror.sender(BTSActivity.this,error.toString());
             }
 

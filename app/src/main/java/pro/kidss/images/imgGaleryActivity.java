@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +59,7 @@ public class imgGaleryActivity extends AppCompatActivity {
     ArrayList<String> timing = new ArrayList<String>();
     RecyclerView recyclerView;
     Dialog dialog1;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     Button accept;
     TextView messageTv, titleTv, timer;
     ImageView close;
@@ -76,6 +78,21 @@ public class imgGaleryActivity extends AppCompatActivity {
         removefab = (FloatingActionButton) findViewById( R.id.fab );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
         dialog1 = new Dialog(this);
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
         swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -84,55 +101,12 @@ public class imgGaleryActivity extends AppCompatActivity {
                 swpref.setRefreshing(false);
             }
         });
-        ShowDialog();
+
         showgalery();
 
     }
 
-    private void ShowDialog() {
-        dialog1.setContentView(R.layout.alert_wait);
-        close = (ImageView) dialog1.findViewById(R.id.close_accept);
-        accept = (Button) dialog1.findViewById(R.id.btnAccept);
-        timer = (TextView) dialog1.findViewById(R.id.text_timer);
-        titleTv = (TextView) dialog1.findViewById(R.id.title_go);
-        messageTv = (TextView) dialog1.findViewById(R.id.messaage_acceot);
-        titleTv.setText("Please Wait");
-        messageTv.setText("Connecting To Server...");
-        long duration = TimeUnit.SECONDS.toMillis(1);
-        new CountDownTimer(duration, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format( Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds(0)
-                        , TimeUnit.SECONDS.toSeconds(59) -
-                                TimeUnit.SECONDS.toSeconds(TimeUnit.SECONDS.toSeconds(1)));
-                timer.setText(sDuration);
-            }
 
-            @Override
-            public void onFinish() {
-                timer.setVisibility(View.GONE);
-                accept.setVisibility(View.VISIBLE);
-
-
-            }
-        }.start();
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-
-        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable( Color.TRANSPARENT));
-        dialog1.show();
-    }
 
 
     public void showgalery(){
@@ -168,13 +142,7 @@ public class imgGaleryActivity extends AppCompatActivity {
                                     String[] time=all[1].split(":");
                                     int hour= Integer.parseInt(time[0]);
                                     int min= Integer.parseInt(time[1]);
-//                                    Calendar mCalendar = new GregorianCalendar();
-//                                    mCalendar.set(year,mounth,day,hour,min,00);
-//                                    Calendar.Builder calendar=new Calendar.Builder();
-//                                    calendar.setDate(year,mounth-1,day);
-//                                    calendar.setTimeOfDay(hour,min,0);
-//                                    calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-//                                    dating.add(String.valueOf(calendar.build().getTime()));
+
                                     Calendar callForDate = Calendar.getInstance();
                                     callForDate.set( year, mounth, day, hour, min, 00 );
                                     callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
@@ -192,7 +160,7 @@ public class imgGaleryActivity extends AppCompatActivity {
 
                                     b++;
                                 }
-                                dialog1.dismiss();
+                               progressBarGIFDialog.clear();
 //                                Log.e("onResponse", img.get(i));
                                     recyclerView = (RecyclerView) findViewById(R.id.imgrecyclerView);
                                     gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);

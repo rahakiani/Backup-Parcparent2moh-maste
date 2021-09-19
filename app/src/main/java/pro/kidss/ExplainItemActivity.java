@@ -27,8 +27,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.ybq.android.spinkit.sprite.Sprite;
-import com.github.ybq.android.spinkit.style.DoubleBounce;
+
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +64,7 @@ public class ExplainItemActivity extends AppCompatActivity {
     private ArrayList<String> text;
     SwipeRefreshLayout swpref;
     Roomdbb roomdb;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     Romdb roomdbb;
     recyclersmsdate dataAdapter;
     Recyclercalldate dataAdap;
@@ -82,9 +83,22 @@ String bod,name,number;
         setContentView(R.layout.activity_explainitem);
         roomdb = Roomdbb.getInstance( this );
         roomdbb = Romdb.getInstance( this );
-        ProgressBar progressBar = (ProgressBar)findViewById(R.id.spin_kit);
-        Sprite doubleBounce = new DoubleBounce();
-        progressBar.setIndeterminateDrawable(doubleBounce);
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
+
 //        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "connecting to server...", true);
         recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
@@ -111,7 +125,7 @@ String bod,name,number;
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onResponse(String response) {
-                                dialog.dismiss();
+
                                 try {
 
                                     JSONObject jsonsms=new JSONObject(response);
@@ -149,9 +163,10 @@ String bod,name,number;
                                                     dataList.add( data );
 //                                                    dialog.dismiss();
 //                                                    progressBar.dismiss
-
+                                                    progressBarGIFDialog.clear();
                                                 }else{
                                                  Log.e( "ASDADE","ADADE" );
+                                                    progressBarGIFDialog.clear();
                                                 }
 
 
@@ -190,7 +205,7 @@ String bod,name,number;
                                     }
 
                                 } catch (JSONException e) {
-                                    dialog.dismiss();
+                                     progressBarGIFDialog.clear();
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
 
@@ -200,7 +215,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+                         progressBarGIFDialog.clear();
                         Alert.shows(ExplainItemActivity.this,"","Please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
                     }
@@ -230,7 +245,7 @@ String bod,name,number;
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                dialog.dismiss();
+                                progressBarGIFDialog.clear();
                                 Log.e("smsres", response );
                                 try {
                                     JSONObject jsoncontact=new JSONObject(response);
@@ -253,7 +268,7 @@ String bod,name,number;
                                                 Log.e( "CHII52572I",numberr.toString() );
 
                                                 i++;
-                                                dialog.dismiss();
+
                                             }
 
 
@@ -271,7 +286,7 @@ String bod,name,number;
                                     }
 
                                 } catch (JSONException e) {
-                                    dialog.dismiss();
+                                     progressBarGIFDialog.clear();
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
                                 }
@@ -279,7 +294,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+                        progressBarGIFDialog.clear();
                         Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 
@@ -307,7 +322,7 @@ String bod,name,number;
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                dialog.dismiss();
+
                                 try {
                                     JSONObject jsoncall=new JSONObject(response);
                                     String status=jsoncall.getString("status");
@@ -337,9 +352,10 @@ String bod,name,number;
                                                     Log.e( "LKLKKL", roomdbb.mainDao().getall().toString() );
                                                     roomdbb.mainDao().insert( dataa );
                                                     dataListt.add( dataa );
-                                                    dialog.dismiss();
+                                                   progressBarGIFDialog.clear();
                                                 }else {
                                                     Log.e( "AFASDF", String.valueOf( id ) );
+                                                    progressBarGIFDialog.clear();
                                                 }
 
 
@@ -382,7 +398,7 @@ String bod,name,number;
                                     }
 
                                 } catch (JSONException e) {
-                                    dialog.dismiss();
+                                     progressBarGIFDialog.clear();
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
                                 }
@@ -390,7 +406,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+                         progressBarGIFDialog.clear();
                         Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 
@@ -418,7 +434,7 @@ String bod,name,number;
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                dialog.dismiss();
+                                 progressBarGIFDialog.clear();
                                 JSONObject jsonstatus = null;
 
                                 try {
@@ -442,7 +458,7 @@ String bod,name,number;
                                                 e.printStackTrace();
 
                                                 // Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
-                                                dialog.dismiss();
+                                                 progressBarGIFDialog.clear();
                                                 SendEror.sender(ExplainItemActivity.this,e.toString());
 
                                             }
@@ -455,7 +471,7 @@ String bod,name,number;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
 
-                                    dialog.dismiss();
+                                     progressBarGIFDialog.clear();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
 
                                 }
@@ -463,7 +479,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+                         progressBarGIFDialog.clear();
 
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 

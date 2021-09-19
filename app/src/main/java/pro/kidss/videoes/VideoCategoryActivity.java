@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,7 +62,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
     ArrayList<String> Type = new ArrayList<String>();
     ArrayList<String> dating = new ArrayList<String>();
     ArrayList<String> timing = new ArrayList<String>();
-    ProgressDialog progressDialog;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     FloatingActionButton fabremove;
     //    RecyclerviewImage dataAdapter;
     RecyclerviewVidcat dataAdapter;
@@ -77,6 +78,21 @@ public class VideoCategoryActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         dialog1 = new Dialog( this );
         setContentView( R.layout.activity_video_category );
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
         roomdb = Roomdb.getInstance( this );
 //        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinatorr );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
@@ -90,21 +106,11 @@ public class VideoCategoryActivity extends AppCompatActivity {
         } );
         loadvideo();
     }
-//    File folder = new File( Environment.getExternalStorageDirectory()+
-//            File.separator+"folderparent");
-//    boolean success = true;
-//    if (!folder.exists()) {
-//                success = folder.mkdirs();
-//            }
-//    if (success) {
-//                // Do something on success
-//    } else {
-//                // Do something else on failure
-//            }
+
 
     public void loadvideo() {
-        ShowDialog();
-        //progressDialog = ProgressDialog.show(VideoCategoryActivity.this, "please wait", "connecting to server...", true);
+
+
         StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/video-detail/",
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -158,69 +164,17 @@ public class VideoCategoryActivity extends AppCompatActivity {
                                         dataList.add( data );
                                         ids.add( "" );
                                         Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
-                                        dialog1.dismiss();
+                                        progressBarGIFDialog.clear();
                                     } else {
                                         Log.e( "DDDD", "FFFF" );
-                                        dialog1.dismiss();
+                                        progressBarGIFDialog.clear();
 //                                            dataList.addAll( roomdb.mainDao().getall() );
                                     }
 
-//                                        switch (roomdb.mainDao().checkaddress(imageUrlList.toString())){
-//                                            case 0:
-////                                                switch (roomdb.mainDao().checkdate(datee.toString())){
-////                                                    case 0:
-////
-////                                                    default:
-////                                                        Log.e("JJJJJ","FFFF");
-////
-////
-////                                                }
-//                                                MsinData data = new MsinData(imageUrlList.toString(), 0, 0,datee.toString());
-//                                                roomdb.mainDao().insert(data);
-//                                                dataList.add(data);
-//                                                Log.e("DDDD",roomdb.mainDao().getall().toString());
-//
-//                                            default:
-//                                                Log.e("DDDD","FFFF");
-//
-//
-//
-//                                        }
-//
-//
-////                                            MsinData data = new MsinData(imageUrlList.toString(), 0, 0);
-////                                            roomdb.mainDao().insert(data);
-//                                            //dating.add("");
-//                                            ids.add("");
-//
-//                            }
-                                    //dating.add("");
+
                                     i++;
                                 }
-//                                JSONArray datearray=vidobject.getJSONArray("Date");
-//                                int b=0;
-//                                while (b<datearray.length()){
-//                                    String[] all=datearray.getString(b).split("T");
-//                                    String[] date=all[0].split("-");
-//                                    int year= Integer.parseInt(date[0]);
-//                                    int mounth= Integer.parseInt(date[1]);
-//                                    int day= Integer.parseInt(date[2]);
-//                                    String[] time=all[1].split(":");
-//                                    int hour= Integer.parseInt(time[0]);
-//                                    int min= Integer.parseInt(time[1]);
-//                                    Calendar mCalendar = new GregorianCalendar();
-//                                    mCalendar.set(year,mounth,day,hour,min,00);
-//                                    Calendar.Builder calendar=new Calendar.Builder();
-//                                    calendar.setDate(year,mounth-1,day);
-//                                    calendar.setTimeOfDay(hour,min,0);
-//                                    calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-//                                    DateConverter converter = new DateConverter();
-//                                    converter.gregorianToPersian(calendar.build().get(Calendar.YEAR), calendar.build().get(Calendar.MONTH)+1, calendar.build().get(Calendar.DAY_OF_MONTH));
-//                                    Log.e("fuuuuuuuuuuuuuuukitime", String.valueOf(calendar.build().getTime()));
-//                                    Log.e("fuuuuuuuuuuuuuuukit",converter.getYear()+"/"+converter.getMonth()+"/"+converter.getDay());
-//                                    dating.add(String.valueOf(converter.getYear()+"/"+converter.getMonth()+"/"+converter.getDay()+"\n"+calendar.build().getTime().getHours()+":"+calendar.build().getTime().getMinutes()+":"+calendar.build().getTime().getSeconds()));
-//                                    b++;
-//                                }
+
                                 Log.e( "DATALIST", dataList.toString() );
                                 distincmsindata = roomdb.mainDao().gettyper();
                                 recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
@@ -231,7 +185,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            dialog1.dismiss();
+
                             Showtry();
                             //Alert.shows(VideoCategoryActivity.this,"","please check the connection","ok","");
                             SendEror.sender( VideoCategoryActivity.this, e.toString() );
@@ -241,7 +195,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
+
                 Showtry();
                 //Alert.shows(VideoCategoryActivity.this,"","please check the connection","ok","");
                 SendEror.sender( VideoCategoryActivity.this, error.toString() );
@@ -276,51 +230,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
         dialog1.show();
     }
 
-    private void ShowDialog() {
 
-        dialog1.setContentView( R.layout.alert_wait );
-        close = (ImageView) dialog1.findViewById( R.id.close_accept );
-        accept = (Button) dialog1.findViewById( R.id.btnAccept );
-        timer = (TextView) dialog1.findViewById( R.id.text_timer );
-        titleTv = (TextView) dialog1.findViewById( R.id.title_go );
-        messageTv = (TextView) dialog1.findViewById( R.id.messaage_acceot );
-        titleTv.setText( "Please Wait" );
-        messageTv.setText( "Connecting To Server..." );
-        long duration = TimeUnit.SECONDS.toMillis( 1 );
-        new CountDownTimer( duration, 100 ) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format( Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds( 0 )
-                        , TimeUnit.SECONDS.toSeconds( 59 ) -
-                                TimeUnit.SECONDS.toSeconds( TimeUnit.SECONDS.toSeconds( 1 ) ) );
-                timer.setText( sDuration );
-            }
-
-            @Override
-            public void onFinish() {
-                timer.setVisibility( View.GONE );
-                accept.setVisibility( View.VISIBLE );
-
-
-            }
-        }.start();
-        close.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        } );
-        accept.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        } );
-
-        dialog1.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-        dialog1.show();
-    }
 
     public String getctoken(Context context) {
         CtokenDataBaseManager ctok = new CtokenDataBaseManager( context );

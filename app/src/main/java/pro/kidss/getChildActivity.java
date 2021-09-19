@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,6 +41,7 @@ public class getChildActivity extends AppCompatActivity {
     String activity = "1";
     private View parent_view;
     private View back_drop;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     private boolean rotate = false;
     private View lyt_add;
     String a = "1";
@@ -102,9 +104,23 @@ public class getChildActivity extends AppCompatActivity {
                 startActivity( b9 );
             }
         } );
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
 
+        progressBarGIFDialog.setCancelable(false)
 
-        dialog = ProgressDialog.show( getChildActivity.this, "please wait", "connecting to server...", true );
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
+
+//        dialog = ProgressDialog.show( getChildActivity.this, "please wait", "connecting to server...", true );
 
     }
 
@@ -130,7 +146,8 @@ public class getChildActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.e( "dsrrfdfs", response );
-                        dialog.dismiss();
+
+                        progressBarGIFDialog.clear();
                         try {
                             JSONObject jsonchilldcondition = new JSONObject( response );
                             String status = jsonchilldcondition.getString( "status" );
@@ -173,7 +190,7 @@ public class getChildActivity extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
-                            dialog.dismiss();
+                             progressBarGIFDialog.clear();
                             Toast.makeText( context, e.toString(), Toast.LENGTH_SHORT ).show();
                             e.printStackTrace();
                             SendEror.sender( getChildActivity.this, e.toString() );
@@ -183,7 +200,7 @@ public class getChildActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
+                 progressBarGIFDialog.clear();
                 Alert.shows( context, "", "please check the connection", "ok", "" );
                 SendEror.sender( getChildActivity.this, error.toString() );
 

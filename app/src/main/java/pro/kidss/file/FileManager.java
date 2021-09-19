@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +52,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
     TextView updatepage;
     TextView messageTv, titleTv, timer;
     ImageView close;
-
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     ScrollView scrollView;
     private RecyclerView recyclerView;
     private FileManagerAdaptor exampleAdapter;
@@ -65,19 +66,23 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
         setContentView( R.layout.activity_file_manager );
        // Toast.makeText(this, "File manager", Toast.LENGTH_SHORT).show();
         dialog = new Dialog( this );
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
         updatepage = (TextView) findViewById( R.id.updatefile );
         cardView = findViewById( R.id.cardviewfile );
+
         button = (TextView) findViewById( R.id.bt_send );
         recyclerView = (RecyclerView) findViewById( R.id.recyclerView_List );
        // parsDataa( FileManager.this );
        // recyclerView.setLayoutManager( new LinearLayoutManager( this ) );
-        ShowDialog();
+        Showslertt();
         Log.e( "KIDDd", getctoken( FileManager.this ) );
         parsDataa( this );
         updatepage.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Showslertt();
+                jsonparsee();
+
             }
         } );
 
@@ -103,38 +108,30 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
     }
 
     private void Showslertt() {
-        dialog.setContentView( R.layout.alert_wait );
-        close = (ImageView) dialog.findViewById( R.id.close_accept );
-        accept = (Button) dialog.findViewById( R.id.btnAccept );
-        accept.setText( "Accept" );
-        accept.setVisibility( View.VISIBLE );
-        timer = (TextView) dialog.findViewById( R.id.text_timer );
-        titleTv = (TextView) dialog.findViewById( R.id.title_go );
-        messageTv = (TextView) dialog.findViewById( R.id.messaage_acceot );
-        titleTv.setText( "Please Wait" );
-        messageTv.setText( "Connecting To Server..." );
-        close.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        } );
-        accept.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jsonparsee();
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
+
             }
 
-        } );
-        dialog.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-        dialog.show();
-    }
+
 
     private void jsonparsee() {
         StringRequest stringRequestt = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/request-updateFiles/", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(FileManager.this, "Request sent", Toast.LENGTH_SHORT).show();
+                progressBarGIFDialog.clear();
              //   dialog.dismiss();
             }
         }, new Response.ErrorListener() {
@@ -238,50 +235,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
         } );
     }
 
-    private void ShowDialog() {
-        dialog.setContentView( R.layout.alert_wait );
-        close = (ImageView) dialog.findViewById( R.id.close_accept );
-        accept = (Button) dialog.findViewById( R.id.btnAccept );
-        timer = (TextView) dialog.findViewById( R.id.text_timer );
-        titleTv = (TextView) dialog.findViewById( R.id.title_go );
-        messageTv = (TextView) dialog.findViewById( R.id.messaage_acceot );
-        titleTv.setText( "Please Wait" );
-        messageTv.setText( "Connecting To Server..." );
-        long duration = TimeUnit.SECONDS.toMillis( 1 );
-        new CountDownTimer( duration, 100 ) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format( Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds( 0 )
-                        , TimeUnit.SECONDS.toSeconds( 59 ) -
-                                TimeUnit.SECONDS.toSeconds( TimeUnit.SECONDS.toSeconds( 1 ) ) );
-                timer.setText( sDuration );
-            }
 
-            @Override
-            public void onFinish() {
-                timer.setVisibility( View.GONE );
-                accept.setVisibility( View.VISIBLE );
-
-
-            }
-        }.start();
-        close.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        } );
-        accept.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        } );
-
-        dialog.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-        dialog.show();
-    }
 
 
     private void createRequestParams() {
@@ -597,6 +551,7 @@ public void parsDataa(Context context) {
                             Log.e( "test134", nameWhatsAppAudioPrivate + ":" + pathWhatsAppAudioPrivate );
                             i++;
                         }}
+                        progressBarGIFDialog.clear();
                       //  RecyclerView filerec=(RecyclerView)findViewById(R.id.recyclerView_List);
                         fileAdapter=new FileAdapter(json,filename,path,FileManager.this);
                         recyclerView.setAdapter(fileAdapter);
@@ -618,7 +573,7 @@ public void parsDataa(Context context) {
             }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
-
+            ShowTry();
         }
 
     } ) {

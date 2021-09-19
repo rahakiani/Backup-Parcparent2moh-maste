@@ -29,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
     FloatingActionButton fabremove, fab2;
     //    private VoiceAdapterRecy adapter ;
     DownloadManager downloadManager;
+
     TimePicker timePicker;
     TextInputLayout editText;
     EditText editTextt;
@@ -76,28 +78,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
         editTextt = findViewById( R.id.edtduration );
         bt = findViewById( R.id.btnrec );
 
-//        swpref.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                finish();
-//                startActivity(getIntent());
-//                swpref.setRefreshing(false);
-//            }
-//        });
 
-//        geturls(RecordVoiceActivity.this);
-//        fab2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int i=0;
-//                while (i<adapter.getremovelist().size()){
-//                    downloadFile(adapter.getremovelist().get(i),voiceNmae.get(voiceurl.indexOf(adapter.getremovelist().get(i)))+".mp3");
-//                    i++;
-//                }
-//                finish();
-//                startActivity(getIntent());
-//            }
-//        });
 
 
     }
@@ -320,29 +301,7 @@ public class RecordVoiceActivity extends AppCompatActivity {
 //        Log.e("fdfdfgg", type );
         request(RecordVoiceActivity.this,type);
     }
-    public void downloadFile(String path,String subpath) {
 
-        Uri uri=Uri.parse(path);
-        downloadManager=(DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        DownloadManager.Request request=new DownloadManager.Request(uri);
-        request.setTitle("downloading");
-        request.setDescription("wait");
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,subpath);
-        long donid=downloadManager.enqueue(request);
-        Toast.makeText(this, "please wait one minute", Toast.LENGTH_SHORT).show();
-        BroadcastReceiver time=new BroadcastReceiver() {
-            @RequiresApi(api = 29)
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // Toast.makeText(context, "file "+subpath+" downloaded ", Toast.LENGTH_SHORT).show();
-
-
-            }
-        };
-        IntentFilter intentFilter = new IntentFilter( DownloadManager.ACTION_DOWNLOAD_COMPLETE );
-        this.registerReceiver( time, intentFilter );
-    }
 
     public void btnplayer(View view) {
         Intent intent = new Intent( RecordVoiceActivity.this, Player.class );

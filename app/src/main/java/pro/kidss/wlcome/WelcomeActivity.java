@@ -44,6 +44,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,8 +83,9 @@ import pro.kidss.images.pictureActivity;
 public class WelcomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Context context;
     private DrawerLayout drawer;
-ProgressDialog dialog = null;
+
     Dialog dialog1;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     JSONArray jsonArray;
     View parent_view;
     FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums, bts;
@@ -109,6 +111,9 @@ ProgressDialog dialog = null;
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_welcome );
         dialog1 = new Dialog( this );
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+
+
         contacts = findViewById( R.id.contacts_activ );
         file = findViewById( R.id.file_activ );
         calls = findViewById( R.id.calls_activ );
@@ -164,6 +169,7 @@ ProgressDialog dialog = null;
             }
 
             private void jsoparse() {
+                showpro();
                 StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/coordinate-list/",
                         new Response.Listener<String>() {
                             @TargetApi(Build.VERSION_CODES.O)
@@ -171,7 +177,7 @@ ProgressDialog dialog = null;
                             @Override
                             public void onResponse(String response) {
 
-                                dialog.dismiss();
+                                progressBarGIFDialog.clear();
                                 try {
                                     JSONObject jsoncorr = new JSONObject( response );
                                     String status = jsoncorr.getString( "status" );
@@ -220,7 +226,7 @@ ProgressDialog dialog = null;
                                     }
 
                                 } catch (JSONException e) {
-                                    dialog.dismiss();
+                                    progressBarGIFDialog.clear();
                                     e.printStackTrace();
                                     SendEror.sender( context, e.toString() );
                                 }
@@ -228,7 +234,7 @@ ProgressDialog dialog = null;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        dialog.dismiss();
+                        progressBarGIFDialog.clear();
                         Alert.shows( context, "", context.getString( R.string.please_check_the_connetion ), "ok", "" );
                         SendEror.sender( context, error.toString() );
 
@@ -363,6 +369,22 @@ ProgressDialog dialog = null;
 //        recyclerViewwelcome.setLayoutAnimation( animation );
 //        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager( 4, StaggeredGridLayoutManager.VERTICAL );
 //        recyclerViewwelcome.setLayoutManager( layoutManager );
+    }
+
+    private void showpro() {
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
     }
 
     private void Snackbarsucess() {
@@ -564,7 +586,7 @@ ProgressDialog dialog = null;
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
+                progressBarGIFDialog.clear();
                 Alert.shows(WelcomeActivity.this,"","please check the connection","ok","");
                 SendEror.sender(WelcomeActivity.this,error.toString());
             }
@@ -717,7 +739,7 @@ ProgressDialog dialog = null;
                             JSONArray jsonArray=new JSONArray(response);
                             Toast.makeText(WelcomeActivity.this, "last time device was online is "+jsonArray.getJSONObject(jsonArray.length()-1).getString("date"), Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
-                            dialog.dismiss();
+                            progressBarGIFDialog.clear();
                             e.printStackTrace();
                             SendEror.sender(WelcomeActivity.this,e.toString());
 
@@ -727,7 +749,7 @@ ProgressDialog dialog = null;
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                dialog.dismiss();
+                progressBarGIFDialog.clear();
                 Alert.shows(WelcomeActivity.this,"","please check the connection","ok","");
                 SendEror.sender(WelcomeActivity.this,error.toString());
             }

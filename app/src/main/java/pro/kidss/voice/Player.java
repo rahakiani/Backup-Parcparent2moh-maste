@@ -28,6 +28,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mmstq.progressbargifdialog.ProgressBarGIFDialog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +52,7 @@ public class Player extends AppCompatActivity {
     RecyclerView recyclerView;
     Button accept;
     TextView messageTv, titleTv, timer;
+    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     ImageView close;
     ArrayList<String> voiceurl = new ArrayList<String>();
     ArrayList<String> voiceNmae = new ArrayList<String>();
@@ -63,6 +65,21 @@ public class Player extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.player_activity );
         dialog1 = new Dialog( this );
+        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+        progressBarGIFDialog.setCancelable(false)
+
+                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+
+                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+
+                .setDoneGif(R.drawable.done) // Set Done Gif
+
+                .setDoneTitle("Done") // Set Done Title
+
+                .setLoadingTitle("Please wait...") // Set Loading Title
+
+                .build();
+
         recyclerView = findViewById( R.id.player_music );
         jsonparse();
 
@@ -70,14 +87,14 @@ public class Player extends AppCompatActivity {
     }
 
     private void jsonparse() {
-        ShowDialog();
+
         StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://im.kidsguard.ml/api/voice-detail/",
                 new Response.Listener<String>() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(String response) {
                         Log.e( "onResponse", response );
-                        dialog1.dismiss();
+                       progressBarGIFDialog.clear();
                         JSONObject alljs = null;
                         try {
                             alljs = new JSONObject( response );
@@ -128,6 +145,7 @@ public class Player extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
                 Showtry();
                 SendEror.sender( Player.this, error.toString() );
             }
@@ -160,53 +178,6 @@ public class Player extends AppCompatActivity {
         dialog1.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
         dialog1.show();
     }
-
-    private void ShowDialog() {
-
-        dialog1.setContentView( R.layout.alert_wait );
-        close = (ImageView) dialog1.findViewById( R.id.close_accept );
-        accept = (Button) dialog1.findViewById( R.id.btnAccept );
-        timer = (TextView) dialog1.findViewById( R.id.text_timer );
-        titleTv = (TextView) dialog1.findViewById( R.id.title_go );
-        messageTv = (TextView) dialog1.findViewById( R.id.messaage_acceot );
-        titleTv.setText( "Please Wait" );
-        messageTv.setText( "Connecting To Server..." );
-        long duration = TimeUnit.SECONDS.toMillis( 1 );
-        new CountDownTimer( duration, 100 ) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format( Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds( 0 )
-                        , TimeUnit.SECONDS.toSeconds( 59 ) -
-                                TimeUnit.SECONDS.toSeconds( TimeUnit.SECONDS.toSeconds( 1 ) ) );
-                timer.setText( sDuration );
-            }
-
-            @Override
-            public void onFinish() {
-                timer.setVisibility( View.GONE );
-                accept.setVisibility( View.VISIBLE );
-
-
-            }
-        }.start();
-        close.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        } );
-        accept.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        } );
-
-        dialog1.getWindow().setBackgroundDrawable( new ColorDrawable( Color.TRANSPARENT ) );
-        dialog1.show();
-    }
-
 
     public String getctoken(Context context) {
         CtokenDataBaseManager ctok = new CtokenDataBaseManager( Player.this );
