@@ -342,7 +342,9 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         snackbar.show();
     }
 
+    public void full(View view) {
     }
+}
 
 
 

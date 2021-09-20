@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
 
-    tools:context=".SmsVerActivity"
+    tools:context=".csc.SmsVerActivity"
     android:layoutDirection="ltr"
     android:background="@color/grey_5">
 

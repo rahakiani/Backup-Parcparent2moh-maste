@@ -8,7 +8,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_height="match_parent"
-    tools:context=".SmsVerActivity"
+    tools:context=".csc.SmsVerActivity"
     android:layoutDirection="ltr">
 
     <EditText

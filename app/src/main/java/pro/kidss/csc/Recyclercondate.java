@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import pro.kidss.R;
 
 public class Recyclercondate extends RecyclerView.Adapter<Recyclercondate.ViewHolder> {
 

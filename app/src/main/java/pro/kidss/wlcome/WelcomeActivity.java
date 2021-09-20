@@ -2,7 +2,6 @@ package pro.kidss.wlcome;
 
 import android.annotation.TargetApi;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,10 +62,10 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import pro.kidss.AddChildActivity;
 import pro.kidss.Alert;
-import pro.kidss.BTSActivity;
+import pro.kidss.bts.BTSActivity;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.DateConverter;
-import pro.kidss.ExplainItemActivity;
+import pro.kidss.csc.ExplainItemActivity;
 import pro.kidss.file.FileManager;
 import pro.kidss.LoginActivity;
 import pro.kidss.MapsActivity;
@@ -88,7 +87,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
     JSONArray jsonArray;
     View parent_view;
-    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, albums, bts;
+    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, bts;
 
     ScheduledExecutorService scheduledExecutorService;
     private ViewPager viewPagerr;
@@ -123,7 +122,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         photo = findViewById( R.id.photo_activ );
         sms = findViewById( R.id.sms_activ );
         location = findViewById( R.id.location_activ );
-        albums = findViewById( R.id.albums_activ );
+
         bts = findViewById( R.id.bts_activ );
 
 

@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import pro.kidss.R;
 import pro.kidss.database.MainData;
 import pro.kidss.database.Roomdbb;
 

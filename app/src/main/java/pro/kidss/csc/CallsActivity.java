@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,11 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import pro.kidss.database.MainData;
+import pro.kidss.R;
 import pro.kidss.database.Maindataa;
 import pro.kidss.database.Romdb;
-import pro.kidss.database.Roomdbb;
-import pro.kidss.wlcome.WelcomeActivity;
 
 public class CallsActivity extends AppCompatActivity {
     RecyclerView recyclerView;

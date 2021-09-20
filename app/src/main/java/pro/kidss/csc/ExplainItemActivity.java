@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +39,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import pro.kidss.Alert;
+import pro.kidss.OwnerDataBaseManager;
+import pro.kidss.R;
+import pro.kidss.SendEror;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.database.MainData;
 import pro.kidss.database.Maindataa;
@@ -55,13 +58,19 @@ public class ExplainItemActivity extends AppCompatActivity {
     StringRequest stringRequest;
     RequestQueue requestQueue;
     RecyclerView recyclerViewDetail;
+    String dir;
+    String callDuration;
+            Date callDayTime;
+
     ProgressDialog dialog = null;
     ArrayList<String> namee = new ArrayList<>();
     ArrayList<String> res=new ArrayList<String>();
     ArrayList<String> numberr=new ArrayList<>();
     EditText edtphonesearch;
     private ImageButton imgleftdra;
+    String phNumber;
     private ArrayList<String> text;
+    int idd;
     SwipeRefreshLayout swpref;
     Roomdbb roomdb;
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
@@ -80,7 +89,7 @@ String bod,name,number;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_explainitem);
+        setContentView( R.layout.activity_explainitem);
         roomdb = Roomdbb.getInstance( this );
         roomdbb = Romdb.getInstance( this );
         progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
@@ -130,6 +139,7 @@ String bod,name,number;
 
                                     JSONObject jsonsms=new JSONObject(response);
                                     String status=jsonsms.getString("status");
+
 
                                     switch (status){
                                         case "ok":
@@ -199,6 +209,7 @@ String bod,name,number;
 
                                             break;
                                         default:
+                                            progressBarGIFDialog.clear();
                                             String message=jsonsms.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
@@ -280,6 +291,7 @@ String bod,name,number;
 
                                             break;
                                         default:
+                                            progressBarGIFDialog.clear();
                                             String message=jsoncontact.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
@@ -338,28 +350,29 @@ String bod,name,number;
 
                                             int i=0;
                                             while (i<phnumberaray.length()){
-                                                String phNumber=phnumberaray.getString(i);
+                                                 phNumber=phnumberaray.getString(i);
                                                 String callDate=calldatearay.getString(i);
-                                                int idd=idarray.getInt( i );
-                                                Date callDayTime = new Date(Long.valueOf(callDate));
-                                                String callDuration=calldurationaray.getString(i);
-                                                String dir=diraray.getString(i);
-                                                res.add("number: "+phNumber+"\n"+"date: "+callDayTime+"\n"+"duration: "+callDuration+"\n"+"direction: "+dir);
-                                                if (roomdbb.mainDao().checkid( id )==0) {
+                                                idd=idarray.getInt( i );
+                                                 callDayTime = new Date(Long.valueOf(callDate));
+                                                 callDuration=calldurationaray.getString(i);
+                                                 dir=diraray.getString(i);
 
 
-                                                    Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
-                                                    Log.e( "LKLKKL", roomdbb.mainDao().getall().toString() );
-                                                    roomdbb.mainDao().insert( dataa );
-                                                    dataListt.add( dataa );
-                                                   progressBarGIFDialog.clear();
-                                                }else {
-                                                    Log.e( "AFASDF", String.valueOf( id ) );
-                                                    progressBarGIFDialog.clear();
-                                                }
 
 
                                                 i++;
+                                            }
+                                            if (roomdbb.mainDao().checkid( id )==0) {
+
+
+                                                Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
+                                                Log.e( "LKLKKL", roomdbb.mainDao().getall().toString() );
+                                                roomdbb.mainDao().insert( dataa );
+                                                dataListt.add( dataa );
+                                                progressBarGIFDialog.clear();
+                                            }else {
+                                                Log.e( "AFASDF", String.valueOf( id ) );
+                                                progressBarGIFDialog.clear();
                                             }
 
 
@@ -392,6 +405,7 @@ String bod,name,number;
 
                                             break;
                                         default:
+                                            progressBarGIFDialog.clear();
                                             String message=jsoncall.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
@@ -434,7 +448,7 @@ String bod,name,number;
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                 progressBarGIFDialog.clear();
+
                                 JSONObject jsonstatus = null;
 
                                 try {
@@ -450,7 +464,7 @@ String bod,name,number;
                                                     res.add(appnamearay.getString(i));
                                                     i++;
                                                 }
-
+                                                progressBarGIFDialog.clear();
                                                 recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
                                                 recyclerViewAddList(ExplainItemActivity.this,res,recyclerViewDetail);
 
@@ -464,6 +478,7 @@ String bod,name,number;
                                             }
                                             break;
                                         default:
+                                            progressBarGIFDialog.clear();
                                             String message=jsonstatus.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;

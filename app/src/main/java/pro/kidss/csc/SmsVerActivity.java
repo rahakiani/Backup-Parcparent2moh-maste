@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.Intent;
 import android.os.Bundle;

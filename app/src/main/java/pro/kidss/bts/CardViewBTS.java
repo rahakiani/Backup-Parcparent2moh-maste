@@ -1,8 +1,7 @@
-package pro.kidss;
+package pro.kidss.bts;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +15,20 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.logging.LogRecord;
+
+import pro.kidss.Maps_Activity;
+import pro.kidss.R;
 
 public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
     private final Context context;
@@ -57,6 +68,7 @@ public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
         TextView txtdate=cardView.findViewById(R.id.txtdate);
         ImageView img = cardView.findViewById( R.id.down_down );
         LinearLayout lin = cardView.findViewById( R.id.lindate );
+        ImageView map = cardView.findViewById( R.id.map_bt );
         img.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +99,45 @@ public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
 
             }
         } );
+        map.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                jsonparse();
+            }
+
+            private void jsonparse() {
+
+
+                    String url = "http://162.55.9.233:42474/lakekiri?mcc="+mcc.get( position )+"&mnc="+mnc.get( position )+"&lac="+lac.get( position )+"&cid="+cell.get( position );
+                    StringRequest stringRequest = new StringRequest( Request.Method.GET, url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                String lat = jsonObject.getString( "Lat" );
+                                String lon = jsonObject.getString( "Lon");
+                                Log.e( "loc",lat+"\n"+lon );
+                                Intent intent = new Intent(context, Maps_Activity.class );
+                                intent.putExtra( "lat",lat );
+                                intent.putExtra( "lon",lon );
+                                context.startActivity(intent );
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText( context, "Erorr", Toast.LENGTH_SHORT ).show();
+
+                        }
+                    } );
+                RequestQueue requestQueue = Volley.newRequestQueue( context );
+                requestQueue.add( stringRequest );
+
+            }
+        } );
         txtlac.setText(lac.get(position));
         txtcell.setText(cell.get(position));
         txtmnc.setText(mnc.get(position));
@@ -96,9 +147,10 @@ public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
 
     }
 
+
     @Override
     public int getItemCount() {
-        return lac.size();
+        return date.size();
     }
 
 

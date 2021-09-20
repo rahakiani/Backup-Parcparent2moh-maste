@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.bts;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +42,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
+import pro.kidss.DateConverter;
+import pro.kidss.R;
+import pro.kidss.SendEror;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.wlcome.WelcomeActivity;
 
@@ -59,7 +62,7 @@ public class BTSActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_btsactivity);
+        setContentView( R.layout.activity_btsactivity);
         dialog1 = new Dialog( this );
         lac=new ArrayList<String>();
         cell=new ArrayList<String>();
@@ -92,7 +95,7 @@ public class BTSActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                        // Toast.makeText(BTSActivity.this, response, Toast.LENGTH_SHORT).show();
-                        progressBarGIFDialog.clear();
+
 
                         try {
 
@@ -106,7 +109,7 @@ public class BTSActivity extends AppCompatActivity {
                                 JSONArray jsonArray = new JSONArray( response );
                                 Log.e( "BTS", response );
 //                            JSONArray datearray = vidobject.getJSONArray( "Date" );
-                                int i = 0;
+                                int i = 1;
                                 while (i < jsonArray.length()) {
                                     lac.add( new JSONObject( jsonArray.getJSONObject( i ).getString( "bts" ) ).getString( "lac" ) );
                                     cell.add( new JSONObject( jsonArray.getJSONObject( i ).getString( "bts" ) ).getString( "cid" ) );
@@ -132,6 +135,7 @@ public class BTSActivity extends AppCompatActivity {
 //
                                     i++;
                                 }
+                            progressBarGIFDialog.clear();
                                 ryclrbts = (RecyclerView) findViewById( R.id.rcyclrbts );
                                 CardViewBTS adapter = new CardViewBTS( BTSActivity.this, lac, cell, mcc, mnc, dating );
                                 ryclrbts.setAdapter( adapter );

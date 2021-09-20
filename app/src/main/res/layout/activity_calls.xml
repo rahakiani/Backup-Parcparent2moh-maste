@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="#00CFCDCA"
-    tools:context=".CallsActivity">
+    tools:context=".csc.CallsActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

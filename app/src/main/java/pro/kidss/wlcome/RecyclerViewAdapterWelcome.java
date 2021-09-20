@@ -44,7 +44,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import pro.kidss.Alert;
-import pro.kidss.ExplainItemActivity;
+import pro.kidss.csc.ExplainItemActivity;
 import pro.kidss.MapsActivity;
 import pro.kidss.OwnerDataBaseManager;
 import pro.kidss.R;

@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import pro.kidss.R;
 import pro.kidss.database.MainData;
-import pro.kidss.database.Roomdb;
 import pro.kidss.database.Roomdbb;
 
 public class SMSactivity extends AppCompatActivity {

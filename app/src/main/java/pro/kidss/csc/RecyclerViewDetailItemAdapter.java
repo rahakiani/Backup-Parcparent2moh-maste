@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -14,6 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import pro.kidss.R;
 
 public class RecyclerViewDetailItemAdapter extends RecyclerView.Adapter<RecyclerViewDetailItemAdapter.ViewHolder> {
 

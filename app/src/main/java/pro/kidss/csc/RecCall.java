@@ -1,10 +1,9 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import pro.kidss.R;
 import pro.kidss.database.Maindataa;
 import pro.kidss.database.Romdb;
 

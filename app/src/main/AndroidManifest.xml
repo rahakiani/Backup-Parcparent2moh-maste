@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="pro.kidss">
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -32,13 +33,20 @@
         android:roundIcon="@drawable/ic_window"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".CallsActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key"/>
+
+        <activity android:name=".Maps_Activity" />
         <activity
-            android:name=".SMSactivity"
+            android:name=".csc.CallsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".BTSActivity" />
+        <activity
+            android:name=".csc.SMSactivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".bts.BTSActivity" />
         <activity
             android:name=".voice.Player_Voice"
             android:parentActivityName=".voice.RecordVoiceActivity" />
@@ -50,7 +58,6 @@
             android:label="SAVED"
             android:parentActivityName=".wlcome.WelcomeActivity" />
         <activity android:name=".Albums" />
-        <activity android:name=".HomeAcitivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity
@@ -91,7 +98,7 @@
             android:label="@string/labaleAddChild"
             android:parentActivityName=".getChildActivity" />
         <activity
-            android:name=".ExplainItemActivity"
+            android:name=".csc.ExplainItemActivity"
             android:label=""
             android:parentActivityName=".wlcome.WelcomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -121,7 +128,7 @@
         <activity
             android:name=".blockTimeActivity"
             android:parentActivityName=".wlcome.WelcomeActivity" />
-        <activity android:name=".SmsVerActivity" />
+        <activity android:name=".csc.SmsVerActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -135,7 +142,7 @@
             android:value="@integer/google_play_services_version" /> <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCAzBSSpS5JbEYSAP85Y2OZZdlWQjbLX_U" />
+            android:value="@string/map_key" />
 
         <activity
             android:name=".getChildActivity"

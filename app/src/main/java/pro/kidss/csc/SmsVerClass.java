@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.csc;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import pro.kidss.OwnerDataBaseManager;
 import pro.kidss.wlcome.WelcomeActivity;
 
 public class SmsVerClass {
