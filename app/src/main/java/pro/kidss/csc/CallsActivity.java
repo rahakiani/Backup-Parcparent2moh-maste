@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,15 +15,15 @@ import java.util.List;
 
 import pro.kidss.R;
 import pro.kidss.database.Maindataa;
-import pro.kidss.database.Romdb;
+import pro.kidss.database.Roomdb;
 
 public class CallsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecCall recCall;
-    TextView name;
+    TextView name,numberr;
     List<Maindataa> all;
     List<String>dire;
-    Romdb roomdb;
+    Roomdb roomdb;
     String date,time;
     Maindataa mainData;
     ImageButton back;
@@ -31,14 +32,17 @@ public class CallsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_calls );
-        roomdb = Romdb.getInstance(this);
+        roomdb = Roomdb.getInstance(this);
         name = findViewById( R.id.name );
         back = findViewById( R.id.lyt_back );
-
+        numberr =findViewById( R.id.numberrr );
         Intent intent = getIntent();
         String namee = intent.getStringExtra( "NAME" );
+        Log.e( "NAMEME",namee );
+        String number = intent.getStringExtra( "Number" );
         name.setText( namee);
-        all = roomdb.mainDao().getcall( namee );
+        numberr.setText( number);
+        all = roomdb.mainDaooo().getcall( number );
         int i =0;
         while (i<all.size()){
             mainData=all.get( i );
@@ -46,7 +50,7 @@ public class CallsActivity extends AppCompatActivity {
             time = mainData.getTime();
             i++;
         }
-        dire =roomdb.mainDao().getdirect( namee );
+        dire =roomdb.mainDaooo().getdirect( number );
 
 
 

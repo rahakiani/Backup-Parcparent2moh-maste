@@ -84,7 +84,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_vid_galery);
         roomdb = Roomdb.getInstance(this);
-        dataList.addAll(roomdb.mainDao().getall());
+        dataList.addAll(roomdb.mainDao().getallvideo());
 
         parent_view = findViewById( android.R.id.content );
         dialog1 = new Dialog(this);

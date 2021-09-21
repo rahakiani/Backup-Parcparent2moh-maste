@@ -13,18 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import pro.kidss.R;
 
 public class Recyclercondate extends RecyclerView.Adapter<Recyclercondate.ViewHolder> {
 
     Context context;
-    ArrayList<String>namee;
-    ArrayList<String>numberr;
-    public Recyclercondate(Context context, ArrayList<String>namee,ArrayList<String>number) {
+    List<String>namee;
+    List<String>numberr;
+    public Recyclercondate(Context context, List<String>distinccontactdata, List<String> distinccontacttdata) {
         this.context=context;
-        this.namee=namee;
-        this.numberr = number;
+        this.namee=distinccontactdata;
+        this.numberr = distinccontacttdata;
 
 
     }

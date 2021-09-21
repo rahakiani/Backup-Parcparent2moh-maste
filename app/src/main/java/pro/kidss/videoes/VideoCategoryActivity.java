@@ -163,7 +163,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
                                         dataList.add( data );
                                         ids.add( "" );
-                                        Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
+                                        Log.e( "LKLKKL", roomdb.mainDao().getallvideo().toString() );
                                         progressBarGIFDialog.clear();
                                     } else {
                                         Log.e( "DDDD", "FFFF" );

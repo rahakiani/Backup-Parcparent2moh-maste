@@ -180,7 +180,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
             @Override
             public void onClick(View view) {
                 roomdb.mainDao().like( addresss );
-                Log.e( "ADDLIKE", roomdb.mainDao().getall().toString() );
+                Log.e( "ADDLIKE", roomdb.mainDao().getallvideo().toString() );
 
 
                 viewHolder.like.setImageResource( R.drawable.ic_saved );
@@ -190,7 +190,7 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
         } );
         if (roomdb.mainDao().checklike( addresss ) == 1) {
             viewHolder.like.setImageResource( R.drawable.ic_saved );
-            Log.e( "LIKE", roomdb.mainDao().getall().toString() );
+            Log.e( "LIKE", roomdb.mainDao().getallvideo().toString() );
 
 
         } else {

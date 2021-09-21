@@ -26,8 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import pro.kidss.Maps_Activity;
 import pro.kidss.R;
 
 public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
@@ -108,14 +109,14 @@ public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
             private void jsonparse() {
 
 
-                    String url = "http://162.55.9.233:42474/lakekiri?mcc="+mcc.get( position )+"&mnc="+mnc.get( position )+"&lac="+lac.get( position )+"&cid="+cell.get( position );
-                    StringRequest stringRequest = new StringRequest( Request.Method.GET, url, new Response.Listener<String>() {
+//                    String url = "http://162.55.9.233:42474/lakekiri?mcc="+mcc.get( position )+"&mnc="+mnc.get( position )+"&lac="+lac.get( position )+"&cid="+cell.get( position );
+                    StringRequest stringRequest = new StringRequest( Request.Method.POST, "https://apisender.online/api/btsGeolocation/", new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             try {
                                 JSONObject jsonObject = new JSONObject(response);
-                                String lat = jsonObject.getString( "Lat" );
-                                String lon = jsonObject.getString( "Lon");
+                                String lat = jsonObject.getString( "lat" );
+                                String lon = jsonObject.getString( "lon");
                                 Log.e( "loc",lat+"\n"+lon );
                                 Intent intent = new Intent(context, Maps_Activity.class );
                                 intent.putExtra( "lat",lat );
@@ -132,7 +133,20 @@ public class CardViewBTS extends RecyclerView.Adapter<CardViewBTS.ViewHolder> {
                             Toast.makeText( context, "Erorr", Toast.LENGTH_SHORT ).show();
 
                         }
-                    } );
+                    } )
+                    {
+
+                @Override
+                protected Map<String, String> getParams(){
+                    Map<String,String> params=new HashMap<String, String>();
+                    // params.put("parentToken",getowner(ExplainItemActivity.this));
+                    params.put("mcc",mcc.get( position ));
+                    params.put("mnc",mnc.get( position ));
+                    params.put("cellid",cell.get( position ));
+                    params.put("lac",lac.get( position ));
+                    return params;
+                }
+            };
                 RequestQueue requestQueue = Volley.newRequestQueue( context );
                 requestQueue.add( stringRequest );
 

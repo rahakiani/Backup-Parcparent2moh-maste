@@ -1,4 +1,4 @@
-package pro.kidss;
+package pro.kidss.bts;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import pro.kidss.R;
 
 public class Maps_Activity extends FragmentActivity implements OnMapReadyCallback {
     GoogleMap map;
@@ -43,9 +45,11 @@ public class Maps_Activity extends FragmentActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         map=googleMap;
+        float zoomLevel = 16.0f; //This goes up to 21
+
         LatLng Locat = new LatLng(  f1, f2 );
-        map.addMarker( new MarkerOptions().position( Locat ).title( "Phone" ) );
-        map.moveCamera( CameraUpdateFactory.newLatLng( Locat ) );
+        map.addMarker( new MarkerOptions().position( Locat ).title( "Device " ) );
+        map.moveCamera( CameraUpdateFactory.newLatLngZoom( Locat ,zoomLevel) );
 
     }
 }

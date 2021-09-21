@@ -13,13 +13,13 @@ import java.util.List;
 
 import pro.kidss.R;
 import pro.kidss.database.MainData;
-import pro.kidss.database.Roomdbb;
+import pro.kidss.database.Roomdb;
 
 public class Smsdata extends RecyclerView.Adapter<Smsdata.ViewHolder> {
     List<MainData> all;
     Context context;
     String body,time;
-    Roomdbb roomdb;
+    Roomdb roomdb;
     private final int CHAT_ME = 100;
     private final int CHAT_YOU = 200;
     MainData mainData;
@@ -50,7 +50,7 @@ public class Smsdata extends RecyclerView.Adapter<Smsdata.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull Smsdata.ViewHolder holder, int position) {
-        roomdb = Roomdbb.getInstance( context );
+        roomdb = Roomdb.getInstance( context );
         mainData = all.get( position );
         body = mainData.getBody();
         time = mainData.getDate();

@@ -11,7 +11,7 @@ public interface Maindaooo {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Maindataa mainData);
     @Query("SELECT  * FROM call_data ")
-    List<Maindataa> getall();
+    List<Maindataa> getallcall();
     @Query("SELECT  DISTINCT number FROM call_data  ORDER BY number DESC")
     List<String> getnumber();
     @Query( "SELECT * FROM call_data WHERE number=:number" )

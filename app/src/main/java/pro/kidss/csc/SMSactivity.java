@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -14,15 +15,15 @@ import java.util.List;
 
 import pro.kidss.R;
 import pro.kidss.database.MainData;
-import pro.kidss.database.Roomdbb;
+import pro.kidss.database.Roomdb;
 
 public class SMSactivity extends AppCompatActivity {
 RecyclerView recyclerView;
 Smsdata smsdata;
-TextView name;
+TextView name,number;
 List<MainData>all;
 List<String>sts;
-Roomdbb roomdb;
+Roomdb roomdb;
 String body,time;
 MainData mainData;
 ImageButton back;
@@ -32,21 +33,25 @@ ImageButton back;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_s_m_sactivity );
-        roomdb = Roomdbb.getInstance(this);
+        roomdb = Roomdb.getInstance(this);
         name = findViewById( R.id.name );
+        number = findViewById( R.id.numberer );
         back = findViewById( R.id.lyt_back );
 
         Intent intent = getIntent();
         String namee = intent.getStringExtra( "NAME" );
+        Log.e( "NAMEME",namee );
+        String numberr = intent.getStringExtra( "Number" );
         name.setText( namee);
-        all = roomdb.mainDao().getsms( namee );
+        number.setText( numberr);
+        all = roomdb.mainDaoo().getsms( numberr );
         int i =0;
         while (i<all.size()){
             mainData=all.get( i );
             body = mainData.getBody();
             i++;
         }
-        sts =roomdb.mainDao().getstatuss( namee,body );
+        sts =roomdb.mainDaoo().getstatuss( numberr,body );
 
 
 

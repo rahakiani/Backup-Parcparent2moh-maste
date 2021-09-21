@@ -194,7 +194,7 @@ public class RecyclerviewGallery extends RecyclerView.Adapter<RecyclerviewGaller
         } );
         if (roomdb.mainDao().checklike( addres ) == 1) {
             holder.like.setImageResource( R.drawable.ic_saved );
-            Log.e( "LIKE", roomdb.mainDao().getall().toString() );
+            Log.e( "LIKE", roomdb.mainDao().getallvideo().toString() );
 
 
         } else {

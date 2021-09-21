@@ -14,7 +14,8 @@ import java.util.List;
 
 import pro.kidss.R;
 import pro.kidss.database.Maindataa;
-import pro.kidss.database.Romdb;
+import pro.kidss.database.Roomdb;
+import pro.kidss.database.Roomdb;
 
 public class RecCall extends RecyclerView.Adapter<RecCall.ViewHolder> {
     Context context;
@@ -22,7 +23,7 @@ public class RecCall extends RecyclerView.Adapter<RecCall.ViewHolder> {
       List<String> dire;
       String time;
     Maindataa mainData;
-    Romdb roomdb;
+    Roomdb roomdb;
       String date,name;
     public RecCall(Context context, List<Maindataa> all, List<String> dire) {
         this.context=context;
@@ -42,7 +43,7 @@ public class RecCall extends RecyclerView.Adapter<RecCall.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecCall.ViewHolder holder, int position) {
-        roomdb = Romdb.getInstance(context);
+        roomdb = Roomdb.getInstance(context);
         mainData=all.get( position );
         date = mainData.getDate();
         time = mainData.getTime();

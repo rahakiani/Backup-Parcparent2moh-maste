@@ -39,7 +39,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key"/>
 
-        <activity android:name=".Maps_Activity" />
+        <activity android:name=".bts.Maps_Activity" />
         <activity
             android:name=".csc.CallsActivity"
             android:theme="@style/AppTheme.NoActionBar" />

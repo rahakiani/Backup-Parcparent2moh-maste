@@ -29,7 +29,7 @@ public interface MainDao {
     //get all data
 
     @Query("SELECT  * FROM video_data ")
-    List<MsinData> getall();
+    List<MsinData> getallvideo();
 
     @Query("UPDATE video_data SET `like`= 1 WHERE address =:address ")
     void like(String address);

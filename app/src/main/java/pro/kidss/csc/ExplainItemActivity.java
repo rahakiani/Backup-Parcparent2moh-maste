@@ -43,11 +43,12 @@ import pro.kidss.Alert;
 import pro.kidss.OwnerDataBaseManager;
 import pro.kidss.R;
 import pro.kidss.SendEror;
+import pro.kidss.database.ContactData;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.database.MainData;
 import pro.kidss.database.Maindataa;
-import pro.kidss.database.Romdb;
-import pro.kidss.database.Roomdbb;
+import pro.kidss.database.Roomdb;
+import pro.kidss.database.Roomdb;
 import pro.kidss.wlcome.WelcomeActivity;
 
 
@@ -72,26 +73,29 @@ public class ExplainItemActivity extends AppCompatActivity {
     private ArrayList<String> text;
     int idd;
     SwipeRefreshLayout swpref;
-    Roomdbb roomdb;
+    Roomdb roomdb;
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
-    Romdb roomdbb;
+
     recyclersmsdate dataAdapter;
     Recyclercalldate dataAdap;
     Recyclercondate dataAdapterr;
     List<String> bodyy;
     int id;
     List<String> distincmsindata;
+    List<String> distinccontactdata;
+    List<String> distinccontacttdata;
     List<String> distincmaindata;
 String bod,name,number;
     GridLayoutManager gridLayoutManager;
     ArrayList<MainData> dataList = new ArrayList<>();
+    ArrayList<ContactData> dataLisst = new ArrayList<>();
     ArrayList<Maindataa> dataListt = new ArrayList<Maindataa>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_explainitem);
-        roomdb = Roomdbb.getInstance( this );
-        roomdbb = Romdb.getInstance( this );
+        roomdb = Roomdb.getInstance( this );
+
         progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
 
         progressBarGIFDialog.setCancelable(false)
@@ -166,10 +170,10 @@ String bod,name,number;
 //                                                Log.e( "Sendin",send.toString() );
                                                 Log.e( "IID", String.valueOf( id ) );
 //                                                res.add(name+":"+"\n"+number+"\n"+dir+"\n"+idd+"\n"+id);
-                                                if (roomdb.mainDao().checkid( id )==0){
+                                                if (roomdb.mainDaoo().checkid( id )==0){
                                                     MainData data = new MainData(id,name,number,send[1],send[0]);
-                                                    Log.e( "LKLKKL", roomdb.mainDao().getall().toString() );
-                                                    roomdb.mainDao().insert( data );
+                                                    Log.e( "LKLKKL", roomdb.mainDaoo().getallsms().toString() );
+                                                    roomdb.mainDaoo().insert( data );
                                                     dataList.add( data );
 //                                                    dialog.dismiss();
 //                                                    progressBar.dismiss
@@ -189,7 +193,7 @@ String bod,name,number;
                                             }
 
                                            recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                            distincmsindata = roomdb.mainDao().getnumber();
+                                            distincmsindata = roomdb.mainDaoo().getnumber();
 //                                            int b = 0;
 //                                            while (b == distincmsindata.size()){
 //                                                bodyy = roomdb.mainDao().bodyy( distincmsindata.get( b ) );
@@ -267,9 +271,10 @@ String bod,name,number;
 
                                             JSONArray contactname=jsoncontact.getJSONArray("name");
                                             JSONArray contactnum=jsoncontact.getJSONArray("tell");
-
+                                            JSONArray idarray=jsoncontact.getJSONArray("id");
                                             int i=0;
                                             while (i<contactname.length()){
+                                                id=idarray.getInt(i);
                                                 String nameeee=contactname.getString( i );
                                                 String nuuum=contactnum.getString( i );
                                                 namee.add( nameeee);
@@ -277,15 +282,23 @@ String bod,name,number;
 
                                                 numberr.add( nuuum);
                                                 Log.e( "CHII52572I",numberr.toString() );
+                                                if (roomdb.mainContact().checknumber( id )==0){
+                                                    ContactData contactData = new ContactData(id,nuuum,nameeee);
+                                                    roomdb.mainContact().insert( contactData );
+                                                    progressBarGIFDialog.clear();
+                                                }else {
+                                                    Log.e( "Tekrarr","AFF" );
+                                                }
 
                                                 i++;
 
                                             }
 
-
+                                            distinccontactdata =roomdb.mainContact().getnamedis();
+                                            distinccontacttdata =roomdb.mainContact().getnumberdic();
                                             gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                             recyclerViewDetail.setLayoutManager( gridLayoutManager );
-                                            dataAdapterr=new Recyclercondate(getApplicationContext(),namee,numberr);
+                                            dataAdapterr=new Recyclercondate(getApplicationContext(),distinccontactdata,distinccontacttdata);
                                             recyclerViewDetail.setAdapter( dataAdapterr );
 
 
@@ -359,21 +372,21 @@ String bod,name,number;
 
 
 
+                                                if (roomdb.mainDaooo().checkid( id )==0) {
 
+
+                                                    Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
+                                                    Log.e( "LKLKKL", roomdb.mainDaooo().getallcall().toString() );
+                                                    roomdb.mainDaooo().insert( dataa );
+                                                    dataListt.add( dataa );
+                                                    progressBarGIFDialog.clear();
+                                                }else {
+                                                    Log.e( "AFASDF", String.valueOf( id ) );
+                                                    progressBarGIFDialog.clear();
+                                                }
                                                 i++;
                                             }
-                                            if (roomdbb.mainDao().checkid( id )==0) {
 
-
-                                                Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
-                                                Log.e( "LKLKKL", roomdbb.mainDao().getall().toString() );
-                                                roomdbb.mainDao().insert( dataa );
-                                                dataListt.add( dataa );
-                                                progressBarGIFDialog.clear();
-                                            }else {
-                                                Log.e( "AFASDF", String.valueOf( id ) );
-                                                progressBarGIFDialog.clear();
-                                            }
 
 
 
@@ -386,7 +399,23 @@ String bod,name,number;
 
 
                                     recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
-                                            distincmaindata = roomdbb.mainDao().getnumber();
+                                            distincmaindata = roomdb.mainDaooo().getnumber();
+//                                            int g=0;
+//                                            boolean fa;
+//                                            while (g<distincmaindata.size()){
+//                                                String num = roomdb.mainContact().getnamee( distincmaindata.get( g ) );
+//
+//                                                if (num == null){
+//                                                    Log.e( "TRUEE","TRUUUUUUUE" );
+//                                                }else {
+//                                                    Log.e( "FFFFF","FFFFFFF" );
+////                                                    holder.txtdate.setText( num);
+////                                                    holder.des.setText( distic.get( g ) );
+//                                                }
+//                                                g++;
+//                                            }
+
+                                            Log.e( "CALL",distincmaindata.toString() );
 //                                            int b = 0;
 //                                            while (b == distincmsindata.size()){
 //                                                bodyy = roomdb.mainDao().bodyy( distincmsindata.get( b ) );
