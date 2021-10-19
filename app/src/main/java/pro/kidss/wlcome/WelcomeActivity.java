@@ -5,11 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +21,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +44,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -54,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.Timer;
@@ -82,7 +88,7 @@ import pro.kidss.images.pictureActivity;
 public class WelcomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     Context context;
     private DrawerLayout drawer;
-
+    RelativeLayout relativeLayout;
     Dialog dialog1;
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
     JSONArray jsonArray;
@@ -94,7 +100,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     private static final int NUM_PAGES = 7;
     private int dotscountt;
     private ImageView[] dotts;
-
+    AppLangSessionManager appLangSessionManager;
 
     private ViewPager mPager;
     private int current_position = 0;
@@ -111,8 +117,8 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         setContentView( R.layout.activity_welcome );
         dialog1 = new Dialog( this );
         progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
-
-
+        appLangSessionManager = new AppLangSessionManager(WelcomeActivity.this);
+        relativeLayout = findViewById( R.id.rvChangeLang );
         contacts = findViewById( R.id.contacts_activ );
         file = findViewById( R.id.file_activ );
         calls = findViewById( R.id.calls_activ );
@@ -124,6 +130,47 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         location = findViewById( R.id.location_activ );
 
         bts = findViewById( R.id.bts_activ );
+
+        relativeLayout.setOnClickListener( new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+                                                   final BottomSheetDialog dialogSortBy = new BottomSheetDialog( WelcomeActivity.this, R.style.SheetDialog );
+                                                   dialogSortBy.requestWindowFeature( Window.FEATURE_NO_TITLE );
+                                                   dialogSortBy.setContentView( R.layout.dialog_language );
+                                                   final TextView tv_english = dialogSortBy.findViewById( R.id.tv_english );
+                                                   final TextView tv_hindi = dialogSortBy.findViewById( R.id.tv_hindi );
+                                                   final TextView tv_cancel = dialogSortBy.findViewById( R.id.tv_cancel );
+                                                   final TextView tvArabic = dialogSortBy.findViewById( R.id.tvArabic );
+                                                   dialogSortBy.show();
+                                                   tv_english.setOnClickListener( new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick(View view) {
+                                                           setLocale( "arr" );
+                                                           appLangSessionManager.setLanguage( "arr" );
+                                                       }
+                                                   } );
+                                                   tv_hindi.setOnClickListener( new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick(View view) {
+                                                           setLocale( "hi" );
+                                                           appLangSessionManager.setLanguage( "hi" );
+                                                       }
+                                                   } );
+                                                   tvArabic.setOnClickListener( new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick(View view) {
+                                                           setLocale( "ar" );
+                                                           appLangSessionManager.setLanguage( "ar" );
+                                                       }
+                                                   } );
+                                                   tv_cancel.setOnClickListener( new View.OnClickListener() {
+                                                       @Override
+                                                       public void onClick(View view) {
+                                                           dialogSortBy.dismiss();
+                                                       }
+                                                   } );
+                                               }
+                                           });
 
 
         contacts.setOnClickListener( new View.OnClickListener() {
@@ -768,4 +815,20 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         RequestQueue requestQueue= Volley.newRequestQueue(WelcomeActivity.this);
         requestQueue.add(stringRequest);
     }
-}
+
+
+
+        public void setLocale(String lang) {
+
+            Locale myLocale = new Locale(lang);
+            Resources res = getResources();
+            DisplayMetrics dm = res.getDisplayMetrics();
+            Configuration conf = res.getConfiguration();
+            conf.locale = myLocale;
+            res.updateConfiguration(conf, dm);
+
+            Intent refresh = new Intent(WelcomeActivity.this, WelcomeActivity.class);
+            startActivity(refresh);
+            finish();
+        }
+    }

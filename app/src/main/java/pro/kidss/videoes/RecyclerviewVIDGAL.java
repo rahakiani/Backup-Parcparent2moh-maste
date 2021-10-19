@@ -79,17 +79,21 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
     TextView messageTv;
     ImageView close;
     Dialog dialog1;
+    String date,time,addresss;
 
-
-    List<MsinData> all;
+    List<String> adad;
     Roomdb roomdb;
     MsinData msinData;
+    List<MsinData> all;
     OnvideoDate vidodate;
 
-    public RecyclerviewVIDGAL(Context context, List<MsinData> all,OnvideoDate vidodate) {
+    public RecyclerviewVIDGAL(Context context,List<MsinData> all,OnvideoDate vidodate) {
 
         this.context = context;
-        this.all = all;
+        this.all=all;
+//        this.time=time;
+//        this.adad=adad;
+//        this.addresss=addresss;
         this.vidodate=vidodate;
     }
 
@@ -103,11 +107,19 @@ public class RecyclerviewVIDGAL extends RecyclerView.Adapter<RecyclerviewVIDGAL.
     @Override
     public void onBindViewHolder(@NonNull RecyclerviewVIDGAL.ViewHolder viewHolder, int i) {
 
-        roomdb = Roomdb.getInstance( context );
-        msinData = all.get(i);
-        String date = msinData.getDate();
-        String time = msinData.getTime();
-        String addresss = msinData.getAddress();
+
+
+            roomdb = Roomdb.getInstance( context );
+            msinData = all.get(i);
+             date = msinData.getDate();
+            Log.e( "GASGASDGV",date );
+             time = msinData.getTime();
+            Log.e( "dvsavc",time );
+             addresss = msinData.getAddress();
+            Log.e( "GAScvasdgvGASDGV",addresss );
+
+
+
 
         viewHolder.txtdate.setText( date );
         viewHolder.txttime.setText( time );

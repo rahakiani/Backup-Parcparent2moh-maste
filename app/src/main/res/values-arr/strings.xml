@@ -1,0 +1,162 @@
+<resources>
+    <string name="app_name">Kids Gaurd</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="navigation_drawer_open">افتح درج التنقل</string>
+    <string name="navigation_drawer_close">أغلق درج التنقل</string>
+    <string name="btnSMS">رسالة قصيرة</string>
+    <string name="btnContact">اتصل</string>
+    <string name="hintPhone">اسم المستخدم.....</string>
+    <string name="hintEmail">عنوان بريد الكتروني</string>
+    <string name="hintPassword">كلمه السر.....</string>
+    <string name="requestFrontCamera">الكاميرا الأمامية</string>
+    <string name="requestRearCamera">الكاميرا الخلفية</string>
+    <string name="showphoto">إظهار الصورة المطلوبة</string>
+    <string name="showVideo">إظهار الفيديو الملتقط</string>
+    <string name="btnphoto">تظهر الصورة المطلوبة</string>
+    <string name="err_phone">الرجاء إدخال اسم المستخدم</string>
+    <string name="err_email">الرجاء إدخال بريد إلكتروني صحيح</string>
+    <string name="err_password">الرجاء إدخال كلمة المرور</string>
+    <string name="hinttitle">الرجاء إدخال العنوان ....</string>
+    <string name="hinttext">الرجاء إدخال نص ....</string>
+    <string name="login_successful">تسجيل الدخول بنجاح</string>
+    <string name="register_successful">تسجيل بنجاح</string>
+    <string name="hintchildName">أدخل اسم طفلك</string>
+    <string name="btnLogin">تسجيل الدخول</string>
+    <string name="change_lang">تغيير اللغة</string>
+    <string name="btnRegister">تسجيل</string>
+    <string name="change_your_language">زبان برنامه را تغییر دهید</string>
+    <string name="hindi">English</string>
+    <string name="english">فارسی</string>
+    <string name="arabic">العربية</string>
+    <string name="cancel">إلغاء</string>
+    <string name="google">AIzaSyBq_pnF8hlNYPH4Es1y2KJmyVtsTOM2l4E</string>
+    <!-- welcome.xml -->
+    <string name="btnCall">مكالمة</string>
+    <string name="btnCurrentApp">التطبيق الحالي</string>
+    <string name="btnInstalledPackage">الحزمة المثبتة</string>
+    <string name="btnPhoneLock">قفل الهاتف</string>
+    <string name="btnBlockApp">حظر التطبيق</string>
+    <string name="btnGPS">GPS</string>
+    <string name="txtSMSList">قائمة الرسائل القصيرة </string>
+    <string name="txtContactList">قائمة الإتصال</string>
+    <string name="txtCallList">قائمة المكالمات </string>
+    <string name="txtInstallPackageList">قائمة الحزم المثبتة </string>
+
+
+    <string name="txtAddChild">الرجاء إضافة طفل</string>
+    <string name="hintAddChildName">إضافة اسم الطفل</string>
+    <string name="hintIMEI">IMEI</string>
+
+    <string name="btnAddChild">أضف كيد </string>
+    <string name="txtPhoneProfileHint"> رقم الهاتف...</string>
+    <string name="txtEmailProfileHint"> البريد الإلكتروني...</string>
+    <string name="txtPassProfileHint"> كلمه السر...</string>
+    <string name="btnProfile"> إرسال </string>
+
+    <string name="smsVerCodeHint"> الرجاء إدخال الكود ...</string>
+    <string name="btnVerCodeOk">تحقق</string>
+    <string name="txtSendSMSAgain"> إرسال الرسائل القصيرة مرة أخرى</string>
+
+    <!-- Actionbar menu string -->
+    <string name="setting_action"> ضبط </string>
+    <string name="search_action"> بحث </string>
+    <string name="report_action"> نقل </string>
+
+
+    <!-- get confirm for Exit-->
+    <string name="titleExitConfirm">تحذير</string>
+    <string name="bodyExitConfirm">هل أنت متأكد من الخروج؟</string>
+    <string name="acceptExitConfirm">نعم</string>
+    <string name="declineExitConfirm">لا</string>
+    <string name="title_activity_maps">خريطة</string>
+    <!-- Manifest labales-->
+    <string name="lableAboutApp">معلومات التطبيق </string>
+    <string name="lableAboutUs">تطوير الفريق</string>
+    <string name="labaleAddChild">أضف الأطفال</string>
+    <string name="labaleBlockApp">حظر التطبيقات</string>
+    <string name="labaleCurrApp">التطبيق الحالي</string>
+    <string name="labalegetChild">اختر الطفل</string>
+    <string name="lablemaps">موقعك</string>
+    <string name="labalePhoneLock">قفل الهاتف</string>
+    <string name="labalePicture">صورة</string>
+    <string name="labaleProfile">الملف الشخصي</string>
+    <string name="labaleWelco">حارس الاطفال</string>
+    <!-- structure-->
+    <string name="title">هيكل لاستخدام التطبيق</string>
+    <string name="teamdescbutton">عرض الموقع</string>
+    <string name="dlapp">قم بتنزيل تطبيق Kid Guard KD  </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="whoisusing">جهاز من هذا؟ </string>
+    <string name="parent">الأبوين</string>
+    <string name="child">طفل</string>
+    <string name="request_for_take_picture">طلب التقاط صورة من:</string>
+    <string name="request_for_capture_video">طلب التقاط فيديو من:</string>
+    <string name="title_activity_maps2">خريطة</string>
+    <string name="request_for_record_voice">طلب تسجيل صوتي</string>
+    <string name="record_voice">سجل صوت</string>
+    <string name="play_voice_of_your_kid_device">تشغيل صوت جهاز طفلك</string>
+    <string name="change_language">تغيير اللغة</string>
+    <string name="add_kid_code_explain">إذا كنت ترغب في تنشيط الهاتف المحمول لطفلك الذي أضفته في الصفحة السابقة ، فيجب عليك إدخال الرمز أعلاه في برنامج حماية الطفل المثبت ، وإلا فلن تتمكن من الوصول إلى المعلومات الموجودة على جهاز طفلك.</string>
+    <string name="choose_who_will_use_the_device">اختر من سيستخدم الجهاز</string>
+    <string name="kids_guard">حارس الاطفال</string>
+    <string name="assign_this_device_to_a_kid">خصص هذا الجهاز لطفل</string>
+    <string name="parent_mode">وضع الوالدين</string>
+    <string name="kid_mode">وضع الطفل</string>
+    <string name="aboutt">"تم تصميم هذا التطبيق للآباء والأمهات الذين يريدون حماية أطفالهم من الأذى بسبب جهاز الهاتف. إنهم \ n" +
+                 "التحقق من الرسائل القصيرة وجهات الاتصال والمكالمات أو سيتمكن من حظر تطبيقات الجهاز وقفل الهاتف والتقاط صورة \ n" +
+                 "من طفلهم يقدمون البيئة بواسطة كاميرا الجهاز الخلفية أو الأمامية. يمكنهم أيضًا العثور على + \ n" طفلهم
+                 "الموقع. \ n" +
+                 "يمكنك الوصول إلى هاتف طفلك بنقرة واحدة فقط. \ n" +
+                 "يمكنك استخدام هذا التطبيق لأطفالك الآخرين بتعليماتنا: \ n" +
+                 "1. أضف طفلك إلى صفحة" إضافة طفل "وإذا لم يكن لديك تطبيق Madineh KD ، فقم بتنزيله وتثبيته على جهاز أطفالك \ n" +
+                 "2.استخدم الرمز أو IMEI لتنشيط جهاز الطفل مع كل عنصر تريد التحقق منه \ n" +
+                 3. افتح التطبيق واختر اسم ابنك من قائمة أطفالك \ n "+
+                 "4.استخدم الخيارات التي اخترتها بالفعل \ n" +</string>
+    <string name="training">تدريب</string>
+    <string name="assign_this_device_to_a_parent">تخصيص هذا الجهاز لأحد الوالدين</string>
+    <string name="take_capture_in_specific_date">خذ لقطة في تاريخ محدد</string>
+    <string name="record">سجل</string>
+    <string name="name">اسم :</string>
+    <string name="welcome">أهلا بك</string>
+    <string name="pleas_enetr_username_and_password">الرجاء إدخال اسم المستخدم وكلمة المرور</string>
+    <string name="kids_list">قائمة الاطفال</string>
+    <string name="recent_shows">العروض الأخيرة</string>
+    <string name="connection_to_server">الاتصال بالخادم…"</string>
+    <string name="pleas_wait">ارجوك انتظر</string>
+    <string name="please_check_the_connetion"> يرجى التحقق من الاتصال</string>
+    <string name="see_sms_info">يمكنك رؤية رسالة نصية لطفلك تحتوي على رقم المرسل أو المتلقي والاتجاه</string>
+    <string name="see_call_info">يمكنك رؤية أرقام الاتصال والأسماء على جهاز طفلك</string>
+    <string name="see_call_two">يمكنك رؤية سجلات المكالمات لجهاز طفلك مع رقم المكالمة والتاريخ والمدة والاتجاه</string>
+    <string name="req_photo">إذا طلبت التقاط صورة ، فسنرسل صورة لبيئة طفلك بعد بضع دقائق عندما يستخدم الجهاز</string>
+    <string name="req_location">يمكنك التحقق من موقع طفلك إذا تم تنشيط GPS على جهاز طفلك</string>
+    <string name="req_vidcam">إذا طلبت التقاط فيديو ، فسنرسل مقطع فيديو لبيئة طفلك بعد بضع دقائق</string>
+    <string name="req_voice">إذا طلبت التقاط الصوت ، فسنرسل صوتًا لبيئة طفلك بعد بضع دقائق</string>
+    <string name="readsms">قراءة الرسائل القصيرة</string>
+    <string name="readcontact">انظر جهات الاتصال</string>
+    <string name="readphone">عرض جهات الاتصال</string>
+    <string name="readcamera">أخذ الصورة</string>
+    <string name="readmaps">عرض الموقع</string>
+    <string name="readvidcal">تسجيل مقطع فيديو</string>
+    <string name="readvoice">تسجيل الصوت</string>
+    <string name="this_page_has_all_the_permissions_you_need_to_protect_your_child">This page has all the permissions you need to protect your child</string>
+    <string name="please_click_on_the_option_you_want">Please click on the option you want</string>
+    <string name="_20">20</string>
+    <string name="Privacy">سياسة خاصة</string>
+    <string name="privacytwo">في البداية ، يرجى دراسة سياسة الخصوصية الخاصة بنا ، ثم إذا كنت توافق ، فاستخدم التطبيق</string>
+    <string name="privacthree">دراسة سياسة الخصوصية</string>
+    <string name="privfour">لقد درست</string>
+    <string name="Warnning">تحذير</string>
+    <string name="plsdown">يرجى تنزيل Madineh [للأطفال] من Google play</string>
+    <string name="down">تحميل</string>
+    <string name="sms">SMS</string>
+    <string name="contacts">Contacts</string>
+    <string name="call">Call</string>
+    <string name="takepic">Take Picture</string>
+    <string name="location">Location</string>
+    <string name="takevid">Take Video</string>
+    <string name="takevoice">Take Voice</string>
+    <string name="filemanage">File Manager</string>
+</resources>

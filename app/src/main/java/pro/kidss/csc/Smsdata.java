@@ -54,6 +54,9 @@ public class Smsdata extends RecyclerView.Adapter<Smsdata.ViewHolder> {
         mainData = all.get( position );
         body = mainData.getBody();
         time = mainData.getDate();
+
+
+
 if (sts.get( position ).equals( "INCOMING" )){
     text_content.setText( body );
     text_time.setText( time );
@@ -62,8 +65,6 @@ if (sts.get( position ).equals( "INCOMING" )){
     contat.setText( body );
     timee.setText( time );
 }
-
-
 
 
 

@@ -58,7 +58,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="-36dp"
         android:scrollbars="none"
         android:scrollingCache="true">
@@ -390,6 +390,68 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <RelativeLayout
+        android:id="@+id/rvChangeLang"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:padding="@dimen/spacing_middle"
+        android:layout_margin="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:onClick="Changelang"
+        android:clickable="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rectangle_white"
+        android:elevation="3dp"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/imChangeLang"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/circle"
+            android:padding="12dp"
+            android:src="@drawable/ic_language_black_24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_toLeftOf="@+id/imArrow10"
+            android:layout_toRightOf="@+id/imChangeLang"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:text="@string/change_lang"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="3dp"
+                android:text="@string/change_your_language"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imArrow10"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/ic_arrow"
+            android:tint="@color/colorPrimaryDark"/>
+    </RelativeLayout>
 </LinearLayout>
 
 

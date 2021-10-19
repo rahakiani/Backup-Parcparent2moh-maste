@@ -23,6 +23,12 @@
     <string name="register_successful">Register successfully</string>
     <string name="hintchildName">enter your child name</string>
     <string name="btnLogin">Login</string>
+    <string name="change_lang">Change Language</string>
+    <string name="change_your_language">Change Your Language</string>
+    <string name="hindi">English</string>
+    <string name="english">فارسی</string>
+    <string name="arabic">العربية</string>
+    <string name="cancel">Cancel</string>
     <string name="btnRegister">Register</string>
     <string name="google">AIzaSyBq_pnF8hlNYPH4Es1y2KJmyVtsTOM2l4E</string>
     <!-- welcome.xml -->

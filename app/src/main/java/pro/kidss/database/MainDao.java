@@ -1,3 +1,4 @@
+
 package pro.kidss.database;
 
 import androidx.room.Dao;
@@ -6,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import java.util.Collection;
 import java.util.List;
 
 @Dao
@@ -55,18 +57,15 @@ public interface MainDao {
     @Query("SELECT  DISTINCT type FROM video_data  ORDER BY type DESC")
     List<String> gettyper();
 
-    @Query("SELECT  DISTINCT date FROM video_data WHERE type=:type ORDER BY date DESC")
+    @Query("SELECT  DISTINCT date FROM video_data WHERE type=:type ")
     List<String> getdater(String type);
 
     @Query("SELECT date FROM video_data WHERE type=:typee")
     List<String> getdatee(String typee);
 
-    @Query("SELECT address FROM video_data WHERE type=:typee AND date=:date ")
-    List<String> getaddressss(String typee, String date);
-    @Query("SELECT * FROM video_data WHERE address =:address ")
-    List<MsinData> getaall(String address);
-    @Query("SELECT file FROM video_data WHERE address =:address ")
-    String getfilee(String address);
+    @Query("SELECT * FROM video_data WHERE type=:typee AND date=:date ")
+    List<MsinData> getaddressss(String typee, String date);
+
 
 //    @Query( "SELECT address FROM video_data WHERE date=:date " )
 //    List<String> getaddressss( String date);

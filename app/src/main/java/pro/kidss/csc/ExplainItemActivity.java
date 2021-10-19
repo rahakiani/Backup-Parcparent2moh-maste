@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -293,9 +294,11 @@ String bod,name,number;
                                                 i++;
 
                                             }
-
                                             distinccontactdata =roomdb.mainContact().getnamedis();
                                             distinccontacttdata =roomdb.mainContact().getnumberdic();
+
+
+
                                             gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                             recyclerViewDetail.setLayoutManager( gridLayoutManager );
                                             dataAdapterr=new Recyclercondate(getApplicationContext(),distinccontactdata,distinccontacttdata);
@@ -316,6 +319,8 @@ String bod,name,number;
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
                                 }
                             }
+
+
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {

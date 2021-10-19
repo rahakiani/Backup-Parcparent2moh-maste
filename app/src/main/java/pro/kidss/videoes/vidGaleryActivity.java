@@ -59,18 +59,22 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     MediaController mediaController;
     RecyclerviewVIDGAL dataAdapter;
     Intent intent3;
-    String type = "";
+    MsinData msinData;
+
+    String type = "",date,time,addresss;
     String datess = "";
     Roomdb roomdb;
     private Handler mHandler = new Handler();
-    List<MsinData> all;
-    List<String> vidaddress;
+    List<MsinData> all ;
+    List<MsinData> vidaddress;
+    List<String> datee;
     private MusicUtils utils;
     String fileaddres;
     Uri videoUri;
     ArrayList<MsinData> dataList = new ArrayList<>();
     MediaPlayer mp;
     OnvideoDate videodate;
+    int adad;
     VideoView videoView;
     View parent_view;
     private ProgressBar download_progress;
@@ -110,21 +114,18 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
         }
         vidaddress = roomdb.mainDao().getaddressss(type, datess);
-        int i = 0;
-        while (i < vidaddress.size()) {
-            all = roomdb.mainDao().getaall(vidaddress.get(i));
-
-            i++;
-        }
+        Log.e( "ADDDRESS",vidaddress.toString() );
 
 
-//        List<MsinData> all= roomdb.mainDao().getaall(vidaddress.get(i));
-        Log.e("Vidadress", vidaddress.toString());
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_item);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         Log.e("Typer", type);
-        dataAdapter = new RecyclerviewVIDGAL(vidGaleryActivity.this, all, vidGaleryActivity.this);
+
+//        adad = datee.size();
+        Log.e( "gadsfgbadb", String.valueOf( adad ) );
+        dataAdapter = new RecyclerviewVIDGAL(vidGaleryActivity.this,vidaddress, vidGaleryActivity.this);
         recyclerView.setAdapter(dataAdapter);
     }
 
