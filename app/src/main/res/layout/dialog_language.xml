@@ -40,7 +40,7 @@
             android:background="@drawable/round_button_lang"
             android:gravity="center"
             android:padding="13dp"
-            android:elevation="3dp"
+
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:text="@string/hindi"
@@ -57,7 +57,7 @@
             android:background="@drawable/round_button_lang"
             android:gravity="center"
             android:padding="13dp"
-            android:elevation="3dp"
+
             android:visibility="visible"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -73,7 +73,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/round_button_lang"
             android:gravity="center"
-            android:elevation="3dp"
+
             android:padding="13dp"
             android:visibility="visible"
             android:fontFamily="@font/sans"
@@ -94,7 +94,7 @@
             android:backgroundTint="#fff"
             android:gravity="center"
             android:padding="13dp"
-            android:elevation="3dp"
+
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
