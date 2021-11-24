@@ -266,7 +266,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
                     videoView.setVideoURI( videoUri );
                     // start a video
                     videoView.start();
-                    linearLayout.setVisibility( View.VISIBLE );
+
                     roomdb.mainDao().adddown( videodate );
 
                     // implement on completion listener on video view
@@ -350,8 +350,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     }
 
     public void full(View view) {
-        Intent intent = new Intent(getApplicationContext(),Viewvideo.class);
-        intent.putExtra( "ADDRES", videoUri );
+
 
     }
 }
