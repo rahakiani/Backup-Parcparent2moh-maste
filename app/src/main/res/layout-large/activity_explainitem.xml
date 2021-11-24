@@ -6,6 +6,16 @@
     android:background="@color/grey_5"
     android:layoutDirection="ltr">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/text_know"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="45sp"
+        android:fontFamily="@font/bluemoon"
+        android:textColor="@color/colorPrimary"
+        android:visibility="gone"/>
 
 
 

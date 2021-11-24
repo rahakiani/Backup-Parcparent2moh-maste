@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.ThemedSpinnerAdapter;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,21 +66,22 @@ public class ExplainItemActivity extends AppCompatActivity {
     RecyclerView recyclerViewDetail;
     String dir;
     String callDuration;
-            Date callDayTime;
-
+    Date callDayTime;
     ProgressDialog dialog = null;
     ArrayList<String> namee = new ArrayList<>();
     ArrayList<String> res=new ArrayList<String>();
     ArrayList<String> numberr=new ArrayList<>();
     EditText edtphonesearch;
+    Thread thread;
+    int num;
     private ImageButton imgleftdra;
     String phNumber;
     private ArrayList<String> text;
     int idd;
     SwipeRefreshLayout swpref;
     Roomdb roomdb;
-    ProgressBarGIFDialog.Builder progressBarGIFDialog;
-
+    boolean isrunnong;
+    TextView textt;
     recyclersmsdate dataAdapter;
     Recyclercalldate dataAdap;
     Recyclercondate dataAdapterr;
@@ -86,7 +91,7 @@ public class ExplainItemActivity extends AppCompatActivity {
     List<String> distinccontactdata;
     List<String> distinccontacttdata;
     List<String> distincmaindata;
-String bod,name,number;
+    String bod,name,number;
     GridLayoutManager gridLayoutManager;
     ArrayList<MainData> dataList = new ArrayList<>();
     ArrayList<ContactData> dataLisst = new ArrayList<>();
@@ -96,24 +101,10 @@ String bod,name,number;
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_explainitem);
         roomdb = Roomdb.getInstance( this );
-
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
-
-        progressBarGIFDialog.setCancelable(false)
-
-                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
-
-                .setLoadingGif(R.drawable.loading) // Set Loading Gif
-
-                .setDoneGif(R.drawable.done) // Set Done Gif
-
-                .setDoneTitle("Done") // Set Done Title
-
-                .setLoadingTitle("Please wait...") // Set Loading Title
-
-                .build();
-
-//        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "connecting to server...", true);
+        dialog = ProgressDialog.show(ExplainItemActivity.this, "Please wait", "Connecting to server...", true);
+        isrunnong = false;
+        thread = null;
+        textt = findViewById( R.id.text_know );
         recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
         Intent intent = getIntent();
         swpref=(SwipeRefreshLayout)findViewById(R.id.swpref);
@@ -139,7 +130,7 @@ String bod,name,number;
                             @RequiresApi(api = Build.VERSION_CODES.N)
                             @Override
                             public void onResponse(String response) {
-
+                                Log.e("smsress", response );
                                 try {
 
                                     JSONObject jsonsms=new JSONObject(response);
@@ -149,79 +140,71 @@ String bod,name,number;
                                     switch (status){
                                         case "ok":
 
+
                                             JSONArray diraray=jsonsms.getJSONArray("direction");
                                             JSONArray bodyaray=jsonsms.getJSONArray("body");
                                             JSONArray numberaray=jsonsms.getJSONArray("number");
                                             JSONArray idarray=jsonsms.getJSONArray("id");
                                             int i=0;
                                            // ArrayList<String> res=new ArrayList<String>();
-                                            while (i<numberaray.length()){
+                                            while (i<idarray.length()){
                                                 String name=numberaray.getString(i);
                                                 String number=bodyaray.getString(i);
-                                                String dir=diraray.getString(i);
+                                               String dir=diraray.getString(i);
                                                  id=idarray.getInt(i);
 
                                                 String[] send = diraray.getString( i ).split( "\\n");
 
-//                                                while (i<diraray.length()){
-//                                                    String stat = send[0].split("\\n").toString();
-                                                    Log.e( "Sendinnn",send[0] );
-//                                                }
-//                                                String[] sendd = send[1].split( "\n" );
-//                                                Log.e( "Sendin",send.toString() );
-                                                Log.e( "IID", String.valueOf( id ) );
-//                                                res.add(name+":"+"\n"+number+"\n"+dir+"\n"+idd+"\n"+id);
-                                                if (roomdb.mainDaoo().checkid( id )==0){
-                                                    MainData data = new MainData(id,name,number,send[1],send[0]);
-                                                    Log.e( "LKLKKL", roomdb.mainDaoo().getallsms().toString() );
+                                                if (roomdb.mainDaoo().checkid( id ) == 0) {
+                                                    MainData data = new MainData( id, name, number, send[1], send[0] );
+
                                                     roomdb.mainDaoo().insert( data );
                                                     dataList.add( data );
+//
+
+
+                                                } else {
 //                                                    dialog.dismiss();
-//                                                    progressBar.dismiss
-                                                    progressBarGIFDialog.clear();
-                                                }else{
-                                                 Log.e( "ASDADE","ADADE" );
-                                                    progressBarGIFDialog.clear();
+                                                    Log.e( "TEKRAR", String.valueOf( id ) );
+
                                                 }
-
-
-
-
-
-
                                                 i++;
 
                                             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+                                            dialog.dismiss();
                                            recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
                                             distincmsindata = roomdb.mainDaoo().getnumber();
-//                                            int b = 0;
-//                                            while (b == distincmsindata.size()){
-//                                                bodyy = roomdb.mainDao().bodyy( distincmsindata.get( b ) );
-////                                                bod = bodyy.get( b );
-//                                                Log.e( "DADA",bodyy.get( b ) );
-//                                                b++;
-//                                            }
-
-
-
                                             gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                             recyclerViewDetail.setLayoutManager( gridLayoutManager );
                                             dataAdapter=new recyclersmsdate(getApplicationContext(),distincmsindata,bod);
                                             recyclerViewDetail.setAdapter( dataAdapter );
-//                                           recyclerViewAddList(getApplicationContext(),res,recyclerViewDetail);
+
 
 
                                             break;
                                         default:
-                                            progressBarGIFDialog.clear();
+                                            textt.setText( "There is no SMS" );
+                                            textt.setVisibility(View.VISIBLE );
                                             String message=jsonsms.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
                                     }
 
                                 } catch (JSONException e) {
-                                     progressBarGIFDialog.clear();
+
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
 
@@ -231,7 +214,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                         progressBarGIFDialog.clear();
+
                         Alert.shows(ExplainItemActivity.this,"","Please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
                     }
@@ -261,7 +244,7 @@ String bod,name,number;
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                progressBarGIFDialog.clear();
+
                                 Log.e("smsres", response );
                                 try {
                                     JSONObject jsoncontact=new JSONObject(response);
@@ -270,8 +253,12 @@ String bod,name,number;
                                     switch (status){
                                         case "ok":
 
-                                            JSONArray contactname=jsoncontact.getJSONArray("name");
-                                            JSONArray contactnum=jsoncontact.getJSONArray("tell");
+
+                                                    JSONArray contactname= null;
+
+                                                        contactname = jsoncontact.getJSONArray("name");
+
+                                                    JSONArray contactnum=jsoncontact.getJSONArray("tell");
                                             JSONArray idarray=jsoncontact.getJSONArray("id");
                                             int i=0;
                                             while (i<contactname.length()){
@@ -279,14 +266,14 @@ String bod,name,number;
                                                 String nameeee=contactname.getString( i );
                                                 String nuuum=contactnum.getString( i );
                                                 namee.add( nameeee);
-                                               Log.e( "CHIIIII",namee.toString() );
+//                                               Log.e( "CHIIIII",namee.toString() );
 
                                                 numberr.add( nuuum);
-                                                Log.e( "CHII52572I",numberr.toString() );
+//                                                Log.e( "CHII52572I",numberr.toString() );
                                                 if (roomdb.mainContact().checknumber( id )==0){
                                                     ContactData contactData = new ContactData(id,nuuum,nameeee);
                                                     roomdb.mainContact().insert( contactData );
-                                                    progressBarGIFDialog.clear();
+//                                                    dialog.dismiss();
                                                 }else {
                                                     Log.e( "Tekrarr","AFF" );
                                                 }
@@ -294,6 +281,7 @@ String bod,name,number;
                                                 i++;
 
                                             }
+                                            dialog.dismiss();
                                             distinccontactdata =roomdb.mainContact().getnamedis();
                                             distinccontacttdata =roomdb.mainContact().getnumberdic();
 
@@ -304,17 +292,18 @@ String bod,name,number;
                                             dataAdapterr=new Recyclercondate(getApplicationContext(),distinccontactdata,distinccontacttdata);
                                             recyclerViewDetail.setAdapter( dataAdapterr );
 
-
                                             break;
                                         default:
-                                            progressBarGIFDialog.clear();
+                                            textt.setText( "There is no Contact" );
+                                            textt.setVisibility(View.VISIBLE );
+//                                            dialog.dismiss();
                                             String message=jsoncontact.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
                                     }
 
                                 } catch (JSONException e) {
-                                     progressBarGIFDialog.clear();
+//                                    dialog.dismiss();
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
                                 }
@@ -324,7 +313,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressBarGIFDialog.clear();
+//                        dialog.dismiss();
                         Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 
@@ -359,6 +348,7 @@ String bod,name,number;
 
                                     switch (status){
                                         case "ok":
+
                                             JSONArray phnumberaray=jsoncall.getJSONArray("phnumber");
                                             JSONArray calldatearay=jsoncall.getJSONArray("calldate");
                                             JSONArray calldurationaray=jsoncall.getJSONArray("callduration");
@@ -381,16 +371,18 @@ String bod,name,number;
 
 
                                                     Maindataa dataa = new Maindataa( idd, phNumber, dir, callDayTime.toString(), callDuration );
-                                                    Log.e( "LKLKKL", roomdb.mainDaooo().getallcall().toString() );
+
                                                     roomdb.mainDaooo().insert( dataa );
+//                                                    Log.e( "LKLKKL", roomdb.mainDaooo().getallcall().toString() );
                                                     dataListt.add( dataa );
-                                                    progressBarGIFDialog.clear();
+//                                                    dialog.dismiss();
                                                 }else {
                                                     Log.e( "AFASDF", String.valueOf( id ) );
-                                                    progressBarGIFDialog.clear();
+
                                                 }
                                                 i++;
                                             }
+                                            dialog.dismiss();
 
 
 
@@ -433,20 +425,23 @@ String bod,name,number;
 
                                     gridLayoutManager = new GridLayoutManager( getApplicationContext(), 1 );
                                     recyclerViewDetail.setLayoutManager( gridLayoutManager );
-                                            dataAdap=new Recyclercalldate(getApplicationContext(),distincmaindata);
+                                    dataAdap=new Recyclercalldate(getApplicationContext(),distincmaindata);
                                     recyclerViewDetail.setAdapter( dataAdap );
 
 
                                             break;
                                         default:
-                                            progressBarGIFDialog.clear();
+                                            textt.setText( "There is no Call History" );
+                                            textt.setVisibility(View.VISIBLE );
+//                                            dialog.dismiss();
                                             String message=jsoncall.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
                                     }
 
                                 } catch (JSONException e) {
-                                     progressBarGIFDialog.clear();
+//                                    dialog.dismiss();
+                                    Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
                                     e.printStackTrace();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
                                 }
@@ -454,7 +449,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                         progressBarGIFDialog.clear();
+//                        dialog.dismiss();
                         Alert.shows(ExplainItemActivity.this,"","please check the connection","ok","");
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 
@@ -498,7 +493,7 @@ String bod,name,number;
                                                     res.add(appnamearay.getString(i));
                                                     i++;
                                                 }
-                                                progressBarGIFDialog.clear();
+                                               dialog.dismiss();
                                                 recyclerViewDetail = (RecyclerView)findViewById(R.id.recyclerViewDetailItem);
                                                 recyclerViewAddList(ExplainItemActivity.this,res,recyclerViewDetail);
 
@@ -506,13 +501,15 @@ String bod,name,number;
                                                 e.printStackTrace();
 
                                                 // Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
-                                                 progressBarGIFDialog.clear();
+                                                dialog.dismiss();
                                                 SendEror.sender(ExplainItemActivity.this,e.toString());
 
                                             }
                                             break;
                                         default:
-                                            progressBarGIFDialog.clear();
+                                            dialog.dismiss();
+                                            textt.setText( "There is no Package" );
+                                            textt.setVisibility(View.VISIBLE );
                                             String message=jsonstatus.getString("message");
                                             SendEror.sender(ExplainItemActivity.this,message);
                                             break;
@@ -520,7 +517,7 @@ String bod,name,number;
                                 } catch (JSONException e) {
                                     e.printStackTrace();
 
-                                     progressBarGIFDialog.clear();
+                                     dialog.dismiss();
                                     SendEror.sender(ExplainItemActivity.this,e.toString());
 
                                 }
@@ -528,7 +525,7 @@ String bod,name,number;
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                         progressBarGIFDialog.clear();
+                         dialog.dismiss();
 
                         SendEror.sender(ExplainItemActivity.this,error.toString());
 
@@ -556,6 +553,7 @@ String bod,name,number;
 //        setress();
 
     }
+
     public String getctoken(Context context){
         CtokenDataBaseManager ctok=new CtokenDataBaseManager(context);
         return ctok.getctoken();

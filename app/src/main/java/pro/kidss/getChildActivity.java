@@ -41,7 +41,7 @@ public class getChildActivity extends AppCompatActivity {
     String activity = "1";
     private View parent_view;
     private View back_drop;
-    ProgressBarGIFDialog.Builder progressBarGIFDialog;
+//    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     private boolean rotate = false;
     private View lyt_add;
     String a = "1";
@@ -104,23 +104,23 @@ public class getChildActivity extends AppCompatActivity {
                 startActivity( b9 );
             }
         } );
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+//        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+//
+//        progressBarGIFDialog.setCancelable(false)
+//
+//                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+//
+//                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+//
+//                .setDoneGif(R.drawable.done) // Set Done Gif
+//
+//                .setDoneTitle("Done") // Set Done Title
+//
+//                .setLoadingTitle("Please wait...") // Set Loading Title
+//
+//                .build();
 
-        progressBarGIFDialog.setCancelable(false)
-
-                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
-
-                .setLoadingGif(R.drawable.loading) // Set Loading Gif
-
-                .setDoneGif(R.drawable.done) // Set Done Gif
-
-                .setDoneTitle("Done") // Set Done Title
-
-                .setLoadingTitle("Please wait...") // Set Loading Title
-
-                .build();
-
-//        dialog = ProgressDialog.show( getChildActivity.this, "please wait", "connecting to server...", true );
+        dialog = ProgressDialog.show( getChildActivity.this, "please wait", "connecting to server...", true );
 
     }
 
@@ -147,7 +147,7 @@ public class getChildActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e( "dsrrfdfs", response );
 
-                        progressBarGIFDialog.clear();
+                        dialog.dismiss();
                         try {
                             JSONObject jsonchilldcondition = new JSONObject( response );
                             String status = jsonchilldcondition.getString( "status" );
@@ -190,7 +190,7 @@ public class getChildActivity extends AppCompatActivity {
                             }
 
                         } catch (JSONException e) {
-                             progressBarGIFDialog.clear();
+                             dialog.dismiss();
                             Toast.makeText( context, e.toString(), Toast.LENGTH_SHORT ).show();
                             e.printStackTrace();
                             SendEror.sender( getChildActivity.this, e.toString() );
@@ -200,7 +200,7 @@ public class getChildActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                 progressBarGIFDialog.clear();
+                 dialog.dismiss();
                 Alert.shows( context, "", "please check the connection", "ok", "" );
                 SendEror.sender( getChildActivity.this, error.toString() );
 

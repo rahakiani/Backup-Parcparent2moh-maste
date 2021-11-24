@@ -1,6 +1,7 @@
 package pro.kidss.file;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.R;
 import pro.kidss.model.DataClass;
+import pro.kidss.videoes.VideoCategoryActivity;
 import pro.kidss.wlcome.WelcomeActivity;
 
 public class FileManager extends AppCompatActivity implements DataModel.OnGetResponse {
@@ -53,6 +56,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
     TextView messageTv, titleTv, timer;
     ImageView close;
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
+    ProgressBar dialog1;
     ScrollView scrollView;
     private RecyclerView recyclerView;
     private FileManagerAdaptor exampleAdapter;
@@ -69,7 +73,7 @@ public class FileManager extends AppCompatActivity implements DataModel.OnGetRes
         progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
         updatepage = (TextView) findViewById( R.id.updatefile );
         cardView = findViewById( R.id.cardviewfile );
-
+//        dialog1 = ProgressDialog.show( FileManager.this, "Please wait", "Connecting to server...", true);
         button = (TextView) findViewById( R.id.bt_send );
         recyclerView = (RecyclerView) findViewById( R.id.recyclerView_List );
        // parsDataa( FileManager.this );

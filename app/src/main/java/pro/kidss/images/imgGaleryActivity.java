@@ -50,6 +50,7 @@ import pro.kidss.SpacingItemDecoration;
 import pro.kidss.Tools;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.database.MsinData;
+import pro.kidss.voice.Player;
 
 public class imgGaleryActivity extends AppCompatActivity {
     ArrayList<String> img = new ArrayList<String>();
@@ -59,7 +60,8 @@ public class imgGaleryActivity extends AppCompatActivity {
     ArrayList<String> timing = new ArrayList<String>();
     RecyclerView recyclerView;
     Dialog dialog1;
-    ProgressBarGIFDialog.Builder progressBarGIFDialog;
+    ProgressDialog dialog;
+//    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     Button accept;
     TextView messageTv, titleTv, timer;
     ImageView close;
@@ -78,21 +80,23 @@ public class imgGaleryActivity extends AppCompatActivity {
         removefab = (FloatingActionButton) findViewById( R.id.fab );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
         dialog1 = new Dialog(this);
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+        dialog = ProgressDialog.show( imgGaleryActivity.this, "Please wait", "Connecting to server...", true);
 
-        progressBarGIFDialog.setCancelable(false)
-
-                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
-
-                .setLoadingGif(R.drawable.loading) // Set Loading Gif
-
-                .setDoneGif(R.drawable.done) // Set Done Gif
-
-                .setDoneTitle("Done") // Set Done Title
-
-                .setLoadingTitle("Please wait...") // Set Loading Title
-
-                .build();
+//        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
+//
+//        progressBarGIFDialog.setCancelable(false)
+//
+//                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
+//
+//                .setLoadingGif(R.drawable.loading) // Set Loading Gif
+//
+//                .setDoneGif(R.drawable.done) // Set Done Gif
+//
+//                .setDoneTitle("Done") // Set Done Title
+//
+//                .setLoadingTitle("Please wait...") // Set Loading Title
+//
+//                .build();
         swpref.setOnRefreshListener( new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -160,7 +164,7 @@ public class imgGaleryActivity extends AppCompatActivity {
 
                                     b++;
                                 }
-                               progressBarGIFDialog.clear();
+                              dialog.dismiss();
 //                                Log.e("onResponse", img.get(i));
                                     recyclerView = (RecyclerView) findViewById(R.id.imgrecyclerView);
                                     gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);

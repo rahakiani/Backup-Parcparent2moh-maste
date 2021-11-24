@@ -1,6 +1,7 @@
 package pro.kidss.voice;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -52,8 +53,8 @@ public class Player extends AppCompatActivity {
     RecyclerView recyclerView;
     Button accept;
     TextView messageTv, titleTv, timer;
-    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     ImageView close;
+    ProgressDialog dialog;
     ArrayList<String> voiceurl = new ArrayList<String>();
     ArrayList<String> voiceNmae = new ArrayList<String>();
     private VoiceAdapter adapter;
@@ -65,20 +66,7 @@ public class Player extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.player_activity );
         dialog1 = new Dialog( this );
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
-        progressBarGIFDialog.setCancelable(false)
-
-                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
-
-                .setLoadingGif(R.drawable.loading) // Set Loading Gif
-
-                .setDoneGif(R.drawable.done) // Set Done Gif
-
-                .setDoneTitle("Done") // Set Done Title
-
-                .setLoadingTitle("Please wait...") // Set Loading Title
-
-                .build();
+        dialog = ProgressDialog.show( Player.this, "Please wait", "Connecting to server...", true);
 
         recyclerView = findViewById( R.id.player_music );
         jsonparse();
@@ -94,7 +82,7 @@ public class Player extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Log.e( "onResponse", response );
-                       progressBarGIFDialog.clear();
+
                         JSONObject alljs = null;
                         try {
                             alljs = new JSONObject( response );
@@ -120,7 +108,7 @@ public class Player extends AppCompatActivity {
                                     callForDate.set( year, mounth, day, hour, min, 00 );
                                     callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
                                     SimpleDateFormat currentDate = new SimpleDateFormat( "dd-MMMM-yyyy" );
-
+                                    dialog.dismiss();
 
                                     DateConverter converter = new DateConverter();
                                     converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );

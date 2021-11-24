@@ -151,12 +151,29 @@
     <string name="Warnning">تحذير</string>
     <string name="plsdown">يرجى تنزيل Madineh [للأطفال] من Google play</string>
     <string name="down">تحميل</string>
-    <string name="sms">SMS</string>
-    <string name="contacts">Contacts</string>
-    <string name="call">Call</string>
-    <string name="takepic">Take Picture</string>
-    <string name="location">Location</string>
-    <string name="takevid">Take Video</string>
-    <string name="takevoice">Take Voice</string>
-    <string name="filemanage">File Manager</string>
+    <string name="sms">رسالة قصيرة</string>
+    <string name="contacts">جهات الاتصال</string>
+    <string name="call">مكالمة</string>
+    <string name="takepic">التقط صورة</string>
+    <string name="location">موقع</string>
+    <string name="takevid">اتخاذ الفيديو</string>
+    <string name="takevoice">خذ صوتا</string>
+    <string name="filemanage">مدير الملفات</string>
+    <string name="GOT_IT">GOT IT</string>
+    <string name="NEXT">NEXT</string>
+<!--    <string name="this_page_has_all_permissions_n_n_you_need_to_project_n_n_your_child">"THIS PAGE HAS ALL PERMISSIONS \n\n"-->
+<!--        "YOU NEED TO PROJECT\n\n"-->
+<!--        YOUR CHILD</string>-->
+    <string name="this_page_has_all_permissions_n_n_you_need_to_project_n_n_your_child">تعرض هذه الصفحة جميع الميزات\n\n
+        يمكنك تخصيصها حسب الحاجة \n\n
+        استعمال</string>
+    <string name="bts">BTS</string>
+    <string name="infosms">YOU CAN SEE YOUR KID SMS TEXT \n\n WITH SENDER OR RECIVER NUMBER \n\n AND DIRECTION</string>
+    <string name="infovoice">IF YOU REQUEST FOR CAPTURING VOICE, \n \n WE WILL SEND A VOICE OF YOUR KID \n \n ENVIRONMENT AFTER A FEW MINUTES</string>
+    <string name="infovid">IF YOU REQUEST FOR CAPTURING VIDEO, \n \n WE WILL SEND A VIDEO OF YOUR KID \n \n ENVIRONMENT AFTER A FEW MINUTES</string>
+    <string name="infopic">IF YOU REQUEST FOR TAKE A PICTURE \n \n WE WILL SEND A PHOTO OF YOUR KID \n \n ENVIRONMENT AFTER A FEW MINUTES</string>
+    <string name="infofile">OU CAN SEE ALL THE FOLDERS \n \n OF YOUR KID DEVICE IN THIS SECTION \n \n AND DOWNLOAD THEM</string>
+    <string name="infocontact">YOU CAN SEE CONTACT NUMBERS \n \n AND NAMES ON YOUR KID DEVICE</string>
+    <string name="infolocatin">YOU CAN CHECK YOUR KID LOCATION \n \n IF THE GPS WAS ACTIVATED ON YOUR \n \n KID DEVICE</string>
+    <string name="infocall">YOU CAN SEE CALL LOGS OF YOUR KID \n \n DEVICE WITH CALL NUMBER,DATE, \n \n DURATION AND DIRECTION</string>
 </resources>

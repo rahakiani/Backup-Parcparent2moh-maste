@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -27,6 +28,7 @@ import android.widget.VideoView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.core.widget.TintableCheckedTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,7 +62,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     RecyclerviewVIDGAL dataAdapter;
     Intent intent3;
     MsinData msinData;
-
+    ImageView img;
     String type = "",date,time,addresss;
     String datess = "";
     Roomdb roomdb;
@@ -79,7 +81,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     View parent_view;
     private ProgressBar download_progress;
     FloatingActionButton ply;
-
+    LinearLayout linearLayout;
     SeekBar seekBar;
 
 
@@ -89,8 +91,9 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         setContentView( R.layout.activity_vid_galery);
         roomdb = Roomdb.getInstance(this);
         dataList.addAll(roomdb.mainDao().getallvideo());
-
+        linearLayout = findViewById( R.id.lyt_progress );
         parent_view = findViewById( android.R.id.content );
+        img = findViewById( R.id.bt_toggle_text );
         dialog1 = new Dialog(this);
         download_progress = (ProgressBar) findViewById(R.id.song_progressbar);
         videoView = findViewById(R.id.image);
@@ -129,70 +132,70 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         recyclerView.setAdapter(dataAdapter);
     }
 
-    private void ShowTry() {
-        dialog1.setContentView(R.layout.try_alert);
-        close = (ImageView) dialog1.findViewById(R.id.close_try);
-        accept = (Button) dialog1.findViewById(R.id.bt_try);
-        messageTv = (TextView) dialog1.findViewById(R.id.messaage_try);
-        messageTv.setText("please check the connection");
-
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-
-        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog1.show();
-    }
-
-
-    private void ShowDialog() {
-
-        dialog1.setContentView(R.layout.alert_wait);
-        close = (ImageView) dialog1.findViewById(R.id.close_accept);
-        accept = (Button) dialog1.findViewById(R.id.btnAccept);
-        timer = (TextView) dialog1.findViewById(R.id.text_timer);
-        titleTv = (TextView) dialog1.findViewById(R.id.title_go);
-        messageTv = (TextView) dialog1.findViewById(R.id.messaage_acceot);
-        titleTv.setText("Please Wait");
-        messageTv.setText("Connecting To Server...");
-        long duration = TimeUnit.SECONDS.toMillis(1);
-        new CountDownTimer(duration, 100) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                String sDuration = String.format(Locale.ENGLISH, "%02d:%02d"
-                        , TimeUnit.MINUTES.toSeconds(0)
-                        , TimeUnit.SECONDS.toSeconds(59) -
-                                TimeUnit.SECONDS.toSeconds(TimeUnit.SECONDS.toSeconds(1)));
-                timer.setText(sDuration);
-            }
-
-            @Override
-            public void onFinish() {
-                timer.setVisibility(View.GONE);
-                accept.setVisibility(View.VISIBLE);
+//    private void ShowTry() {
+//        dialog1.setContentView(R.layout.try_alert);
+//        close = (ImageView) dialog1.findViewById(R.id.close_try);
+//        accept = (Button) dialog1.findViewById(R.id.bt_try);
+//        messageTv = (TextView) dialog1.findViewById(R.id.messaage_try);
+//        messageTv.setText("please check the connection");
+//
+//        close.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog1.dismiss();
+//            }
+//        });
+//
+//        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog1.show();
+//    }
 
 
-            }
-        }.start();
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-        accept.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog1.dismiss();
-            }
-        });
-
-        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog1.show();
-    }
+//    private void ShowDialog() {
+//
+//        dialog1.setContentView(R.layout.alert_wait);
+//        close = (ImageView) dialog1.findViewById(R.id.close_accept);
+//        accept = (Button) dialog1.findViewById(R.id.btnAccept);
+//        timer = (TextView) dialog1.findViewById(R.id.text_timer);
+//        titleTv = (TextView) dialog1.findViewById(R.id.title_go);
+//        messageTv = (TextView) dialog1.findViewById(R.id.messaage_acceot);
+//        titleTv.setText("Please Wait");
+//        messageTv.setText("Connecting To Server...");
+//        long duration = TimeUnit.SECONDS.toMillis(1);
+//        new CountDownTimer(duration, 100) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                String sDuration = String.format(Locale.ENGLISH, "%02d:%02d"
+//                        , TimeUnit.MINUTES.toSeconds(0)
+//                        , TimeUnit.SECONDS.toSeconds(59) -
+//                                TimeUnit.SECONDS.toSeconds(TimeUnit.SECONDS.toSeconds(1)));
+//                timer.setText(sDuration);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                timer.setVisibility(View.GONE);
+//                accept.setVisibility(View.VISIBLE);
+//
+//
+//            }
+//        }.start();
+//        close.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog1.dismiss();
+//            }
+//        });
+//        accept.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog1.dismiss();
+//            }
+//        });
+//
+//        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        dialog1.show();
+//    }
 
     public String getctoken(Context context) {
         CtokenDataBaseManager ctok = new CtokenDataBaseManager(context);
@@ -210,7 +213,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
             videoView.setMediaController(mediaController);
             mediaController.setAnchorView(videoView);
             videoView.setVideoURI(videoUri);
-            videoView.start();;
+            videoView.start();
 
         }else {
             downloadfile(videodate);
@@ -228,7 +231,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
             DownloadManager.Request request = new DownloadManager.Request( uri );
             request.setTitle( "downloading" );
             request.setDescription( "wait" );
-            request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS, "kidvideo"+datess+type+".mp4" );
+            request.setDestinationInExternalPublicDir( Environment.DIRECTORY_DOWNLOADS,  "kidvideo"+datess+type+".mp4" );
             long donid = downloadManager.enqueue( request );
 
         final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
@@ -239,14 +242,14 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
         snackBarView.setPadding( 0, 0, 0, 0 );
 
-        ((TextView) custom_view.findViewById( R.id.message )).setText( "please wait one minute" );
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "Please Wait One Minute" );
         ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_loading );
         (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_500 ) );
         snackBarView.addView( custom_view, 0 );
         snackbar.show();
 //        Toast.makeText( this, "please wait one minute", Toast.LENGTH_SHORT ).show();
             BroadcastReceiver time = new BroadcastReceiver() {
-                @RequiresApi(api = 29)
+                @RequiresApi(api = 31)
                 @Override
                 public void onReceive(Context context, Intent intent) {
 
@@ -263,12 +266,15 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
                     videoView.setVideoURI( videoUri );
                     // start a video
                     videoView.start();
+                    linearLayout.setVisibility( View.VISIBLE );
                     roomdb.mainDao().adddown( videodate );
 
                     // implement on completion listener on video view
                     videoView.setOnCompletionListener( new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mp) {
+
+
 
 
                             final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
@@ -344,6 +350,9 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     }
 
     public void full(View view) {
+        Intent intent = new Intent(getApplicationContext(),Viewvideo.class);
+        intent.putExtra( "ADDRES", videoUri );
+
     }
 }
 

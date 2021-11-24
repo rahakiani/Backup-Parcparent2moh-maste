@@ -43,6 +43,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import pro.kidss.csc.ExplainItemActivity;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.DateConverter;
 import pro.kidss.database.MsinData;
@@ -62,11 +63,10 @@ public class VideoCategoryActivity extends AppCompatActivity {
     ArrayList<String> Type = new ArrayList<String>();
     ArrayList<String> dating = new ArrayList<String>();
     ArrayList<String> timing = new ArrayList<String>();
-    ProgressBarGIFDialog.Builder progressBarGIFDialog;
     FloatingActionButton fabremove;
-    //    RecyclerviewImage dataAdapter;
+    //RecyclerviewImage dataAdapter;
     RecyclerviewVidcat dataAdapter;
-    ;
+    ProgressDialog dialog = null;
     private SwipeRefreshLayout swpref;
     ArrayList<MsinData> dataList = new ArrayList<>();
     CoordinatorLayout coordinatorLayout;
@@ -78,21 +78,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         dialog1 = new Dialog( this );
         setContentView( R.layout.activity_video_category );
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
-
-        progressBarGIFDialog.setCancelable(false)
-
-                .setTitleColor(R.color.colorPrimary) // Set Title Color (int only)
-
-                .setLoadingGif(R.drawable.loading) // Set Loading Gif
-
-                .setDoneGif(R.drawable.done) // Set Done Gif
-
-                .setDoneTitle("Done") // Set Done Title
-
-                .setLoadingTitle("Please wait...") // Set Loading Title
-
-                .build();
+        dialog = ProgressDialog.show( VideoCategoryActivity.this, "Please wait", "Connecting to server...", true);
         roomdb = Roomdb.getInstance( this );
 //        coordinatorLayout = (CoordinatorLayout) findViewById( R.id.coordinatorr );
         swpref = (SwipeRefreshLayout) findViewById( R.id.swpref );
@@ -150,7 +136,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
 //                                    if (!Type.contains( Typearray.getString( i ) )) {
                                     dating.add( String.valueOf( converter.getYear() + "/" + converter.getMonth() + "/" + converter.getDay()));
                                     timing.add(String.valueOf( callForDate.getTime().getHours() + ":" + callForDate.getTime().getMinutes() + ":" + callForDate.getTime().getSeconds() ) );
-                                    Log.e( "DATEING", dating.toString() );
+//                                    Log.e( "DATEING", dating.toString() );
 //                                        String datee = dating.get( i ).toString();
 
 
@@ -163,11 +149,11 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
                                         dataList.add( data );
                                         ids.add( "" );
-                                        Log.e( "LKLKKL", roomdb.mainDao().getallvideo().toString() );
-                                        progressBarGIFDialog.clear();
+//                                        Log.e( "LKLKKL", roomdb.mainDao().getallvideo().toString() );
+
                                     } else {
                                         Log.e( "DDDD", "FFFF" );
-                                        progressBarGIFDialog.clear();
+
 //                                            dataList.addAll( roomdb.mainDao().getall() );
                                     }
 
@@ -176,6 +162,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
                                 }
 
                                 Log.e( "DATALIST", dataList.toString() );
+                                dialog.dismiss();
                                 distincmsindata = roomdb.mainDao().gettyper();
                                 recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
                                 gridLayoutManager = new GridLayoutManager( getApplicationContext(), 2 );
@@ -218,7 +205,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
         close = (ImageView) dialog1.findViewById( R.id.close_try );
         accept = (Button) dialog1.findViewById( R.id.bt_try );
         messageTv = (TextView) dialog1.findViewById( R.id.messaage_try );
-        messageTv.setText( "please check the connection" );
+        messageTv.setText( "Please check the connection" );
         close.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -66,6 +68,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledExecutorService;
 
+
 import pro.kidss.AddChildActivity;
 import pro.kidss.Alert;
 import pro.kidss.bts.BTSActivity;
@@ -90,11 +93,14 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     private DrawerLayout drawer;
     RelativeLayout relativeLayout;
     Dialog dialog1;
+    private static final int REQUEST_CODE_SPEECH_INPUT =1000 ;
+
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
     JSONArray jsonArray;
     View parent_view;
-    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, bts;
-
+    String txt;
+    FloatingActionButton contacts, sms, calls, voice, photo, video, file, location, bts,speeech;
+    TextView text;
     ScheduledExecutorService scheduledExecutorService;
     private ViewPager viewPagerr;
     private static final int NUM_PAGES = 7;
@@ -116,8 +122,9 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_welcome );
         dialog1 = new Dialog( this );
-        progressBarGIFDialog= new ProgressBarGIFDialog.Builder(this);
-        appLangSessionManager = new AppLangSessionManager(WelcomeActivity.this);
+        text = findViewById( R.id.Speech_tex );
+        progressBarGIFDialog = new ProgressBarGIFDialog.Builder( this );
+        appLangSessionManager = new AppLangSessionManager( WelcomeActivity.this );
         relativeLayout = findViewById( R.id.rvChangeLang );
         contacts = findViewById( R.id.contacts_activ );
         file = findViewById( R.id.file_activ );
@@ -126,53 +133,78 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         parent_view = findViewById( android.R.id.content );
         video = findViewById( R.id.video_activ );
         photo = findViewById( R.id.photo_activ );
+        speeech = findViewById( R.id.Speech );
         sms = findViewById( R.id.sms_activ );
         location = findViewById( R.id.location_activ );
 
         bts = findViewById( R.id.bts_activ );
 
+
         relativeLayout.setOnClickListener( new View.OnClickListener() {
-                                               @Override
-                                               public void onClick(View view) {
-                                                   final BottomSheetDialog dialogSortBy = new BottomSheetDialog( WelcomeActivity.this, R.style.SheetDialog );
-                                                   dialogSortBy.requestWindowFeature( Window.FEATURE_NO_TITLE );
-                                                   dialogSortBy.setContentView( R.layout.dialog_language );
-                                                   final TextView tv_english = dialogSortBy.findViewById( R.id.tv_english );
-                                                   final TextView tv_hindi = dialogSortBy.findViewById( R.id.tv_hindi );
-                                                   final TextView tv_cancel = dialogSortBy.findViewById( R.id.tv_cancel );
-                                                   final TextView tvArabic = dialogSortBy.findViewById( R.id.tvArabic );
-                                                   dialogSortBy.show();
-                                                   tv_english.setOnClickListener( new View.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(View view) {
-                                                           setLocale( "arr" );
-                                                           appLangSessionManager.setLanguage( "arr" );
-                                                       }
-                                                   } );
-                                                   tv_hindi.setOnClickListener( new View.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(View view) {
-                                                           setLocale( "hi" );
-                                                           appLangSessionManager.setLanguage( "hi" );
-                                                       }
-                                                   } );
-                                                   tvArabic.setOnClickListener( new View.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(View view) {
-                                                           setLocale( "ar" );
-                                                           appLangSessionManager.setLanguage( "ar" );
-                                                       }
-                                                   } );
-                                                   tv_cancel.setOnClickListener( new View.OnClickListener() {
-                                                       @Override
-                                                       public void onClick(View view) {
-                                                           dialogSortBy.dismiss();
-                                                       }
-                                                   } );
-                                               }
-                                           });
+            @Override
+            public void onClick(View view) {
+                final BottomSheetDialog dialogSortBy = new BottomSheetDialog( WelcomeActivity.this, R.style.SheetDialog );
+                dialogSortBy.requestWindowFeature( Window.FEATURE_NO_TITLE );
+                dialogSortBy.setContentView( R.layout.dialog_language );
+                final TextView tv_english = dialogSortBy.findViewById( R.id.tv_english );
+                final TextView tv_hindi = dialogSortBy.findViewById( R.id.tv_hindi );
+                final TextView tv_cancel = dialogSortBy.findViewById( R.id.tv_cancel );
+                final TextView tvArabic = dialogSortBy.findViewById( R.id.tvArabic );
+                dialogSortBy.show();
+                tv_english.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setLocale( "arr" );
+                        appLangSessionManager.setLanguage( "arr" );
+                    }
+                } );
+                tv_hindi.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setLocale( "hi" );
+                        appLangSessionManager.setLanguage( "hi" );
+                    }
+                } );
+                tvArabic.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        setLocale( "ar" );
+                        appLangSessionManager.setLanguage( "ar" );
+                    }
+                } );
+                tv_cancel.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialogSortBy.dismiss();
+                    }
+                } );
+            }
+        } );
+        speeech.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                speak();
 
 
+            }
+
+            private void speak() {
+
+                Intent intent = new Intent( RecognizerIntent.ACTION_RECOGNIZE_SPEECH );
+                intent.putExtra( RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                        RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra( RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault() );
+                intent.putExtra( RecognizerIntent.EXTRA_PROMPT,"Hello, please talk about Medina options");
+                try {
+
+                    startActivityForResult( intent,REQUEST_CODE_SPEECH_INPUT );
+                }
+                catch (Exception e){
+//                    Toast.makeText( this, ""+e.getMessage(), Toast.LENGTH_SHORT ).show();
+
+                }
+            }
+        } );
         contacts.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -415,7 +447,18 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
 //        recyclerViewwelcome.setLayoutAnimation( animation );
 //        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager( 4, StaggeredGridLayoutManager.VERTICAL );
 //        recyclerViewwelcome.setLayoutManager( layoutManager );
+
+
+
+
+
+
+
     }
+
+
+
+
 
     private void showpro() {
         progressBarGIFDialog.setCancelable(false)
@@ -445,6 +488,21 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         ((TextView) custom_view.findViewById( R.id.message )).setText( "Please use the original version of the application" );
         ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
         (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.blue_grey_400 ) );
+        snackBarView.addView( custom_view, 0 );
+        snackbar.show();
+    }
+    private void SnackbarErorr() {
+        final Snackbar snackbar = Snackbar.make( parent_view, "", Snackbar.LENGTH_SHORT );
+        //inflate view
+        View custom_view = getLayoutInflater().inflate( R.layout.snackbar_icon_text, null );
+
+        snackbar.getView().setBackgroundColor( Color.TRANSPARENT );
+        Snackbar.SnackbarLayout snackBarView = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarView.setPadding( 0, 0, 0, 0 );
+
+        ((TextView) custom_view.findViewById( R.id.message )).setText( "This option does not exist" );
+        ((ImageView) custom_view.findViewById( R.id.icon )).setImageResource( R.drawable.ic_close );
+        (custom_view.findViewById( R.id.parent_view )).setBackgroundColor( getResources().getColor( R.color.red_300 ) );
         snackBarView.addView( custom_view, 0 );
         snackbar.show();
     }
@@ -479,8 +537,57 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         dialog1.show();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult( requestCode, resultCode, data );
+        switch (requestCode){
+            case REQUEST_CODE_SPEECH_INPUT:
+                if (resultCode == RESULT_OK && null!=data) {
+                    ArrayList<String> result = data.getStringArrayListExtra( RecognizerIntent.EXTRA_RESULTS );
 
-//    private void initNavigationMen() {
+                    txt= ( result.get( 0 ) );
+
+                    if (txt.equals( "SMS" )||txt.equals( "sms" )) {
+                        Intent intent = new Intent( getApplicationContext(), ExplainItemActivity.class );
+                        intent.putExtra( "IntentName", "SMS Data" );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "contact" )||txt.equals( "CONTACT" )) {
+                        Intent intent = new Intent( getApplicationContext(), ExplainItemActivity.class );
+                        intent.putExtra( "IntentName", "Contact Data" );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "call" )||txt.equals( "CALL" )) {
+                        Intent intent = new Intent( getApplicationContext(), ExplainItemActivity.class );
+                        intent.putExtra( "IntentName", "Call Data" );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "video" )||txt.equals( "VIDEO" )) {
+                        Intent intent = new Intent( getApplicationContext(), RecordVideoActivity.class );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "photo" )||txt.equals( "PHOTO" )) {
+                        Intent intent = new Intent( getApplicationContext(), pictureActivity.class );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "voice" )||txt.equals( "VOICE" )){
+                        Intent intent = new Intent( getApplicationContext(), RecordVoiceActivity.class );
+                        startActivity( intent );
+                    }
+                    if (txt.equals( "BTS" )||txt.equals( "bts" )){
+                        Intent intent = new Intent( getApplicationContext(), BTSActivity.class );
+                        startActivity( intent );
+                    }if (txt.equals( "FILE" )||txt.equals( "file" )){
+                        Intent intent = new Intent( getApplicationContext(), FileManager.class );
+                        startActivity( intent );
+                    }else {
+                        SnackbarErorr();
+                    }
+                }
+                break;
+        }
+    }
+    //    private void initNavigationMen() {
 //        drawer = findViewById(R.id.drawer_layoutt);
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 //            public void onDrawerOpened(View drawerView) {

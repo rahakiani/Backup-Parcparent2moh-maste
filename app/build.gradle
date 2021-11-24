@@ -4,7 +4,7 @@ android {
     compileSdkVersion 31
     defaultConfig {
         applicationId "pro.kidss"
-        minSdkVersion 17
+        minSdkVersion 21
         targetSdkVersion 31
         ndkVersion '21.1.6528147'
         versionCode 13
@@ -33,7 +33,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0-rc01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-        implementation 'ir.siaray:downloadmanagerplus:1.4.1'
+    implementation 'ir.siaray:downloadmanagerplus:1.4.1'
     implementation 'com.mindorks.android:prdownloader:0.6.0'
 
     implementation 'com.google.android.material:material:1.4.0'

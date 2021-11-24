@@ -33,11 +33,13 @@
         android:roundIcon="@drawable/ic_window"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key"/>
+        <activity android:name=".videoes.Viewvideo"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/map_key" />
 
         <activity android:name=".bts.Maps_Activity" />
         <activity
@@ -78,7 +80,8 @@
             android:parentActivityName=".videoes.VideoCategoryActivity" />
         <activity
             android:name=".VoroodActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

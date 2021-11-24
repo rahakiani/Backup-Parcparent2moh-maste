@@ -3,6 +3,7 @@ package pro.kidss;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
@@ -20,13 +21,16 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+
+import pro.kidss.database.Roomdb;
+
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class loginClass {
     CoordinatorLayout coordinatorLayout;
-
+    Roomdb roomdb;
     public static void log(final Context context, final String phoneNumer, final String pass, CoordinatorLayout coordinatorLayout) {
-
 
         String url = "https://apisender.online/api/login/";
         StringRequest stringRequest = new StringRequest( Request.Method.POST, url,
@@ -50,6 +54,8 @@ public class loginClass {
                                     String owner = jsonlogin.getString( "token" );
                                     OwnerDataBaseManager own = new OwnerDataBaseManager( context );
                                     own.Insertowner( owner );
+
+
                                     Intent intent = new Intent( context, getChildActivity.class );
                                     intent.putExtra( "activity", "first" );
                                     context.startActivity( intent );
