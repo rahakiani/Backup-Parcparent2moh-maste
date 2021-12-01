@@ -23,6 +23,8 @@ public interface MainDaoo {
 //    List<String> bodyy(String id);
     @Query("SELECT COUNT(*) FROM sms_data WHERE id =:id")
     int checkid(int id);
+    @Query("DELETE FROM sms_data")
+    void deletsms();
 
 
 

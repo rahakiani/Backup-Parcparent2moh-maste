@@ -20,4 +20,6 @@ public interface Maindaooo {
     int checkid(Integer id);
     @Query( "SELECT direction FROM call_data WHERE number=:number " )
     List<String>getdirect(String number);
+    @Query("DELETE FROM call_data")
+    void deletcall();
 }

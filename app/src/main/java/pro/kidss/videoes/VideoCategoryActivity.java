@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 import pro.kidss.csc.ExplainItemActivity;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.DateConverter;
+import pro.kidss.database.MainDao;
 import pro.kidss.database.MsinData;
 import pro.kidss.R;
 import pro.kidss.database.Roomdb;
@@ -71,7 +73,9 @@ public class VideoCategoryActivity extends AppCompatActivity {
     ArrayList<MsinData> dataList = new ArrayList<>();
     CoordinatorLayout coordinatorLayout;
     List<String> distincmsindata;
+    List<String> addressss;
     Roomdb roomdb;
+    MainDao mainDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +130,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
                                     Calendar callForDate = Calendar.getInstance();
                                     callForDate.set( year, mounth, day, hour, min, 00 );
                                     callForDate.setTimeZone( TimeZone.getTimeZone( "UTC" ) );
-                                    java.text.SimpleDateFormat currentDate = new java.text.SimpleDateFormat( "dd-MMMM-yyyy" );
+                                    SimpleDateFormat currentDate = new SimpleDateFormat( "dd-MMMM-yyyy" );
 
                                     DateConverter converter = new DateConverter();
                                     converter.gregorianToPersian( callForDate.get( Calendar.YEAR ), callForDate.get( Calendar.MONTH ), callForDate.get( Calendar.DAY_OF_MONTH ) );
@@ -141,7 +145,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
 
                                     Type.add( Typearray.getString( i ) );
-                                    imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
+
 
                                     if (roomdb.mainDao().checkaddress( "https://apisender.online" + viduri.getString( i ) ) == 0) {
                                         MsinData data = new MsinData( "https://apisender.online" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ),"/Download/kidvideo.mp4",timing.get(i) );
@@ -156,12 +160,12 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
 //                                            dataList.addAll( roomdb.mainDao().getall() );
                                     }
-
-
+                                    imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
+//                                    addressss = roomdb.mainDao().getad(roomdb.mainDao().gettyper().get( i ));
                                     i++;
                                 }
 
-                                Log.e( "DATALIST", dataList.toString() );
+
                                 dialog.dismiss();
                                 distincmsindata = roomdb.mainDao().gettyper();
                                 recyclerView = (RecyclerView) findViewById( R.id.recyclerView );

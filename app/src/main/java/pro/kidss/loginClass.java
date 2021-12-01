@@ -56,6 +56,7 @@ public class loginClass {
                                     own.Insertowner( owner );
 
 
+
                                     Intent intent = new Intent( context, getChildActivity.class );
                                     intent.putExtra( "activity", "first" );
                                     context.startActivity( intent );

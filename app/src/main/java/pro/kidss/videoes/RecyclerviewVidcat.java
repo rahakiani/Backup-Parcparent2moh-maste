@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import pro.kidss.database.MsinData;
@@ -30,13 +31,14 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
 
     FloatingActionButton removefab;
     ArrayList<String> ids;
-
+    List<String> adreess;
+    String imgg;
 
     List<String> distincmsindata;
     Roomdb roomdb;
-
-    public RecyclerviewVidcat(ArrayList<String> imageUrlList, Context context, FloatingActionButton fabremove, ArrayList<String> ids, ArrayList<String> type, List<String> distincmsindata, ArrayList<MsinData> dataList) {
-        this.imageUrls = imageUrlList;
+    MsinData msinData;
+    public RecyclerviewVidcat(ArrayList<String> address, Context context, FloatingActionButton fabremove, ArrayList<String> ids, ArrayList<String> type, List<String> distincmsindata, ArrayList<MsinData> dataList) {
+        this.imageUrls = address;
         this.context = context;
         this.removefab = fabremove;
         this.ids = ids;
@@ -58,6 +60,7 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
         RequestOptions options = new RequestOptions().frame( thumb );
 
 
+
         if (distincmsindata.get( i ).equals( "camera" )) {
             viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.cam ) );
             viewHolder.txtdate.setText( "Camera" );
@@ -76,20 +79,40 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
         } else if (distincmsindata.get( i ).equals( "ir.alibaba" )) {
             viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.alibaba ) );
             viewHolder.txtdate.setText( "علی بابا" );
+        } else if (distincmsindata.get( i ).equals( "com.google.android.gm" )) {
+            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.gmail ) );
+            viewHolder.txtdate.setText( "Gmail" );
         } else if (distincmsindata.get( i ).contains( "clubhouse" )) {
             viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.imagess ) );
             viewHolder.txtdate.setText( "Clubhouse" );
 
-        } else if (distincmsindata.get( i ).contains( "whatsapp" )) {
-            viewHolder.txtdate.setText( "Whatsapp" );
-            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-        } else if (distincmsindata.get( i ).contains( "telegram" )) {
-            viewHolder.txtdate.setText( "Telegram" );
-            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-        } else {
-            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-            viewHolder.txtdate.setText( distincmsindata.get( i ) );
+//        } else if (distincmsindata.get( i ).contains( "whatsapp" )) {
+//            viewHolder.txtdate.setText( "Whatsapp" );
+//            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
+//        } else if (distincmsindata.get( i ).contains( "telegram" )) {
+//            viewHolder.txtdate.setText( "Telegram" );
+//            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
+
+
+        } else if (distincmsindata.get( i ).contains( "contact" )) {
+            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.ic_baseline_contacts_24 ) );
+            viewHolder.txtdate.setText( "Contact" );
+        } else if (distincmsindata.get( i ).contains( "snapp" )) {
+            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.sn ) );
+            viewHolder.txtdate.setText( "Snapp" );
+        }else{
+
+
+
+                    Glide.with( context ).load(imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
+                    viewHolder.txtdate.setText( distincmsindata.get( i ) );
+
+
         }
+
+
+
+
         viewHolder.img.setOnClickListener( new View.OnClickListener() {
             String type = distincmsindata.get( i );
 

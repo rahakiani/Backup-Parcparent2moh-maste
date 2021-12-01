@@ -19,6 +19,7 @@ public abstract class Roomdb extends RoomDatabase {
     public abstract MainContact mainContact();
 
 
+
     public synchronized static Roomdb getInstance(Context context) {
         if (database == null) {
             database = Room.databaseBuilder( context.getApplicationContext()

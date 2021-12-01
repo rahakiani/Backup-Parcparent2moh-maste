@@ -75,6 +75,7 @@ import pro.kidss.bts.BTSActivity;
 import pro.kidss.database.CtokenDataBaseManager;
 import pro.kidss.DateConverter;
 import pro.kidss.csc.ExplainItemActivity;
+import pro.kidss.database.Roomdb;
 import pro.kidss.file.FileManager;
 import pro.kidss.LoginActivity;
 import pro.kidss.MapsActivity;
@@ -93,6 +94,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
     private DrawerLayout drawer;
     RelativeLayout relativeLayout;
     Dialog dialog1;
+    Roomdb roomdb;
     private static final int REQUEST_CODE_SPEECH_INPUT =1000 ;
 
     ProgressBarGIFDialog.Builder progressBarGIFDialog;
@@ -123,6 +125,7 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
         setContentView( R.layout.activity_welcome );
         dialog1 = new Dialog( this );
         text = findViewById( R.id.Speech_tex );
+        roomdb = Roomdb.getInstance( this );
         progressBarGIFDialog = new ProgressBarGIFDialog.Builder( this );
         appLangSessionManager = new AppLangSessionManager( WelcomeActivity.this );
         relativeLayout = findViewById( R.id.rvChangeLang );
@@ -668,6 +671,14 @@ public class WelcomeActivity extends AppCompatActivity implements NavigationView
                 ownerDataBaseManager.delall();
                 CtokenDataBaseManager ctok = new CtokenDataBaseManager( WelcomeActivity.this );
                 ctok.delall();
+                roomdb.mainContact().deletcontact();
+                Log.e( "TAG",roomdb.mainDao().getallvideo().toString() );
+                roomdb.mainDaooo().deletcall();
+
+                roomdb.mainDao().deletvideo();
+
+                roomdb.mainDaoo().deletsms();
+
                 Intent b5 = new Intent( this, LoginActivity.class );
                 startActivity( b5 );
                 break;

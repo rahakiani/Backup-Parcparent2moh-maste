@@ -66,6 +66,12 @@ public interface MainDao {
     @Query("SELECT * FROM video_data WHERE type=:typee AND date=:date ")
     List<MsinData> getaddressss(String typee, String date);
 
+    @Query( "SELECT  address FROM video_data WHERE type-:type" )
+   String getad(String type);
+
+    @Query("DELETE FROM video_data")
+    void deletvideo();
+
 
 //    @Query( "SELECT address FROM video_data WHERE date=:date " )
 //    List<String> getaddressss( String date);

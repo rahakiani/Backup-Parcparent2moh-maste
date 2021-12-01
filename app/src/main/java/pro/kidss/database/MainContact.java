@@ -23,4 +23,6 @@ public interface MainContact {
     List<String> getnamedis();
     @Query("SELECT  DISTINCT number FROM contact_data  ORDER BY number DESC")
     List<String> getnumberdic();
+    @Query("DELETE FROM contact_data")
+    void deletcontact();
 }
