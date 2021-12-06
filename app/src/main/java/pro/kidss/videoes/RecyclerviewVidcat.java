@@ -96,8 +96,8 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
                 viewHolder.txtdate.setText("Clubhouse");
                 break;
                 case "com.whatsapp.w4b":
-                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.vidd));
-                viewHolder.txtdate.setText("WhatsApp Video Call");
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.unnamed));
+                viewHolder.txtdate.setText("WhatsApp Business");
                 break;
                 case "com.google.android.gm":
                 viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.gmail));
