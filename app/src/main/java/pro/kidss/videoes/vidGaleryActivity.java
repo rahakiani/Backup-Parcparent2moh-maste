@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -62,6 +63,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
     RecyclerviewVIDGAL dataAdapter;
     Intent intent3;
     MsinData msinData;
+    RelativeLayout relat;
     ImageView img;
     String type = "",date,time,addresss;
     String datess = "";
@@ -90,6 +92,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         super.onCreate(savedInstanceState);
         setContentView( R.layout.activity_vid_galery);
         roomdb = Roomdb.getInstance(this);
+        relat=findViewById( R.id.relative );
         dataList.addAll(roomdb.mainDao().getallvideo());
         linearLayout = findViewById( R.id.lyt_progress );
         parent_view = findViewById( android.R.id.content );
@@ -132,70 +135,7 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
         recyclerView.setAdapter(dataAdapter);
     }
 
-//    private void ShowTry() {
-//        dialog1.setContentView(R.layout.try_alert);
-//        close = (ImageView) dialog1.findViewById(R.id.close_try);
-//        accept = (Button) dialog1.findViewById(R.id.bt_try);
-//        messageTv = (TextView) dialog1.findViewById(R.id.messaage_try);
-//        messageTv.setText("please check the connection");
-//
-//        close.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog1.dismiss();
-//            }
-//        });
-//
-//        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog1.show();
-//    }
 
-
-//    private void ShowDialog() {
-//
-//        dialog1.setContentView(R.layout.alert_wait);
-//        close = (ImageView) dialog1.findViewById(R.id.close_accept);
-//        accept = (Button) dialog1.findViewById(R.id.btnAccept);
-//        timer = (TextView) dialog1.findViewById(R.id.text_timer);
-//        titleTv = (TextView) dialog1.findViewById(R.id.title_go);
-//        messageTv = (TextView) dialog1.findViewById(R.id.messaage_acceot);
-//        titleTv.setText("Please Wait");
-//        messageTv.setText("Connecting To Server...");
-//        long duration = TimeUnit.SECONDS.toMillis(1);
-//        new CountDownTimer(duration, 100) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                String sDuration = String.format(Locale.ENGLISH, "%02d:%02d"
-//                        , TimeUnit.MINUTES.toSeconds(0)
-//                        , TimeUnit.SECONDS.toSeconds(59) -
-//                                TimeUnit.SECONDS.toSeconds(TimeUnit.SECONDS.toSeconds(1)));
-//                timer.setText(sDuration);
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                timer.setVisibility(View.GONE);
-//                accept.setVisibility(View.VISIBLE);
-//
-//
-//            }
-//        }.start();
-//        close.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog1.dismiss();
-//            }
-//        });
-//        accept.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog1.dismiss();
-//            }
-//        });
-//
-//        dialog1.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        dialog1.show();
-//    }
 
     public String getctoken(Context context) {
         CtokenDataBaseManager ctok = new CtokenDataBaseManager(context);
@@ -204,6 +144,8 @@ public class vidGaleryActivity extends AppCompatActivity implements OnvideoDate 
 
     @Override
     public void onImageClick(String videodate) {
+        relat.setVisibility( View.VISIBLE );
+
         ply.setVisibility(View.GONE);
 
         if (roomdb.mainDao().checkdown( videodate ) == 1) {

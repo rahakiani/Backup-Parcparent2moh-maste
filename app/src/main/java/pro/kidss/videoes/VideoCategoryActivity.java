@@ -70,7 +70,7 @@ public class VideoCategoryActivity extends AppCompatActivity {
     RecyclerviewVidcat dataAdapter;
     ProgressDialog dialog = null;
     private SwipeRefreshLayout swpref;
-    ArrayList<MsinData> dataList = new ArrayList<>();
+
     CoordinatorLayout coordinatorLayout;
     List<String> distincmsindata;
     List<String> addressss;
@@ -143,15 +143,19 @@ public class VideoCategoryActivity extends AppCompatActivity {
 //                                    Log.e( "DATEING", dating.toString() );
 //                                        String datee = dating.get( i ).toString();
 
+                                    if (!Type.contains( Typearray.getString( i ) )) {
+                                        Type.add( Typearray.getString( i ) );
+                                        imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
+                                        ids.add( "" );
+                                    }
 
-                                    Type.add( Typearray.getString( i ) );
 
 
                                     if (roomdb.mainDao().checkaddress( "https://apisender.online" + viduri.getString( i ) ) == 0) {
                                         MsinData data = new MsinData( "https://apisender.online" + viduri.getString( i ), 0, 0, dating.get( i ), Typearray.getString( i ),"/Download/kidvideo.mp4",timing.get(i) );
                                         roomdb.mainDao().insert( data );
 
-                                        dataList.add( data );
+
                                         ids.add( "" );
 //                                        Log.e( "LKLKKL", roomdb.mainDao().getallvideo().toString() );
 
@@ -160,18 +164,18 @@ public class VideoCategoryActivity extends AppCompatActivity {
 
 //                                            dataList.addAll( roomdb.mainDao().getall() );
                                     }
-                                    imageUrlList.add( "https://apisender.online" + viduri.getString( i ) );
+
 //                                    addressss = roomdb.mainDao().getad(roomdb.mainDao().gettyper().get( i ));
                                     i++;
                                 }
 
 
                                 dialog.dismiss();
-                                distincmsindata = roomdb.mainDao().gettyper();
+
                                 recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
                                 gridLayoutManager = new GridLayoutManager( getApplicationContext(), 2 );
                                 recyclerView.setLayoutManager( gridLayoutManager );
-                                dataAdapter = new RecyclerviewVidcat( imageUrlList, VideoCategoryActivity.this, fabremove, ids, Type, distincmsindata, dataList );
+                                dataAdapter = new RecyclerviewVidcat( imageUrlList, VideoCategoryActivity.this, fabremove, ids, Type);
                                 recyclerView.setAdapter( dataAdapter );
                             }
                         } catch (JSONException e) {

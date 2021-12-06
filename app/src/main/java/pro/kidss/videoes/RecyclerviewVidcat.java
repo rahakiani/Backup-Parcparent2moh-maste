@@ -26,7 +26,7 @@ import pro.kidss.R;
 import pro.kidss.database.Roomdb;
 
 public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.ViewHolder> {
-    ArrayList<String> imageUrls;
+    ArrayList<String> imageUrls,type;
     Context context;
 
     FloatingActionButton removefab;
@@ -34,15 +34,16 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
     List<String> adreess;
     String imgg;
 
-    List<String> distincmsindata;
+
     Roomdb roomdb;
     MsinData msinData;
-    public RecyclerviewVidcat(ArrayList<String> address, Context context, FloatingActionButton fabremove, ArrayList<String> ids, ArrayList<String> type, List<String> distincmsindata, ArrayList<MsinData> dataList) {
+    public RecyclerviewVidcat(ArrayList<String> address, Context context, FloatingActionButton fabremove, ArrayList<String> ids, ArrayList<String> type) {
         this.imageUrls = address;
         this.context = context;
         this.removefab = fabremove;
         this.ids = ids;
-        this.distincmsindata = distincmsindata;
+
+        this.type=type;
 
 
     }
@@ -61,51 +62,52 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
 
 
 
-        if (distincmsindata.get( i ).equals( "camera" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.cam ) );
-            viewHolder.txtdate.setText( "Camera" );
-        } else if (distincmsindata.get( i ).equals( "com.whatsapp" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.whatsapp ) );
-            viewHolder.txtdate.setText( "Whatsapp" );
-        } else if (distincmsindata.get( i ).equals( "com.instagram.android" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.instagram ) );
-            viewHolder.txtdate.setText( "instagram" );
-        } else if (distincmsindata.get( i ).equals( "org.telegram.messenger" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.telegram ) );
-            viewHolder.txtdate.setText( "Telegram" );
-        } else if (distincmsindata.get( i ).equals( "com.facebook.katana" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.ic_facebook__2_ ) );
-            viewHolder.txtdate.setText( "Facebook" );
-        } else if (distincmsindata.get( i ).equals( "ir.alibaba" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.alibaba ) );
-            viewHolder.txtdate.setText( "علی بابا" );
-        } else if (distincmsindata.get( i ).equals( "com.google.android.gm" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.gmail ) );
-            viewHolder.txtdate.setText( "Gmail" );
-        } else if (distincmsindata.get( i ).contains( "clubhouse" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.imagess ) );
-            viewHolder.txtdate.setText( "Clubhouse" );
+        switch (type.get(i)){
+            case "camera":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.cam));
+                viewHolder.txtdate.setText("Camera");
+                break;
+            case "com.whatsapp":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.whatsapp));
+                viewHolder.txtdate.setText("Whatsapp");
+                break;
+            case "com.instagram.android":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.instagram));
+                viewHolder.txtdate.setText("instagram");
+                break;
+            case "org.telegram.messenger":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.telegram));
+                viewHolder.txtdate.setText("Telegram");
+                break;
+            case "com.facebook.katana":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_facebook__2_));
+                viewHolder.txtdate.setText("Facebook");
+                break;
+            case "ir.alibaba":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.alibaba));
+                viewHolder.txtdate.setText("علی بابا");
+                break;
+                case "cab.snapp.passenger.play":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.sn));
+                viewHolder.txtdate.setText("Snapp");
+                break;
+                case "com.clubhouse.app":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.imagess));
+                viewHolder.txtdate.setText("Clubhouse");
+                break;
+                case "com.whatsapp.w4b":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.vidd));
+                viewHolder.txtdate.setText("WhatsApp Video Call");
+                break;
+                case "com.google.android.gm":
+                viewHolder.img.setBackground(ContextCompat.getDrawable(context, R.drawable.gmail));
+                viewHolder.txtdate.setText("Gmail");
+                break;
 
-//        } else if (distincmsindata.get( i ).contains( "whatsapp" )) {
-//            viewHolder.txtdate.setText( "Whatsapp" );
-//            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-//        } else if (distincmsindata.get( i ).contains( "telegram" )) {
-//            viewHolder.txtdate.setText( "Telegram" );
-//            Glide.with( context ).load( imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-
-
-        } else if (distincmsindata.get( i ).contains( "contact" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.ic_baseline_contacts_24 ) );
-            viewHolder.txtdate.setText( "Contact" );
-        } else if (distincmsindata.get( i ).contains( "snapp" )) {
-            viewHolder.img.setBackground( ContextCompat.getDrawable( context, R.drawable.sn ) );
-            viewHolder.txtdate.setText( "Snapp" );
-        }else{
-
-
-
-                    Glide.with( context ).load(imageUrls.get( i ) ).apply( options ).into( viewHolder.img );
-                    viewHolder.txtdate.setText( distincmsindata.get( i ) );
+            default:
+                Glide.with(context).load(imageUrls.get(i)).apply(options).into(viewHolder.img);
+                viewHolder.txtdate.setText( type.get( i ) );
+                break;
 
 
         }
@@ -113,14 +115,15 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
 
 
 
+
         viewHolder.img.setOnClickListener( new View.OnClickListener() {
-            String type = distincmsindata.get( i );
+
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( context, VideoDateActivity.class );
-                Log.e( "TYPER", type );
-                intent.putExtra( "Type", type );
+                Log.e( "TYPER", type.get( i ) );
+                intent.putExtra( "Type", type.get( i ) );
                 context.startActivity( intent );
             }
         } );
@@ -129,7 +132,7 @@ public class RecyclerviewVidcat extends RecyclerView.Adapter<RecyclerviewVidcat.
 
     @Override
     public int getItemCount() {
-        return distincmsindata.size();
+        return imageUrls.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
